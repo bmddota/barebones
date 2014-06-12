@@ -1,0 +1,133 @@
+"DOTAAbilities"
+{
+	//Shield
+	"item_example_item"
+	{
+		"ID"							"1836"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"BaseClass"						"item_datadriven"
+    "AbilityCastAnimation"			"ACT_DOTA_DISABLED"
+		"AbilityTextureName"			"item_example_item"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"13.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		"ItemCost"						"750"
+		"ItemInitialCharges"			"0"
+		"ItemDroppable"					"1"
+		"ItemSellable"					"1"
+		"ItemRequiresCharges"			"0"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"MaxUpgradeLevel"				"1"
+		"ItemBaseLevel"					"1"
+		
+		"precache"
+		{
+			"particlefile"				"particles/frostivus_herofx.pcf"
+      "soundfile"				"scripts/game_sounds_heroes/game_sounds_abaddon.txt"
+		}
+		"OnSpellStart"
+    {
+      "LinearProjectile"
+      {
+        "EffectName"			"queen_shadow_strike_linear_parent"
+				"MoveSpeed"				"%speed"
+				//"StartPosition"	  "attach_attack1"
+        "FixedDistance"   "%distance"
+				"StartRadius"			"%radius"
+				"EndRadius"				"%radius"
+				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"			"DOTA_UNIT_TARGET_HERO"
+				"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
+				"HasFrontalCone"		"0"
+				"ProvidesVision"		"0"
+				"VisionRadius"			"0"
+      }
+      "FireSound"
+			{
+				"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
+				"Target"			  "CASTER"
+			}
+      "ApplyModifier"
+			{
+				"Target"  		"CASTER"
+				"ModifierName"	"modifier_item_shield"
+			}
+    }
+    
+		"OnProjectileHitUnit"
+		{			
+      "DeleteOnHit" "0"
+			"Damage"
+			{
+				"Target"  		"TARGET"
+        "Type"		"DAMAGE_TYPE_PURE"
+				"Damage"	"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_shield"
+			{
+				"EffectName"		"damage_immunity"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+				
+				"Duration" "%duration"
+				"TextureName" "abaddon_aphotic_shield"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction"
+				}
+			}
+		}
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"		"-50"
+			}
+      "03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				  "150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					  "1800"
+			}
+      "05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"distance"		    "900"
+			}
+      "06"
+			{
+				"var_type"				"FIELD_INTEGER`"
+				"damage"		      "125"
+			}
+		}
+  }
+}

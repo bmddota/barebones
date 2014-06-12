@@ -1,0 +1,16 @@
+{
+  "name": "barebones",
+  "fullname": "Barebones",
+  "version": "0.00.01",
+  "author": "BMD",
+  "authorimage": "",
+  "thumbnail": "",
+  "spreadimage": "",
+  "website": "https://github.com/bmddota/barebones",
+  "subtitle": "A bare-bones Dota 2 Mod for expansion and testing.",
+  "description": "",
+  "features": ["Barebones"],
+  "playable": true,
+  "spreadvideo": "",
+  "isPublic": true
+}
