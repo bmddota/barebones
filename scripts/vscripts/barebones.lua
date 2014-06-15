@@ -253,6 +253,7 @@ function BareBonesGameMode:AutoAssignPlayer(keys)
   endTime = Time(),
   callback = function(barebones, args)
     -- Make sure the game has started
+    print ('ASSIGNED')
     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_PRE_GAME then
       -- Assign a hero to a fake client
       local heroEntity = ply:GetAssignedHero()
@@ -312,7 +313,7 @@ function BareBonesGameMode:ShopReplacement( keys )
   local itemName = keys.itemname 
   
   -- The cost of the item purchased
-  local itemcost = keys.itemcose
+  local itemcost = keys.itemcost
   
 end
 
