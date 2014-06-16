@@ -488,9 +488,9 @@ end
 function dealDamage(source, target, damage)
   local unit = nil
   if source ~= nil then
-    unit = CreateUnitByName("npc_dummy_unit", target:GetAbsOrigin(), false, source, source, source:GetTeamNumber())
+    unit = CreateUnitByName("npc_dota_danger_indicator", target:GetAbsOrigin(), false, source, source, source:GetTeamNumber())
   else
-    unit = CreateUnitByName("npc_dummy_unit", target:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_NOTEAM)
+    unit = CreateUnitByName("npc_dota_danger_indicator", target:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_NOTEAM)
   end
   unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
   unit:AddNewModifier(unit, nil, "modifier_phased", {})
@@ -541,10 +541,11 @@ function dealDamage(source, target, damage)
     endTime = GameRules:GetGameTime() + 0.2,
     useGameTime = true,
     callback = function(reflex, args)
-      if target:GetHealth() == hp and hp ~= 0 then
-        print ("[BAREBONES] WARNING: dealDamage did no damage: " .. hp)
-      end
       unit:Destroy()
+      if target:GetHealth() == hp and hp ~= 0 and damage ~= 0 then
+        print ("[BAREBONES] WARNING: dealDamage did no damage: " .. hp)
+        dealDamage(source, target, damage)
+      end
     end
   })
 end
