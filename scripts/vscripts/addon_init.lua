@@ -29,4 +29,5 @@ local function loadModule(name)
 end
 
 loadModule ( 'util' )
+loadModule ( 'physics' )
 loadModule ( 'barebones')
