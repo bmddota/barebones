@@ -22,7 +22,7 @@ AddPhysicsVelocity (velocityVector)
     Adds a new velocity vector to the current internal velocity vector.  This is effectively a force push on the unit.
 -----------------------------
 FollowNavMesh (boolean)
-    This function adds a new velocity vector to the current internal velocity vector.  This is effectively a force push on the unit.
+    Whether this unit should respect the NavMesh when moving and exhibit NavCollisionType behavior when interacting with a NavGrid block
 -----------------------------
 GetNavCollisionType ()
     Returns the current GridNav Collision Type (PHYSICS_NAV_NOTHING, PHYSICS_NAV_HALT, PHYSICS_NAV_SLIDE, or PHYSICS_NAV_BOUNCE)
@@ -42,8 +42,17 @@ GetPhysicsVelocityMax ()
 GetSlideMultiplier ()
     Returns the slide multipler value. Default is 0.1
 -----------------------------
+GetVelocityClamp ()
+    Returns the current velocity clamp in hammer units per second.  Default is 20 hammer units per second
+-----------------------------
+Hibernate (boolean)
+    Whether this unit should Hibernate when there is no sliding/acceleration/velocity.  When hibernating the unit performs no physics calculation until new force/acceleration/sliding is applied.  Additionally, OnPhysicsFrame will not be called if this unit is hibernating
+-----------------------------
 IsFollowNavMesh ()
-    Returns whether this unit will respect the navigation mesh when moving the unit around.  This also forces the unit to stick to the ground if on.
+    Returns whether this unit will respect the navigation mesh when moving the unit around.
+-----------------------------
+IsHibernate ()
+    Returns whether this unit should hibernate when there are no physics calculations to be performed
 -----------------------------
 IsLockToGround ()
     Returns whether this unit will lock the unit to the ground while performing position calculations. 
@@ -85,6 +94,9 @@ SetPhysicsVelocityMax (maxVelocity)
 SetSlideMultiplier (slideMultiplier)
     Sets the slide multiplier.  The default is 0.1
 -----------------------------
+SetVelocityClamp (clamp)
+    Sets the velocity magnitude clamp for stopping physics calculations/hibernating.  The default is 20 hammer units per second
+-----------------------------
 Slide (boolean)
     Whether this unit should be sliding or not.  Sliding units accelerate based on their direction of travel in addition to their normal movespeed motion.
 -----------------------------
@@ -93,7 +105,6 @@ StartPhysicsSimulation ()
 -----------------------------
 StopPhysicsSimulation ()
     Stop the physics simulation from executing any more for this unit
-
     
     
 =============================

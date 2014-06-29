@@ -144,11 +144,14 @@ end
 function Physics:Unit(unit)
   function unit:StopPhysicsSimulation ()
     Physics.timers[unit.PhysicsTimerName] = nil
+    unit.bStarted = false
   end
   function unit:StartPhysicsSimulation ()
     Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+    unit.PhysicsTimer.endTime = GameRules:GetGameTime()
     unit.PhysicsLastPosition = unit:GetAbsOrigin()
     unit.PhysicsLastTime = GameRules:GetGameTime()
+    unit.bStarted = true
   end
   
   function unit:SetPhysicsVelocity (velocity)
@@ -156,11 +159,27 @@ function Physics:Unit(unit)
     if unit.nVelocityMax > 0 and unit.vVelocity:Length() > unit.nVelocityMax then
       unit.vVelocity = unit.vVelocity:Normalized() * unit.nVelocityMax
     end
+    
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.bHibernating = false
+    end
   end
   function unit:AddPhysicsVelocity (velocity)
     unit.vVelocity = unit.vVelocity + velocity / 30
     if unit.nVelocityMax > 0 and unit.vVelocity:Length() > unit.nVelocityMax then
       unit.vVelocity = unit.vVelocity:Normalized() * unit.nVelocityMax
+    end
+    
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.bHibernating = false
     end
   end
   
@@ -173,9 +192,25 @@ function Physics:Unit(unit)
   
   function unit:SetPhysicsAcceleration (acceleration)
     unit.vAcceleration = acceleration / 30
+    
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.bHibernating = false
+    end
   end
   function unit:AddPhysicsAcceleration (acceleration)
     unit.vAcceleration = unit.vAcceleration + acceleration / 30
+    
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.bHibernating = false
+    end
   end
   
   function unit:SetPhysicsFriction (friction)
@@ -215,6 +250,14 @@ function Physics:Unit(unit)
   
   function unit:Slide (slide)
     unit.bSlide = slide
+    
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.bHibernating = false
+    end
   end
   function unit:IsSlide ()
     return unit.bSlide
@@ -238,12 +281,33 @@ function Physics:Unit(unit)
     unit.PhysicsFrameCallback = fun
   end
   
+  function unit:SetVelocityClamp (clamp)
+    unit.fVelocityClamp = clamp / 30
+  end
+  
+  function unit:GetVelocityClamp ()
+    return unit.fVelocityClamp * 30
+  end
+  
+  function unit:Hibernate (hibernate)
+    unit.bHibernate = hibernate
+  end
+  
+  function unit:IsHibernate ()
+    return unit.bHibernate
+  end
+  
+  function unit:DoHibernate ()
+    Physics.timers[unit.PhysicsTimerName] = nil
+    unit.bHibernating = true
+  end
+  
   unit.PhysicsTimerName = DoUniqueString('phys')
   Physics:CreateTimer(unit.PhysicsTimerName, {
     endTime = GameRules:GetGameTime(),
     useGameTime = true,
     callback = function(reflex, args)
-      local prevTime = unit.PhysicsLastTime
+      --local prevTime = unit.PhysicsLastTime
       local curTime = GameRules:GetGameTime()
       local prevPosition = unit.PhysicsLastPosition
       local position = unit:GetAbsOrigin()
@@ -259,22 +323,51 @@ function Physics:Unit(unit)
         slideVelocity = ((position - prevPosition) - lastVelocity + unit.vSlideVelocity) * unit.fSlideMultiplier
       end
       
-      --[[if unit.vVelocity ~= Vector(0,0,0) then
-        print ('----------------')
-        print ('pos: ' .. tostring(position))
-        print ('vel: ' .. tostring(unit.vVelocity))
-        print ('acc: ' .. tostring(unit.vAcceleration))
-        --print ('fric: ' .. tostring(unit.fFriction))
-      end]]
-      
-      --[[if slideVelocity ~= Vector(0,0,0) then
-        print ('tickVel: ' .. tostring(slideVelocity))
-        print ('tickLen: ' .. tostring(slideVelocity:Length()))
-        print ('tickTime: ' .. tostring((curTime - prevTime)))
-      end]]
+      -- Adjust velocity
+      local newVelocity = unit.vVelocity + unit.vAcceleration + (-1 * unit.fFriction * unit.vVelocity) + slideVelocity
+      local newVelLength = newVelocity:Length()
+      if unit.nVelocityMax > 0 and newVelLength > unit.nVelocityMax then
+        newVelocity = newVelocity:Normalized() * unit.nVelocityMax
+      end
+      if unit.vAcceleration == Vector(0,0,0) and newVelLength < unit.fVelocityClamp then
+        newVelocity = Vector(0,0,0)
+        if unit:HasModifier("modifier_rooted") then
+          unit:RemoveModifierByName("modifier_rooted")
+        end
+        if unit.bHibernate then
+          unit:DoHibernate()
+          local ent = Entities:FindInSphere(nil, position, 35)
+          local blocked = false
+          while ent ~= nil and not blocked do
+            if ent.IsHero ~= nil and ent ~= unit then
+              blocked = true
+            end
+            --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
+            ent = Entities:FindInSphere(ent, position, 35)
+          end
+          if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) then
+            FindClearSpaceForUnit(unit, position, true)
+          end
+          return
+        end
+        
+        local ent = Entities:FindInSphere(nil, position, 35)
+        local blocked = false
+        while ent ~= nil and not blocked do
+          if ent.IsHero ~= nil and ent ~= unit then
+            blocked = true
+          end
+          --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
+          ent = Entities:FindInSphere(ent, position, 35)
+        end
+        if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) then
+          FindClearSpaceForUnit(unit, position, true)
+        end
+        return curTime
+      end
       
       -- Calculate new position
-      local newPos = unit:GetAbsOrigin() + unit.vVelocity
+      local newPos = position + unit.vVelocity
       if unit.bLockToGround then
         local groundPos = GetGroundPosition(newPos, unit)
         local groundPosDiff = groundPos - newPos
@@ -282,47 +375,16 @@ function Physics:Unit(unit)
       end
       
       
-      
-      -- Adjust velocity
-      local newVelocity = unit.vVelocity + unit.vAcceleration + (-1 * unit.fFriction * unit.vVelocity) + slideVelocity
-      if unit.nVelocityMax > 0 and newVelocity:Length() > unit.nVelocityMax then
-        --print ('maxvel hit')
-        --print ('velLen: ' .. tostring(newVelocity:Length()))
-        newVelocity = newVelocity:Normalized() * unit.nVelocityMax
-        --print ('newvelLen: ' .. tostring(newVelocity:Length()))
-      end
-      if unit.vAcceleration == Vector(0,0,0) and newVelocity:Length() < 20 / 30 then
-        newVelocity = Vector(0,0,0)
-        if unit:HasModifier("modifier_rooted") then
-          unit:RemoveModifierByName("modifier_rooted")
-        end
-      end
-      
-      
-      
       if unit.vVelocity ~= Vector(0,0,0) or slideVelocity ~= Vector(0,0,0) then
-        --print ('newpos: ' .. tostring(newPos))
-        --print ('groundpos: ' .. tostring(groundPos))
-        --print ('newvel: ' .. tostring(newVelocity))
         if unit.bFollowNavMesh then
           local diff = unit.vVelocity:Normalized()
-          --print(tostring(GridNav:IsBlocked(newPos)) .. " -- " .. tostring(GridNav:IsTraversable(newPos)))
-          --local d1 = newPos + diff * 50
-          --local d2 = newPos + diff * 100
-          --local d3 = newPos + diff * 150
-          --print(tostring(GridNav:IsBlocked(d1)) .. " -- " .. tostring(GridNav:IsTraversable(d1)))
-          --print(tostring(GridNav:IsBlocked(d2)) .. " -- " .. tostring(GridNav:IsTraversable(d2)))
-          --print(tostring(GridNav:IsBlocked(d3)) .. " -- " .. tostring(GridNav:IsTraversable(d3)))
-          --print(newPos)
-          FindClearSpaceForUnit(unit, newPos, true)
+          --FindClearSpaceForUnit(unit, newPos, true)
+          unit:SetAbsOrigin(newPos)
           
           local navConnect = (not GridNav:IsTraversable(newPos) or not GridNav:IsTraversable(newPos + diff * 50))
           if unit.nNavCollision == PHYSICS_NAV_HALT and navConnect then
-            --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
             newVelocity = Vector(0,0,0)
-          elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then
-            --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
-            
+          elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then        
             local blocked = not GridNav:IsTraversable(newPos)
             local navPos = nil
             if blocked then
@@ -332,8 +394,8 @@ function Physics:Unit(unit)
               navPos = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(d1.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(d1.y)), 0)
             end
             
-            local face = navPos - unit:GetAbsOrigin()
-            print("face: " .. tostring(face))
+            local face = navPos - position
+            --print("face: " .. tostring(face))
             if math.abs(face.x) > math.abs(face.y) then
               newVelocity = Vector(0, newVelocity.y, 0)
             else
@@ -351,7 +413,7 @@ function Physics:Unit(unit)
               navPos = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(d1.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(d1.y)), 0)
             end
             
-            local face = navPos - unit:GetAbsOrigin()
+            local face = navPos - position
             --print("face: " .. tostring(face)) 
             local dir = diff
             -- Nav bounce checks
@@ -384,7 +446,7 @@ function Physics:Unit(unit)
             end
             
             --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
-            newVelocity = dir * newVelocity:Length()
+            newVelocity = dir * newVelLength
           end
         else
           unit:SetAbsOrigin(newPos)
@@ -394,14 +456,14 @@ function Physics:Unit(unit)
       unit.vVelocity = newVelocity
       unit.vSlideVelocity = slideVelocity
       
-      if unit.PhysicsFrameCallback ~= nil and type(unit.PhysicsFrameCallback) == "function" then
+      if unit.PhysicsFrameCallback ~= nil then
         pcall(unit.PhysicsFrameCallback, unit)
       end
       
-      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.PhysicsLastTime = curTime
       unit.PhysicsLastPosition = position
       
-      return GameRules:GetGameTime()
+      return curTime
     end
   })
   
@@ -419,6 +481,10 @@ function Physics:Unit(unit)
   unit.fSlideMultiplier = 0.1
   unit.nVelocityMax = 0
   unit.PhysicsFrameCallback = nil
+  unit.fVelocityClamp = 20.0 / 30.0
+  unit.bHibernate = true
+  unit.bHibernating = false
+  unit.bStarted = true
 end
 
 Physics:start()
