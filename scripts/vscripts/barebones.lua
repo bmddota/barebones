@@ -134,7 +134,7 @@ function BareBonesGameMode:CaptureGameMode()
     GameRules:SetHeroMinimapIconSize( 300 )
 
     print( '[BAREBONES] Beginning Think' ) 
-    GameMode:SetContextThink("BarebonesThink", Dynamic_Wrap( BareBonesGameMode, 'Think' ), 0.1 )
+    GameMode:SetContextThink("BarebonesThink", Dynamic_Wrap( BareBonesGameMode, 'Think' ), THINK_TIME )
   end 
 end
 
