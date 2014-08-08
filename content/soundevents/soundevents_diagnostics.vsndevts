@@ -1,0 +1,853 @@
+"Diagnostic.AAAAA_editTESTER"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "core_start_simple_oneshot"
+				
+				"operator_variables"
+				{
+					"volume"
+					{
+						"value" "0.5"
+					}
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird01.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.Bell.Spatial.Center"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/bell.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.Bell.Spatial.30FeetY"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "src1_3d"
+				"operator_variables"
+				{
+					"position"
+					{
+						"value" "[ 0, 360, 64 ]"
+					}
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/bell.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+
+// "Diagnostic.Bell.StopLoop.Center"
+// {
+// 	"channel"		"CHAN_STATIC"
+// 	"volume"		"1"
+// 	"soundlevel"		"SNDLVL_75dB"
+// 	"wave"		"sounds/diagnostics/bell.wav"
+
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"construction_stack" "true"
+
+// 			"import_stack" "update_default"
+// 			"source_distance"
+// 			{
+// 				"force_not_player_sound"   "true"
+// 				"input_position"  "[ 0, 0, 0 ]"
+// 			}
+// 			"speakers_spatialize"
+// 			{
+// 				"input_position"  "[ 0, 0, 0 ]"
+// 			}
+// 		}
+// 		"stop_stack"
+// 		{
+// 			"construction_stack" "true"
+
+// 			"play_entry"
+// 			{
+// 				"operator" "sys_start_entry"
+// 				"input_start" "1"	
+// 				"entry_name" "Diagnostic.Bell.StopLoop.Center"
+// 			}
+// 		}
+// 	}
+// }
+
+// "Diagnostic.Bell.StopLoop.30FeetY"
+// {
+// 	"channel"		"CHAN_STATIC"
+// 	"volume"		"1"
+// 	"soundlevel"		"SNDLVL_75dB"
+// 	"wave"		"sounds/diagnostics/bell.wav"
+
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"construction_stack" "true"
+
+// 			"import_stack" "update_default"
+// 			"source_distance"
+// 			{
+// 				"force_not_player_sound"   "true"
+// 				"input_position"  "[ 0, 360, 64 ]"
+// 			}
+// 			"speakers_spatialize"
+// 			{
+// 				"input_position"  "[ 0, 360, 64 ]"
+// 			}
+// 		}
+// 		"stop_stack"
+// 		{
+// 			"construction_stack" "true"
+
+// 			"play_entry"
+// 			{
+// 				"operator" "sys_start_entry"
+// 				"input_start" "1"	
+// 				"entry_name" "Diagnostic.Bell.StopLoop.30FeetY"
+// 			}
+// 		}
+// 	}
+// }
+
+"Diagnostic.update_test_reference_op"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "core_start_simple_oneshot"
+				
+				"operator_variables"
+				{
+					"volume"
+					{
+						"value" "0.5"
+					}
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird01.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.update_test_start_stack_vsnd_rand_oneshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_start_stack_vsnd_rand_oneshot"
+				
+				"operator_variables"
+				{
+					"file_list_stack_name"
+					{	
+						"value" "diagnostics_vsnd_lists"
+					}
+					"file_list_operator_name"
+					{	
+						"value" "bird_variations"
+					}
+					"file_list_field_name"
+					{	
+						"value" "vsnd_files"
+					}
+					"selected_list_field_name"
+					{	
+						"value" "vsnd_file_selections"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.update_test_start_vsnd_rand_oneshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_start_vsnd_rand_oneshot"
+				
+				"operator_variables"
+				{					
+					"vsnd_files"
+					{	
+						"value"
+						{
+							"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird01.vsnd"
+							"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird01b.vsnd"
+							"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird02.vsnd"
+							"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird02b.vsnd"
+							"value" "sounds/diagnostics/ambient/random_amb_sfx/forest_bird03.vsnd"	
+						}
+					}
+					"delay"
+					{
+						"value" "0.0"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.update_test_start_vsnd_lfo"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_start_vsnd_lfo"
+				
+				"operator_variables"
+				{
+					"entry_time"
+					{
+						"value" "Diagnostic.update_test_vsnd_start_lfo"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.update_test_start_vsnd_flo"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_start_vsnd_lfo"
+				
+				"operator_variables"
+				{
+					"entry_time"
+					{
+						"value" "Diagnostic.update_test_vsnd_start_lfo"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Diagnostic.update_test_convar"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_convar"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_delta"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_delta"
+			}
+		}
+	}
+}
+// "Diagnostic.update_test_distant_dsp"
+// {
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"reference_operator"
+// 			{
+// 				"operator" "sos_reference_stack"
+// 				"reference_stack" "update_test_distant_dsp"
+// 			}
+// 		}
+// 	}
+// }
+"Diagnostic.update_test_entity_info"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_entity_info"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_falloff"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_falloff"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_float_filter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_float_filter"
+			}
+		}
+	}
+}
+// "Diagnostic.update_test_iterate_merge_speakers"
+// {
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"reference_operator"
+// 			{
+// 				"operator" "sos_reference_stack"
+// 				"reference_stack" "update_test_iterate_merge_speakers"
+// 			}
+// 		}
+// 	}
+// }
+// "Diagnostic.update_test_mixer"
+// {
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"reference_operator"
+// 			{
+// 				"operator" "sos_reference_stack"
+// 				"reference_stack" "update_test_mixer"
+// 			}
+// 		}
+// 	}
+// }
+// "Diagnostic.update_test_occlusion"
+// {
+// 	"operator_stacks"
+// 	{
+// 		"update_stack"
+// 		{
+// 			"reference_operator"
+// 			{
+// 				"operator" "sos_reference_stack"
+// 				"reference_stack" "update_test_occlusion"
+// 			}
+// 		}
+// 	}
+// }
+"Diagnostic.update_test_opvar"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_opvar"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_utils"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_utils"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_math_string"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_math_string"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_calc_distance"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_calc_distance"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_listener_velocity"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_listener_velocity"
+			}
+		}
+	}
+}
+"Diagnostic.test_goto_exit"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_goto_exit"
+			}
+		}
+	}
+}
+"Diagnostic.test_goto_loop_head"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_goto_loop_head"
+			}
+		}
+	}
+}
+
+"Diagnostic.test_goto_loop_operator"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_goto_loop_operator"
+			}
+		}
+	}
+}
+"Diagnostic.update_test_simple_import_op"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "update_test_simple_import_op"
+			}
+		}
+	}
+}
+
+"Diagnostic.test_soundevent_limiter_lfo"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_limiter_lfo"
+				"operator_variables"
+				{
+					"max_count"
+					{
+						"value" "0.0"
+					}
+					"match_substring"
+					{
+						"value" "1.0"
+					}
+					"invert_match"
+					{
+						"value" "1.0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Diagnostic.test_stop_soundevents_lfo_at_time"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_control_lfo_stop_at_time"
+				"operator_variables"
+				{
+					"volume"
+					{
+						"value" "4.0"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.test_soundevent_block"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_block"
+
+				"operator_variables"
+				{
+					"duration"
+					{
+						"value" "5.0"
+					}
+					"match_substring"
+					{
+						"value" "1.0"
+					}
+					"match_event_name"
+					{
+						"value" "lfo"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Diagnostic.test_soundevent_start_oneshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_start_oneshot"
+
+				"operator_variables"
+				{
+					"duration"
+					{
+						"value" "5.0"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.test_soundevent_start_lfo"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_start_lfo"
+
+				"operator_variables"
+				{
+					"time"
+					{
+						"value" "17.0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Diagnostic.test_soundevent_start_opvar_get_parent"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_start_opvar_get_parent"
+			}
+		}
+	}
+}
+
+"Diagnostic.test_get_parent_space"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_get_parent_space"
+			}
+		}
+	}
+}
+"Diagnostic.test_import_get_parent_space"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_import_get_parent_space"
+			}
+		}
+	}
+}
+
+"Diagnostic.test_random_multiple"
+{
+
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_random_multiple"
+			}
+		}
+	}
+}
+
+"Diagnostic.test_import_random_multiple"
+{
+
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_import_random_multiple"
+			}
+		}
+	}
+}
+"Diagnostic.test_soundevent_start_random_multiple"
+{
+
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "test_soundevent_start_random_multiple"
+			}
+		}
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// 
+// Core
+//
+//////////////////////////////////////////////////////////////////////////////////
+"Diagnostic.core_start_simple_oneshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "core_start_simple_oneshot"
+				
+				"operator_variables"
+				{
+					"volume"
+					{
+						"value" "0.5"
+					}
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/bell.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+"Diagnostic.core_start_oneshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "core_start_oneshot"
+				
+				"operator_variables"
+				{
+					"volume_min"
+					{	
+						"value" "0.1"	
+					}
+					"volume_max"
+					{	
+						"value" "1.0"	
+					}
+					"pitch_min"
+					{	
+						"value" "0.5"	
+					}
+					"pitch_max"
+					{	
+						"value" "1.5"	
+					}
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/bell.vsnd"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Diagnostic.src1_3d"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator" "sos_reference_stack"
+				"reference_stack" "src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value" "sounds/diagnostics/bell.vsnd"
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,354 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 6
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMin = ( -30.000000, -30.000000, -30.000000 )
+	float(3) m_BoundingBoxMax = ( 30.000000, 30.000000, 30.000000 )
+	float m_flCullRadius = -1.000000
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 8.000000
+	int(4) m_ConstantColor = ( 0, 248, 163, 255 )
+	int m_nConstantSequenceNumber1 = 1
+	float m_flMaxDrawDistance = 4000.000000
+	float m_flNoDrawTimeToGoToSleep = 0.100000
+	bool m_bShouldSort = false
+	int m_nMinCPULevel = 1
+	float m_flMaxRecreationTime = -1.000000
+	CParticleOperator*[] m_Renderers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_Decay_0,
+		&C_OP_SetControlPointToCenter_0,
+		&C_OP_VelocityMatchingForce_0,
+		&C_OP_VectorNoise_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_MaxVelocity_0,
+		&C_OP_SetPerChildControlPoint_0,
+		&C_OP_OscillateVector_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_LerpEndCapScalar_0,
+		&C_OP_MovementRotateParticleAroundAxis_0,
+		&C_OP_SetControlPointOrientation_0,
+		&C_OP_SetControlPointRotation_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomSequence_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_NormalOffset_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0,
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		&C_OP_AttractToControlPoint_0,
+		&C_OP_TurbulenceForce_0,
+		&C_OP_TwistAroundAxis_0,
+		&C_OP_AttractToControlPoint_2,
+		&C_OP_AttractToControlPoint_4,
+		&C_OP_AttractToControlPoint_6,
+		&C_OP_LocalAccelerationForce_0,
+		&C_OP_AttractToControlPoint_8
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		&C_OP_PlanarConstraint_0,
+		&C_OP_ConstrainDistance_0
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirit_trail.vpcf"
+		}
+	]
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	int m_nOpEndCapState = 1
+	string m_Notes = ""
+}
+
+C_OP_SetControlPointToCenter C_OP_SetControlPointToCenter_0
+{
+	int m_nCP1 = 2
+	float(3) m_vecCP1Pos = ( 0.000000, 0.000000, 32.000000 )
+	string m_Notes = ""
+}
+
+C_OP_VelocityMatchingForce C_OP_VelocityMatchingForce_0
+{
+	float m_flDirScale = 0.003313
+	float m_flSpdScale = 0.002500
+	string m_Notes = ""
+}
+
+C_OP_VectorNoise C_OP_VectorNoise_0
+{
+	float(3) m_vecOutputMax = ( 410.000000, 410.000000, 410.000000 )
+	int m_nFieldOutput = 0
+	float(3) m_vecOutputMin = ( -410.000000, -410.000000, -410.000000 )
+	bool m_bAdditive = true
+	string m_Notes = ""
+	float m_fl4NoiseScale = 0.010000
+	bool m_bOffset = true
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 10.000000 )
+	float m_fDrag = 0.090000
+	string m_Notes = ""
+}
+
+C_OP_MaxVelocity C_OP_MaxVelocity_0
+{
+	bool m_bDisableOperator = true
+	float m_flMaxVelocity = 1750.000000
+	string m_Notes = ""
+}
+
+C_OP_SetPerChildControlPoint C_OP_SetPerChildControlPoint_0
+{
+	string m_Notes = ""
+	int m_nNumControlPoints = 6
+}
+
+C_OP_OscillateVector C_OP_OscillateVector_0
+{
+	float(3) m_FrequencyMin = ( 0.250000, 0.250000, 0.250000 )
+	string m_Notes = ""
+	bool m_bOffset = true
+	float(3) m_RateMin = ( -100.000000, -100.000000, -100.000000 )
+	float(3) m_RateMax = ( 100.000000, 100.000000, 100.000000 )
+	float(3) m_FrequencyMax = ( 0.500000, 0.500000, 0.500000 )
+	bool m_bProportional = false
+	float m_flEndTime_min = 99999998430674944.000000
+	float m_flEndTime_max = 99999998430674944.000000
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	string m_Notes = ""
+	float m_flDecayTime = 0.250000
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	string m_Notes = ""
+	float m_flLerpTime = 0.250000
+	float m_flOutput = 0.000000
+}
+
+C_OP_MovementRotateParticleAroundAxis C_OP_MovementRotateParticleAroundAxis_0
+{
+	string m_Notes = ""
+	float m_flRotRate = 32.000000
+}
+
+C_OP_SetControlPointOrientation C_OP_SetControlPointOrientation_0
+{
+	string m_Notes = ""
+	int m_nCP = 5
+	float(3) m_vecRotationB = ( 360.000000, 360.000000, 360.000000 )
+	bool m_bRandomize = true
+	bool m_bUseWorldLocation = true
+	bool m_bSetOnce = true
+}
+
+C_OP_SetControlPointRotation C_OP_SetControlPointRotation_0
+{
+	string m_Notes = ""
+	float(3) m_vecRotAxis = ( -0.500000, 0.700000, 1.200000 )
+	float m_flRotRate = 87.000000
+	int m_nCP = 5
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	float m_fRadiusMax = 448.000000
+	float(3) m_vecDistanceBias = ( 0.010000, 0.010000, 0.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMin = 8.000000
+	float m_fLifetimeMax = 22.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	int m_nSequenceMax = 5
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	float m_flDegreesMin = -5.000000
+	float m_flDegreesMax = 5.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	float(3) m_vecOutputMin = ( -100.000000, -100.000000, 0.000000 )
+	float(3) m_vecOutputMax = ( 100.000000, 100.000000, 0.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_NormalOffset C_INIT_NormalOffset_0
+{
+	string m_Notes = ""
+	float(3) m_OffsetMin = ( -1.000000, -1.000000, -1.000000 )
+	float(3) m_OffsetMax = ( 1.000000, 1.000000, 1.000000 )
+	bool m_bNormalize = true
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	float m_flEmitRate = 10.000000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 6
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_0
+{
+	float m_fForceAmount = 25.000000
+	float m_fFalloffPower = -0.700000
+	float(3) m_vecComponentScale = ( 1.000000, 1.000000, 0.150000 )
+	string m_Notes = ""
+}
+
+C_OP_TurbulenceForce C_OP_TurbulenceForce_0
+{
+	float(3) m_vecNoiseAmount0 = ( 1450.000000, 1450.000000, 450.000000 )
+	float m_flNoiseCoordScale1 = 0.100000
+	float(3) m_vecNoiseAmount1 = ( -1510.000000, -1510.000000, -110.000000 )
+	float m_flNoiseCoordScale2 = 0.335000
+	float(3) m_vecNoiseAmount2 = ( 1100.000000, 1100.000000, 100.000000 )
+	float m_flNoiseCoordScale3 = 0.220000
+	float(3) m_vecNoiseAmount3 = ( -1300.000000, -1300.000000, -300.000000 )
+	string m_Notes = ""
+	float m_flNoiseCoordScale0 = 0.155000
+}
+
+C_OP_TwistAroundAxis C_OP_TwistAroundAxis_0
+{
+	float(3) m_TwistAxis = ( 0.100000, -0.115000, 1.000000 )
+	bool m_bLocalSpace = true
+	float m_fForceAmount = -1350.000000
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_2
+{
+	bool m_bDisableOperator = true
+	int m_nControlPointNumber = 2
+	float m_fFalloffPower = 0.500000
+	float m_fForceAmount = -500.000000
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_4
+{
+	int m_nControlPointNumber = 2
+	float m_fFalloffPower = -0.010000
+	float m_fForceAmount = -150.000000
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_6
+{
+	float m_flOpEndFadeInTime = 0.200000
+	float m_flOpStartFadeOutTime = 0.200000
+	float m_flOpEndFadeOutTime = 0.400000
+	float m_flOpFadeOscillatePeriod = 3.000000
+	string m_Notes = ""
+	float m_fForceAmount = 50.000000
+	float m_fFalloffPower = -0.500000
+	float(3) m_vecComponentScale = ( 0.750000, 1.300000, 0.190000 )
+	int m_nScaleCP = 6
+	int m_nScaleCPField = 2
+}
+
+C_OP_LocalAccelerationForce C_OP_LocalAccelerationForce_0
+{
+	string m_Notes = ""
+	int m_nCP = 5
+	float(3) m_vecAccel = ( 250.000000, -100.000000, 50.000000 )
+	int m_nScaleCP = 6
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_8
+{
+	float m_flOpEndFadeOutTime = 0.700000
+	float m_flOpFadeOscillatePeriod = 8.000000
+	string m_Notes = ""
+	float m_fForceAmount = 950.000000
+	float m_fFalloffPower = 0.000000
+	float(3) m_vecComponentScale = ( 1.000000, 1.000000, 0.000000 )
+	int m_nScaleCP = 6
+	int m_nScaleCPField = 1
+}
+
+C_OP_PlanarConstraint C_OP_PlanarConstraint_0
+{
+	bool m_bGlobalNormal = true
+	float(3) m_PointOnPlane = ( 0.000000, 0.000000, 300.000000 )
+	string m_Notes = ""
+}
+
+C_OP_ConstrainDistance C_OP_ConstrainDistance_0
+{
+	float m_fMinDistance = 190.000000
+	float(3) m_CenterOffset = ( 0.000000, 0.000000, 400.000000 )
+	float m_fMaxDistance = 360.000000
+	string m_Notes = ""
+}

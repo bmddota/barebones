@@ -1,0 +1,125 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 128
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 260.000000
+	int(4) m_ConstantColor = ( 86, 252, 144, 5 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_FadeInSimple_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_LerpEndCapScalar_0,
+		&C_OP_InterpolateRadius_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RingWave_0,
+		&C_INIT_PositionOffset_0,
+		&C_INIT_PositionPlaceOnGround_0,
+		&C_INIT_RandomLifeTime_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\particle_glow_04.vtex"
+	string m_Notes = ""
+	int m_nOrientationType = 2
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	string m_Notes = ""
+	float m_flRadiusScale = 2.000000
+	float m_flAlphaScale = 8.000000
+	float m_flStartFalloff = 0.100000
+	string m_hTexture = "materials\\particle\\particle_glow_04.vtex"
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	string m_Notes = ""
+	float m_flDecayTime = 0.200000
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	string m_Notes = ""
+	float m_flLerpTime = 0.200000
+	float m_flOutput = 0.000000
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	int m_nOpEndCapState = 0
+	string m_Notes = ""
+	float m_flStartScale = 0.000000
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	float m_flParticlesPerOrbit = 16.000000
+	bool m_bEvenDistribution = true
+	float m_flInitialRadius = 650.000000
+	string m_Notes = ""
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 512.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 512.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_PositionPlaceOnGround C_INIT_PositionPlaceOnGround_0
+{
+	float m_flOffset = 128.000000
+	string m_CollisionGroupName = "DEBRIS"
+	float m_flMaxTraceLength = 2048.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 1.000000
+	float m_fLifetimeMin = 0.100000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 16
+}

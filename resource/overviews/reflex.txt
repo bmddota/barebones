@@ -1,9 +1,0 @@
-reflex
-{
-	material overviews/reflex
-	pos_x -2560
-	pos_y 2560	scale 5.150
-	rotate 0
-	zoom 1.0000
-}
-

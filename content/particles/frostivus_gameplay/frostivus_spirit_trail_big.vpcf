@@ -1,0 +1,220 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 160
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 64.000000
+	int(4) m_ConstantColor = ( 15, 196, 122, 100 )
+	int m_nConstantSequenceNumber = 1
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_Spin_0,
+		&C_OP_LerpEndCapScalar_0,
+		&C_OP_LerpScalar_0,
+		&C_OP_Decay_0,
+		&C_OP_PercentageBetweenCPs_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_SetSingleControlPointPosition_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RemapParticleCountToScalar_0,
+		&C_INIT_RemapParticleCountToScalar_2,
+		&C_INIT_RemapParticleCountToScalar_4,
+		&C_INIT_RemapParticleCountToScalar_6,
+		&C_INIT_RemapParticleCountToScalar_8,
+		&C_INIT_RandomTrailLength_0,
+		&C_INIT_RemapParticleCountToScalar_10
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		&C_OP_ConstrainDistanceToPath_0
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\wisp\\particle_swirl.vtex"
+	float m_flAnimationRate = 0.750000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	float m_flDecayTime = 3.000000
+	string m_Notes = ""
+}
+
+C_OP_Spin C_OP_Spin_0
+{
+	int m_nSpinRateDegrees = -21
+	string m_Notes = ""
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	bool m_bDisableOperator = true
+	string m_Notes = ""
+	int m_nFieldOutput = 7
+	float m_flOutput = 0.000000
+}
+
+C_OP_LerpScalar C_OP_LerpScalar_0
+{
+	float m_flEndTime = 1.500000
+	string m_Notes = ""
+	float m_flStartTime = 0.400000
+	int m_nFieldOutput = 18
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_PercentageBetweenCPs C_OP_PercentageBetweenCPs_0
+{
+	bool m_bScaleInitialRange = true
+	int m_nEndCP = 11
+	float m_flInputMax = 0.400000
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeOutTime = 1.000000
+}
+
+C_OP_SetSingleControlPointPosition C_OP_SetSingleControlPointPosition_0
+{
+	string m_Notes = ""
+	int m_nCP1 = 11
+	float(3) m_vecCP1Pos = ( 0.000000, 0.000000, 1250.000000 )
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	float m_fSpeedMax = 100.000000
+	float m_fSpeedMin = 100.000000
+	float m_fRadiusMax = 30.000000
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMax = 2.000000
+	float m_fLifetimeMin = 2.000000
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_0
+{
+	int m_nFieldOutput = 18
+	int m_nInputMax = 160
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_2
+{
+	float m_flOutputMax = 12.000000
+	int m_nFieldOutput = 4
+	int m_nInputMax = 160
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_4
+{
+	bool m_bScaleInitialRange = true
+	float m_flOutputMax = 0.350000
+	float m_flOutputMin = 1.000000
+	int m_nInputMax = 160
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_6
+{
+	string m_Notes = ""
+	int m_nInputMax = 32
+	int m_nFieldOutput = 16
+	bool m_bActiveRange = true
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_8
+{
+	string m_Notes = ""
+	int m_nInputMin = 30
+	int m_nInputMax = 160
+	int m_nFieldOutput = 16
+	float m_flOutputMin = 1.000000
+	float m_flOutputMax = 0.000000
+	bool m_bActiveRange = true
+}
+
+C_INIT_RandomTrailLength C_INIT_RandomTrailLength_0
+{
+	float m_flMaxLength = 0.400000
+	float m_flMinLength = 0.400000
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_10
+{
+	bool m_bScaleInitialRange = true
+	float m_flOutputMin = 0.800000
+	int m_nFieldOutput = 1
+	int m_nInputMax = 160
+	string m_Notes = ""
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	float m_flEmitRate = 300.000000
+	float m_flEmissionDuration = 0.500000
+	string m_Notes = ""
+	float m_flOpEndFadeInTime = 0.500000
+}
+
+C_OP_ConstrainDistanceToPath C_OP_ConstrainDistanceToPath_0
+{
+	int m_nManualTField = 18
+	string m_Notes = ""
+	float m_flMaxDistance0 = 0.000000
+	float m_flTravelTime = 1.000000
+	CPathParameters m_PathParameters = CPathParameters
+	{
+		float m_flMidPoint = 0.600000
+		float m_flBulge = 650.000000
+		int m_nEndControlPointNumber = 11
+	}
+}

@@ -1,0 +1,185 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 220
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMin = ( 300.000000, 300.000000, -10.000000 )
+	float(3) m_BoundingBoxMax = ( -300.000000, -300.000000, 10.000000 )
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_RemapSpeed_0,
+		&C_OP_SpinUpdate_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_MaxVelocity_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomSequence_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_CreationNoise_0,
+		&C_INIT_RingWave_0,
+		&C_INIT_RemapScalar_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	string m_hTexture = "materials\\particle\\impact\\fleks.vtex"
+	bool m_bFitCycleToLifetime = true
+	float m_flAnimationRate = 1.500000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float m_fDrag = 0.020007
+	float(3) m_Gravity = ( 0.000000, 0.000000, -800.000000 )
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_RemapSpeed C_OP_RemapSpeed_0
+{
+	float m_flOutputMin = 1.000000
+	float m_flInputMax = 10.000000
+	int m_nFieldOutput = 5
+	bool m_bScaleInitialRange = true
+	string m_Notes = ""
+}
+
+C_OP_SpinUpdate C_OP_SpinUpdate_0
+{
+	float m_flOpEndFadeOutTime = 1.000000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flStartTime = 0.750000
+	float m_flEndScale = 0.000000
+	string m_Notes = ""
+}
+
+C_OP_MaxVelocity C_OP_MaxVelocity_0
+{
+	float m_flMaxVelocity = 450.000000
+	bool m_bDisableOperator = true
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 130, 151, 91, 255 )
+	int(4) m_ColorMin = ( 153, 127, 79, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 1.000000
+	float m_fLifetimeMin = 0.250000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMax = 10.000000
+	float m_flRadiusMin = 3.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	int m_nSequenceMax = 63
+	int m_nSequenceMin = 50
+	string m_Notes = ""
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	float m_flNoiseScale = 2.000000
+	float m_flNoiseScaleLoc = 2.000000
+	float(3) m_vecOutputMin = ( -36.000000, -36.000000, 150.000000 )
+	float(3) m_vecOutputMax = ( 36.000000, 36.000000, 600.000000 )
+	bool m_bLocalSpace = true
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_CreationNoise C_INIT_CreationNoise_0
+{
+	float m_flNoiseScale = 3.000000
+	float m_flNoiseScaleLoc = 1.000000
+	int m_nFieldOutput = 5
+	float m_flOutputMin = -15.000000
+	float m_flOutputMax = 15.000000
+	string m_Notes = ""
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	float m_flThickness = 0.500000
+	int m_nOverrideCP = 1
+	float m_flInitialSpeedMax = 1.500000
+	float m_flInitialSpeedMin = 0.250000
+	float m_flInitialRadius = 0.750000
+	string m_Notes = ""
+}
+
+C_INIT_RemapScalar C_INIT_RemapScalar_0
+{
+	bool m_bScaleInitialRange = true
+	float m_flOutputMin = 1.000000
+	float m_flInputMax = 0.250000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 220
+	string m_Notes = ""
+}

@@ -1,0 +1,156 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 16
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMin = ( -510.000000, -510.000000, -10.000000 )
+	float(3) m_BoundingBoxMax = ( 510.000000, 510.000000, 10.000000 )
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 200.000000
+	bool m_bShouldSort = false
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_SetControlPointsToParticle_0,
+		&C_OP_MovementPlaceOnGround_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_NormalAlignToCP_0,
+		&C_INIT_VelocityFromCP_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_final_grid_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_sphere_final_smoke.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_ice_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_main.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_ice.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_initial_explode.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_sphere_final_glow_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_sphere_final_smoke_glow.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_final_grid.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/holdout_ancient_apparition_ice_blast_sphere_final_glow.vpcf"
+		}
+	]
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	int(4) m_ColorScale = ( 11, 75, 219, 255 )
+	float m_flStartFalloff = 0.650000
+	float m_flAlphaScale = 3.000000
+	float m_flRadiusScale = 2.250000
+	string m_Notes = ""
+	string m_hTexture = "materials\\models\\heroes\\mirana\\javelin_color.vtex"
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	int m_nOpEndCapState = 1
+	string m_Notes = ""
+}
+
+C_OP_SetControlPointsToParticle C_OP_SetControlPointsToParticle_0
+{
+	int m_nFirstControlPoint = 3
+	string m_Notes = ""
+}
+
+C_OP_MovementPlaceOnGround C_OP_MovementPlaceOnGround_0
+{
+	int m_nRefCP1 = 3
+	string m_CollisionGroupName = "DEBRIS"
+	float m_flTraceOffset = 256.000000
+	float m_flMaxTraceLength = 1024.000000
+	bool m_bIncludeWater = true
+	float m_flOffset = 120.000000
+	float m_flTolerance = 96.000000
+	int m_nLerpCP = 3
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMin = 0.200000
+	float m_fLifetimeMax = 0.200000
+	string m_Notes = ""
+}
+
+C_INIT_NormalAlignToCP C_INIT_NormalAlignToCP_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_VelocityFromCP C_INIT_VelocityFromCP_0
+{
+	int m_nControlPoint = 1
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 1
+	string m_Notes = ""
+}

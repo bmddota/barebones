@@ -1,0 +1,184 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 128
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_VectorNoise_0,
+		&C_OP_ColorInterpolate_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomAlpha_0,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_RandomSequence_0,
+		&C_INIT_RandomYawFlip_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		&C_OP_AttractToControlPoint_0,
+		&C_OP_AttractToControlPoint_2
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\yellowflare.vtex"
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float m_fDrag = 0.090000
+	float(3) m_Gravity = ( 0.000000, 0.000000, 25.000000 )
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 0.500000
+	float m_flBias = 0.750000
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+}
+
+C_OP_VectorNoise C_OP_VectorNoise_0
+{
+	bool m_bAdditive = true
+	float(3) m_vecOutputMax = ( 15.000000, 15.000000, 15.000000 )
+	float(3) m_vecOutputMin = ( -15.000000, -15.000000, -15.000000 )
+	int m_nFieldOutput = 0
+	float m_fl4NoiseScale = 0.200000
+	string m_Notes = ""
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	int(4) m_ColorFade = ( 12, 50, 38, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 50, 239, 174, 255 )
+	int(4) m_ColorMin = ( 33, 255, 122, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 1.200000
+	float m_fLifetimeMin = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMax = 15.000000
+	float m_flRadiusMin = 8.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	int m_nAlphaMin = 200
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	float m_fRadiusMax = 300.000000
+	float(3) m_vecDistanceBiasAbs = ( 0.000000, 0.000000, 1.000000 )
+	float m_fSpeedMin = 300.000000
+	float m_fSpeedMax = 350.000000
+	int m_nControlPointNumber = 3
+	string m_Notes = ""
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	float(3) m_vecOutputMax = ( 400.000000, 400.000000, 400.000000 )
+	float(3) m_vecOutputMin = ( -400.000000, -400.000000, -400.000000 )
+	float m_flNoiseScaleLoc = 0.250000
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	int m_nSequenceMax = 5
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	float m_flEmissionDuration = 0.400000
+	float m_flEmitRate = 500.000000
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_0
+{
+	float m_fForceAmount = -2000.000000
+	float m_fFalloffPower = 0.000000
+	float m_flOpEndFadeOutTime = 0.200000
+	int m_nControlPointNumber = 3
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_2
+{
+	float m_flOpEndFadeOutTime = 0.200000
+	float m_fFalloffPower = 0.100000
+	float m_fForceAmount = -4000.000000
+	string m_Notes = ""
+}

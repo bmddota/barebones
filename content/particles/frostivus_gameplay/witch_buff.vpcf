@@ -1,0 +1,196 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 24
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int(4) m_ConstantColor = ( 237, 89, 17, 155 )
+	float m_flMaxRecreationTime = -1.000000
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderTrails_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_InterpolateRadius_0,
+		&C_OP_LockToBone_0,
+		&C_OP_RemapCPtoVector_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_Decay_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_FadeOutSimple_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomAlpha_0,
+		&C_INIT_CreateOnModel_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomTrailLength_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RemapCPtoVector_0,
+		&C_INIT_RandomScalar_0,
+		&C_INIT_RandomRotation_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/witch_buff_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/witch_buff_c.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/witch_buff_d.vpcf"
+		}
+	]
+}
+
+C_OP_RenderTrails C_OP_RenderTrails_0
+{
+	float m_flSelfIllumAmount = 4.000000
+	string m_hTexture = "materials\\particle\\beam_jagged_01.vtex"
+	float m_flAnimationRate = 0.600000
+	int m_nVertCropField = 18
+	float m_flLengthFadeInTime = 0.500000
+	string m_Notes = ""
+	bool m_bIgnoreDT = true
+	int(4) m_trailTint = ( 255, 255, 255, 255 )
+	float m_flTrailEndAlpha = 0.000000
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flBias = 0.750000
+	float m_flStartScale = 0.000000
+	string m_Notes = ""
+}
+
+C_OP_LockToBone C_OP_LockToBone_0
+{
+	string m_HitboxSetName = "hands"
+	string m_Notes = ""
+	float m_flPrevPosScale = 0.000000
+}
+
+C_OP_RemapCPtoVector C_OP_RemapCPtoVector_0
+{
+	float(3) m_vOutputMax = ( 1000000.000000, 1000000.000000, 1000000.000000 )
+	float(3) m_vOutputMin = ( -1000000.000000, -1000000.000000, -1000000.000000 )
+	int m_nFieldOutput = 2
+	float(3) m_vInputMax = ( 1000000.000000, 1000000.000000, 1000000.000000 )
+	float(3) m_vInputMin = ( -1000000.000000, -1000000.000000, -1000000.000000 )
+	int m_nCPInput = 1
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	float m_flFadeInTime = 0.500000
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	float m_flFadeOutTime = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMax = 25.000000
+	float m_flRadiusMin = 15.000000
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	string m_Notes = ""
+	int m_nAlphaMin = 15
+	int m_nAlphaMax = 25
+}
+
+C_INIT_CreateOnModel C_INIT_CreateOnModel_0
+{
+	string m_HitboxSetName = "hands"
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.500000
+	float m_fLifetimeMax = 0.750000
+}
+
+C_INIT_RandomTrailLength C_INIT_RandomTrailLength_0
+{
+	string m_Notes = ""
+	float m_flMaxLength = 1.000000
+	float m_flMinLength = 1.000000
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	string m_Notes = ""
+	int(4) m_ColorMax = ( 0, 191, 121, 255 )
+	int(4) m_ColorMin = ( 47, 241, 170, 255 )
+}
+
+C_INIT_RemapCPtoVector C_INIT_RemapCPtoVector_0
+{
+	float(3) m_vOutputMax = ( 1000000.000000, 1000000.000000, 1000000.000000 )
+	float(3) m_vOutputMin = ( -1000000.000000, -1000000.000000, -1000000.000000 )
+	int m_nFieldOutput = 2
+	float(3) m_vInputMax = ( 1000000.000000, 1000000.000000, 1000000.000000 )
+	float(3) m_vInputMin = ( -1000000.000000, -1000000.000000, -1000000.000000 )
+	int m_nCPInput = 1
+	string m_Notes = ""
+}
+
+C_INIT_RandomScalar C_INIT_RandomScalar_0
+{
+	int m_nFieldOutput = 18
+	float m_flMax = 2.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	int m_nFieldOutput = 12
+	string m_Notes = ""
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	string m_Notes = ""
+	float m_flEmitRate = 20.000000
+}

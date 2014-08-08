@@ -1,0 +1,177 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 250
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int m_nConstantSequenceNumber = 4
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderTrails_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_FadeOutSimple_0,
+		&C_OP_RampScalarLinearSimple_0,
+		&C_OP_AlphaDecay_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RingWave_0,
+		&C_INIT_VelocityRandom_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomTrailLength_0,
+		&C_INIT_RemapParticleCountToScalar_0,
+		&C_INIT_RemapParticleCountToScalar_2,
+		&C_INIT_PositionPlaceOnGround_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring_flash.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_line.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_line_light.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring_rope.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring_banner_light.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring_flags.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring_outer_rope.vpcf"
+		}
+	]
+}
+
+C_OP_RenderTrails C_OP_RenderTrails_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\spark_02.vtex"
+	string m_Notes = ""
+	float m_flLengthFadeInTime = 0.200000
+	float m_flMaxLength = 500.000000
+	bool m_bIgnoreDT = true
+	int(4) m_trailTint = ( 255, 255, 255, 255 )
+	float m_flTrailEndAlpha = 0.000000
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeOutTime = 0.500000
+}
+
+C_OP_RampScalarLinearSimple C_OP_RampScalarLinearSimple_0
+{
+	float m_flStartTime = 0.500000
+	float m_Rate = -1.000000
+	int m_nField = 10
+	string m_Notes = ""
+}
+
+C_OP_AlphaDecay C_OP_AlphaDecay_0
+{
+	float m_flMinAlpha = 0.001000
+	string m_Notes = ""
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	string m_Notes = ""
+	float m_flInitialRadius = 625.000000
+	bool m_bEvenDistribution = true
+	float m_flParticlesPerOrbit = 200.000000
+	int m_nControlPointNumber = 7
+}
+
+C_INIT_VelocityRandom C_INIT_VelocityRandom_0
+{
+	string m_Notes = ""
+	float(3) m_LocalCoordinateSystemSpeedMin = ( 0.000000, 0.000000, -7000.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMax = ( 0.000000, 0.000000, -10000.000000 )
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.600000
+	float m_fLifetimeMax = 0.650000
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMin = 75.000000
+	float m_flRadiusMax = 100.000000
+}
+
+C_INIT_RandomTrailLength C_INIT_RandomTrailLength_0
+{
+	string m_Notes = ""
+	float m_flMinLength = 1.500000
+	float m_flMaxLength = 1.500000
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_0
+{
+	string m_Notes = ""
+	int m_nInputMax = 100
+	int m_nFieldOutput = 10
+	bool m_bScaleInitialRange = true
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_2
+{
+	string m_Notes = ""
+	int m_nInputMin = 200
+	int m_nInputMax = 250
+	int m_nFieldOutput = 10
+	float m_flOutputMin = 1.000000
+	float m_flOutputMax = 0.000000
+	bool m_bScaleInitialRange = true
+}
+
+C_INIT_PositionPlaceOnGround C_INIT_PositionPlaceOnGround_0
+{
+	bool m_bIncludeWater = true
+	float m_flOffset = -10.000000
+	string m_Notes = ""
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	string m_Notes = ""
+	float m_flEmitRate = 1500.000000
+	float m_flEmissionDuration = 0.250000
+}

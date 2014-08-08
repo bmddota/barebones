@@ -1,0 +1,137 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 10
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 296.000000
+	int m_nConstantSequenceNumber = 5
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_Decay_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_OscillateVector_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_PositionLock_0,
+		&C_OP_InterpolateRadius_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomRotation_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	bool m_bDisableZBuffering = true
+	string m_hTexture = "materials\\particle\\particle_flares\\aircraft_blue2.vtex"
+	string m_Notes = ""
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	float m_flStartFalloff = 0.650000
+	int(4) m_ColorScale = ( 97, 136, 224, 255 )
+	string m_Notes = ""
+	string m_hTexture = "materials\\particle\\particle_flares\\aircraft_blue2.vtex"
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	float m_flFadeInTime = 0.100000
+	string m_Notes = ""
+}
+
+C_OP_OscillateVector C_OP_OscillateVector_0
+{
+	float(3) m_RateMin = ( -3.000000, -3.000000, -3.000000 )
+	float(3) m_RateMax = ( 3.000000, 3.000000, 3.000000 )
+	float(3) m_FrequencyMax = ( 3.000000, 3.000000, 3.000000 )
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	float m_flFadeOutTime = 0.200000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 50.000000 )
+	float m_fDrag = 0.050000
+	string m_Notes = ""
+}
+
+C_OP_PositionLock C_OP_PositionLock_0
+{
+	int m_nControlPointNumber = 3
+	float m_flStartTime_min = 0.000000
+	float m_flStartTime_max = 0.000000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 2.000000
+	float m_flBias = 0.750000
+	float m_flStartScale = 0.250000
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMin = 0.100000
+	float m_fLifetimeMax = 0.100000
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	int m_nControlPointNumber = 3
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 2
+	string m_Notes = ""
+}

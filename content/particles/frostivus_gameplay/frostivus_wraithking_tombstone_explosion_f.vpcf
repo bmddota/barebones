@@ -1,0 +1,144 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 4
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int(4) m_ConstantColor = ( 40, 177, 108, 245 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_Decay_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_ColorInterpolate_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_RandomSequence_0,
+		&C_INIT_RandomRotationSpeed_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	symbol m_nSequenceCombineMode = SEQUENCE_COMBINE_MODE_ALPHA_FROM0_RGB_FROM_1
+	int m_bAdditive = 1
+	float m_flZoomRate1 = 4.000000
+	bool m_bMaxLuminanceBlendingSequence0 = false
+	bool m_bMaxLuminanceBlendingSequence1 = true
+	string m_hTexture = "materials\\particle\\smoke3\\smoke3b.vtex"
+	string m_Notes = ""
+	float m_flAnimationRate = 1.250000
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float(3) m_Gravity = ( 0.000000, 0.000000, 500.000000 )
+	float m_fDrag = 0.100000
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+	float m_flBias = 0.680000
+	float m_flEndScale = 5.000000
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeOutTime = 0.800000
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	string m_Notes = ""
+	float m_flFadeEndTime = 0.750000
+	float m_flFadeStartTime = 0.250000
+	int(4) m_ColorFade = ( 42, 105, 73, 255 )
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 1.000000
+	float m_fLifetimeMax = 1.500000
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	float(3) m_LocalCoordinateSystemSpeedMax = ( -40.000000, 0.000000, 0.000000 )
+	float m_fSpeedMax = 400.000000
+	int m_nControlPointNumber = 1
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMax = 40.000000
+	float m_flRadiusMin = 30.000000
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	string m_Notes = ""
+	int m_nSequenceMax = 8
+}
+
+C_INIT_RandomRotationSpeed C_INIT_RandomRotationSpeed_0
+{
+	string m_Notes = ""
+	float m_flDegreesMax = 50.000000
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 4
+}

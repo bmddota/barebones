@@ -1,0 +1,124 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 32
+	int m_nInitialParticles = 16
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_FadeAndKill_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_OscillateVector_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomColor_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		&C_OP_AttractToControlPoint_0
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	bool m_bMod2X = true
+	bool m_bDisableZBuffering = true
+	string m_hTexture = "materials\\particle\\particle_modulate_02.vtex"
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float m_fDrag = 0.050000
+}
+
+C_OP_FadeAndKill C_OP_FadeAndKill_0
+{
+	string m_Notes = ""
+	float m_flEndFadeInTime = 0.125000
+	float m_flStartFadeOutTime = 0.750000
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+	float m_flEndScale = 0.000000
+	float m_flStartScale = 2.000000
+}
+
+C_OP_OscillateVector C_OP_OscillateVector_0
+{
+	string m_Notes = ""
+	float(3) m_RateMin = ( -3.000000, -3.000000, -3.000000 )
+	float(3) m_RateMax = ( 3.000000, 3.000000, 3.000000 )
+	float(3) m_FrequencyMax = ( 3.000000, 3.000000, 3.000000 )
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	float m_fSpeedMin = 24.000000
+	float m_fSpeedMax = 96.000000
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.250000
+	float m_fLifetimeMax = 0.500000
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMax = 8.000000
+	float m_flRadiusMin = 4.000000
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	string m_Notes = ""
+	int(4) m_ColorMax = ( 0, 130, 173, 255 )
+	int(4) m_ColorMin = ( 0, 50, 67, 255 )
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 32
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 1
+	float m_fFalloffPower = 0.000000
+	float m_fForceAmount = 1000.000000
+	float m_flOpEndFadeOutTime = 0.250000
+}

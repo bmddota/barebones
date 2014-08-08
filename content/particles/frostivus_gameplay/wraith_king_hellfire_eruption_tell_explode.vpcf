@@ -1,0 +1,138 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 128
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantLifespan = 0.200000
+	int(4) m_ConstantColor = ( 68, 199, 114, 25 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderRopes_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_InterpolateRadius_0,
+		&C_OP_Decay_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_FadeOutSimple_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RingWave_0,
+		&C_INIT_PositionOffset_0,
+		&C_INIT_RemapParticleCountToScalar_0,
+		&C_INIT_RemapParticleCountToScalar_2
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/wraith_king_hellfire_eruption_tell_explode_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_explode.vpcf"
+		}
+	]
+}
+
+C_OP_RenderRopes C_OP_RenderRopes_0
+{
+	float m_flSelfIllumAmount = 14.000000
+	string m_hTexture = "materials\\particle\\beam_jagged_01.vtex"
+	string m_Notes = ""
+	float m_flTextureVWorldSize = 2000.000122
+	int m_nMaxTesselation = 3
+	int m_nMinTesselation = 3
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 4.000000
+	float m_flStartScale = 0.000000
+	string m_Notes = ""
+	int m_nOpEndCapState = 0
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float m_fDrag = 0.250000
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeOutTime = 1.000000
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMax = 128.000000
+	float m_flRadiusMin = 120.000000
+	string m_Notes = ""
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	float m_flInitialSpeedMax = 7550.000000
+	float m_flInitialSpeedMin = 7550.000000
+	string m_Notes = ""
+	float m_flInitialRadius = 50.000000
+	bool m_bEvenDistribution = true
+	float m_flParticlesPerOrbit = 46.000000
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	string m_Notes = ""
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 64.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 64.000000 )
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_0
+{
+	bool m_bActiveRange = true
+	int m_nFieldOutput = 16
+	int m_nInputMax = 1
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_2
+{
+	bool m_bInvert = true
+	bool m_bActiveRange = true
+	float m_flOutputMax = 0.000000
+	float m_flOutputMin = 1.000000
+	int m_nFieldOutput = 16
+	int m_nInputMax = 1
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 48
+	string m_Notes = ""
+}

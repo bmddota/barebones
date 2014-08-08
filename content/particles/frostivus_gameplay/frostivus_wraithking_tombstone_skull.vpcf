@@ -1,0 +1,120 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 1
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_skull_lv.vpcf"
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 2.000000
+	float m_flConstantLifespan = 0.250000
+	int(4) m_ConstantColor = ( 87, 187, 143, 255 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderModels_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Orient2DRelToCP_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_SetToCP_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomSecondSequence_0,
+		&C_INIT_RandomRotation_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderModels C_OP_RenderModels_0
+{
+	string m_EconSlotName = ""
+	string m_Notes = ""
+	bool m_bOrientZ = true
+	string m_ActivityName = ""
+	string m_hOverrideMaterial = ""
+	float m_flAnimationRate = 0.000000
+	int m_nManualFrameField = 18
+	ModelReference_t[] m_ModelList = 
+	[
+		ModelReference_t
+		{
+			string m_model = "models/heroes/necrolyte/necrolyte_skull.vmdl"
+		}
+	]
+	bool m_bAnimated = true
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_Orient2DRelToCP C_OP_Orient2DRelToCP_0
+{
+	string m_Notes = ""
+	int m_nFieldOutput = 12
+	float m_flRotOffset = 270.000000
+	int m_nCP = 1
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_SetToCP C_OP_SetToCP_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 3
+	float(3) m_vecOffset = ( -2.000000, 0.000000, -8.000000 )
+	bool m_bOffsetLocal = true
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 3
+}
+
+C_INIT_RandomSecondSequence C_INIT_RandomSecondSequence_0
+{
+	string m_Notes = ""
+	int m_nSequenceMin = 2
+	int m_nSequenceMax = 2
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+	float m_flDegrees = -10.000000
+	float m_flDegreesMin = -10.000000
+	float m_flDegreesMax = -10.000000
+	int m_nFieldOutput = 20
+	bool m_bRandomlyFlipDirection = false
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 1
+}

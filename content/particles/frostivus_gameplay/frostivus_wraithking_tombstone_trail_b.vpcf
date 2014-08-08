@@ -1,0 +1,218 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 256
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 15.000000
+	int(4) m_ConstantColor = ( 255, 255, 255, 60 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_Noise_0,
+		&C_OP_Noise_2,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_PositionLock_0,
+		&C_OP_ColorInterpolate_0,
+		&C_OP_FadeOutSimple_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomColor_2,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_CreationNoise_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomYaw_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_RemapParticleCountToScalar_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	float m_flSelfIllumAmount = 1.000000
+	float m_flStartFadeSize = 0.575000
+	float m_flEndFadeSize = 0.650000
+	float m_flMaxSize = 0.750000
+	string m_hTexture = "materials\\particle\\water_splash\\water_splash.vtex"
+	string m_Notes = ""
+	float m_flAnimationRate = 1.500000
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float(3) m_Gravity = ( 0.000000, 0.000000, -100.000000 )
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeInTime = 0.100000
+}
+
+C_OP_Noise C_OP_Noise_0
+{
+	string m_Notes = ""
+	bool m_bAdditive = true
+	float m_flOutputMax = 130.000000
+	int m_nFieldOutput = 4
+	float m_fl4NoiseScale = 0.001310
+}
+
+C_OP_Noise C_OP_Noise_2
+{
+	string m_Notes = ""
+	float m_fl4NoiseScale = 0.001100
+	int m_nFieldOutput = 12
+	float m_flOutputMax = 90.000000
+	bool m_bAdditive = true
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+	float m_flEndTime = 0.140000
+	float m_flStartScale = 0.250000
+	float m_flBias = 0.750000
+	float m_flEndScale = 2.000000
+}
+
+C_OP_PositionLock C_OP_PositionLock_0
+{
+	string m_Notes = ""
+	float m_flEndTime_max = 0.150000
+	float m_flEndTime_min = 0.130000
+	float m_flStartTime_max = 0.000000
+	float m_flStartTime_min = 0.000000
+	int m_nControlPointNumber = 3
+	float m_flJumpThreshold = 1512.000000
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	int m_nFieldOutput = 22
+	float m_flFadeStartTime = 0.500000
+	int(4) m_ColorFade = ( 0, 0, 0, 255 )
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	int m_nFieldOutput = 23
+	float m_flFadeOutTime = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.450000
+	float m_fLifetimeMax = 0.750000
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	string m_Notes = ""
+	int(4) m_ColorMin = ( 222, 255, 244, 255 )
+	int(4) m_ColorMax = ( 0, 178, 134, 255 )
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_2
+{
+	string m_Notes = ""
+	bool m_bRunForParentApplyKillList = false
+	int(4) m_ColorMin = ( 4, 28, 18, 255 )
+	int(4) m_ColorMax = ( 6, 47, 40, 255 )
+	int m_nFieldOutput = 22
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	float(3) m_LocalCoordinateSystemSpeedMax = ( 40.000000, 0.000000, 0.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMin = ( 50.000000, 0.000000, 0.000000 )
+	float m_fSpeedMax = 64.000000
+	float m_fRadiusMax = 1.000000
+	int m_nControlPointNumber = 3
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	string m_Notes = ""
+	bool m_bLocalSpace = true
+	float(3) m_vecOutputMin = ( -24.000000, -24.000000, -24.000000 )
+	float(3) m_vecOutputMax = ( 24.000000, 24.000000, 24.000000 )
+}
+
+C_INIT_CreationNoise C_INIT_CreationNoise_0
+{
+	string m_Notes = ""
+	float m_flNoiseScale = 2.000000
+	float m_flOutputMin = 14.000000
+	float m_flOutputMax = 18.000000
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomYaw C_INIT_RandomYaw_0
+{
+	string m_Notes = ""
+	float m_flDegreesMin = -4.000000
+	float m_flDegreesMax = 4.000000
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_0
+{
+	string m_Notes = ""
+	bool m_bActiveRange = true
+	bool m_bScaleInitialRange = true
+	int m_nInputMax = 4
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	string m_Notes = ""
+	float m_flEmitRate = 328.000000
+}

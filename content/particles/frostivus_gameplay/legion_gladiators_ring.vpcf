@@ -1,0 +1,64 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_SetSingleControlPointPosition_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_ring.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			bool m_bEndCap = true
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_start_endcap.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_ring_aura.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_rays.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/legion_gladiators_ring_dust.vpcf"
+		}
+	]
+}
+
+C_OP_SetSingleControlPointPosition C_OP_SetSingleControlPointPosition_0
+{
+	string m_Notes = ""
+	int m_nCP1 = 7
+	float(3) m_vecCP1Pos = ( 75.000000, 0.000000, 0.000000 )
+}

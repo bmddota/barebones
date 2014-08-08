@@ -1,0 +1,163 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 16
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 110.000000
+	int(4) m_ConstantColor = ( 50, 239, 134, 255 )
+	int m_nConstantSequenceNumber = 4
+	bool m_bShouldSort = false
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderTrails_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_SetChildControlPoints_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_VelocityFromCP_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_skull.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_i.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_f.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_e.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			bool m_bEndCap = true
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_explosion.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_h.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_g.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_sphere_glow.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_launch.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_d.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_trail_detail.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/wraith_king_spirits_2.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_skeletonking_hellfireblast_sphere_glow_b.vpcf"
+		}
+	]
+}
+
+C_OP_RenderTrails C_OP_RenderTrails_0
+{
+	float m_flSelfIllumAmount = 2.000000
+	string m_hTexture = "materials\\particle\\sparks\\sparks.vtex"
+	float m_flMaxLength = 100.000000
+	float m_flLengthFadeInTime = 0.100000
+	string m_Notes = ""
+	float m_flMinLength = 64.000000
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	float m_flRadiusScale = 3.000000
+	float m_flAlphaScale = 6.000000
+	float m_flStartFalloff = 0.100000
+	int(4) m_ColorScale = ( 50, 239, 174, 255 )
+	string m_Notes = ""
+	string m_hTexture = "materials\\particle\\sparks\\sparks.vtex"
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	int m_nOpEndCapState = 1
+	string m_Notes = ""
+}
+
+C_OP_SetChildControlPoints C_OP_SetChildControlPoints_0
+{
+	int m_nFirstControlPoint = 3
+	bool m_bSetOrientation = true
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_VelocityFromCP C_INIT_VelocityFromCP_0
+{
+	int m_nControlPoint = 1
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 1
+	string m_Notes = ""
+}

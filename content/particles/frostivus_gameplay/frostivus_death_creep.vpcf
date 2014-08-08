@@ -1,0 +1,162 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 32
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int(4) m_ConstantColor = ( 76, 203, 121, 200 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderTrails_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_LockToBone_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_Decay_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_LerpScalar_0,
+		&C_OP_ColorInterpolate_0,
+		&C_OP_BasicMovement_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_CreateOnModel_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_RandomTrailLength_0,
+		&C_INIT_RandomScalar_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderTrails C_OP_RenderTrails_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\beam_smoke_03.vtex"
+	int m_nVertCropField = 18
+	string m_Notes = ""
+	float m_flLengthFadeInTime = 1.200000
+	int(4) m_trailTint = ( 255, 255, 255, 255 )
+	float m_flTrailEndAlpha = 0.000000
+}
+
+C_OP_LockToBone C_OP_LockToBone_0
+{
+	float m_flLifeTimeFadeEnd = 0.125000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+	float m_flBias = 0.750000
+	float m_flStartScale = 2.000000
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeOutTime = 1.000000
+}
+
+C_OP_LerpScalar C_OP_LerpScalar_0
+{
+	bool m_bDisableOperator = true
+	float m_flStartTime = 0.500000
+	string m_Notes = ""
+	int m_nFieldOutput = 10
+	float m_flOutput = 0.000000
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	int(4) m_ColorFade = ( 130, 203, 76, 255 )
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 500.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.250000
+	float m_fLifetimeMax = 0.750000
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	int m_nFieldOutput = 20
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMin = 18.000000
+	float m_flRadiusMax = 38.000000
+}
+
+C_INIT_CreateOnModel C_INIT_CreateOnModel_0
+{
+	float m_flHitBoxScale = 0.700000
+	string m_Notes = ""
+	float(3) m_vecDirectionBias = ( 0.000000, 0.000000, 1.000000 )
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	string m_Notes = ""
+	float(3) m_vecOutputMax = ( 0.000000, 0.000000, 300.000000 )
+	float(3) m_vecOutputMin = ( 0.000000, 0.000000, 300.000000 )
+}
+
+C_INIT_RandomTrailLength C_INIT_RandomTrailLength_0
+{
+	string m_Notes = ""
+	float m_flMinLength = 0.500000
+	float m_flMaxLength = 0.700000
+}
+
+C_INIT_RandomScalar C_INIT_RandomScalar_0
+{
+	int m_nFieldOutput = 18
+	float m_flMax = 2.000000
+	float m_flMin = 0.250000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 32
+}

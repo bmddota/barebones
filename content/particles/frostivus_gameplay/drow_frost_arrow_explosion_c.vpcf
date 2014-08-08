@@ -1,0 +1,169 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 256
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_Decay_0,
+		&C_OP_OscillateVector_0,
+		&C_OP_PositionLock_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomRadius_0,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_RandomColor_2,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomSequence_0,
+		&C_INIT_RandomYaw_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	float m_flMinSize = 0.000750
+	float m_flMaxSize = 0.002500
+	string m_hTexture = "materials\\particle\\impact\\fleks3.vtex"
+	string m_Notes = ""
+	float m_flAnimationRate2 = 0.100000
+	float m_flAnimationRate = 1.000000
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float m_fDrag = 0.250000
+	float(3) m_Gravity = ( 0.000000, 0.000000, -800.000000 )
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+	float m_flBias = 0.600000
+	float m_flEndScale = 0.000000
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_OscillateVector C_OP_OscillateVector_0
+{
+	string m_Notes = ""
+	float(3) m_FrequencyMax = ( 3.000000, 3.000000, 3.000000 )
+	float(3) m_FrequencyMin = ( 0.500000, 0.500000, 0.500000 )
+	float(3) m_RateMax = ( 4.000000, 4.000000, 4.000000 )
+	float(3) m_RateMin = ( -4.000000, -4.000000, -4.000000 )
+}
+
+C_OP_PositionLock C_OP_PositionLock_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 3
+	float m_flStartTime_min = 0.000000
+	float m_flStartTime_max = 0.000000
+	float m_flEndTime_min = 0.500000
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeRandExponent = 15.000000
+	float m_fLifetimeMax = 1.000000
+	float m_fLifetimeMin = 0.100000
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	string m_Notes = ""
+	float m_flRadiusMax = 4.000000
+	float m_flRadiusMin = 0.250000
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 3
+	float m_fRadiusMax = 4.000000
+	float m_fSpeedMin = 500.000000
+	float m_fSpeedMax = 900.000000
+	float(3) m_LocalCoordinateSystemSpeedMin = ( 320.000000, 0.000000, 0.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMax = ( 430.000000, 0.000000, 0.000000 )
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	string m_Notes = ""
+	int(4) m_ColorMin = ( 105, 165, 255, 255 )
+	int(4) m_ColorMax = ( 209, 238, 255, 255 )
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	string m_Notes = ""
+	float m_flNoiseScale = 3.000000
+	float(3) m_vecOutputMax = ( 632.000000, 632.000000, 632.000000 )
+	float(3) m_vecOutputMin = ( -632.000000, -632.000000, -632.000000 )
+	float m_flNoiseScaleLoc = 0.100000
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_2
+{
+	string m_Notes = ""
+	int m_nFieldOutput = 22
+	int(4) m_ColorMax = ( 150, 236, 255, 255 )
+	int(4) m_ColorMin = ( 50, 84, 183, 255 )
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	string m_Notes = ""
+	int m_nSequenceMax = 63
+}
+
+C_INIT_RandomYaw C_INIT_RandomYaw_0
+{
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+}

@@ -1,0 +1,334 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 16
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMax = ( 64.000000, 64.000000, 64.000000 )
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 15.000000
+	int(4) m_ConstantColor = ( 255, 255, 255, 200 )
+	bool m_bShouldSort = false
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_Noise_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_RampScalarLinearSimple_0,
+		&C_OP_RampScalarLinearSimple_2,
+		&C_OP_ColorInterpolate_0,
+		&C_OP_LockToBone_0,
+		&C_OP_SetRandomControlPointPosition_0,
+		&C_OP_SetRandomControlPointPosition_2,
+		&C_OP_SetParentControlPointsToChildCP_0,
+		&C_OP_LerpEndCapScalar_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_InitialVelocityNoise_0,
+		&C_INIT_CreationNoise_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomYaw_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_CreateOnModel_0,
+		&C_INIT_PositionOffset_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirits.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_spirits.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_c.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_d.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_e.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_a.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_c.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_f.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_g.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_f.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_g.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_h.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			bool m_bEndCap = true
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_endcap.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_i.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_j.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_throne_wraith_king_ambient_beams_h.vpcf"
+		}
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	float m_flStartFadeSize = 0.200000
+	float m_flEndFadeSize = 0.250000
+	float m_flMaxSize = 0.250000
+	string m_hTexture = "materials\\particle\\smoke\\maya_wispy\\wispy_small.vtex"
+	float m_flAnimationRate = 0.500000
+	string m_Notes = ""
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	bool m_bDisableOperator = true
+	string m_Notes = ""
+	float m_flRadiusScale = 22.000000
+	float m_flStartFalloff = 0.100000
+	int(4) m_ColorScale = ( 122, 233, 164, 255 )
+	float m_flAlphaScale = 18.000000
+	string m_hTexture = "materials\\particle\\smoke\\maya_wispy\\wispy_small.vtex"
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 10.000000 )
+	string m_Notes = ""
+	float m_fDrag = 0.100000
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	float m_flFadeOutTime = 0.400000
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	float m_flFadeInTime = 0.100000
+	string m_Notes = ""
+}
+
+C_OP_Noise C_OP_Noise_0
+{
+	float m_fl4NoiseScale = 0.001310
+	int m_nFieldOutput = 4
+	float m_flOutputMax = 5.000000
+	bool m_bAdditive = true
+	string m_Notes = ""
+	float m_flOutputMin = -5.000000
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 1.250000
+	float m_flBias = 0.750000
+	string m_Notes = ""
+}
+
+C_OP_RampScalarLinearSimple C_OP_RampScalarLinearSimple_0
+{
+	int m_nOpEndCapState = 1
+	float m_Rate = 150.000000
+	float m_flEndTime = 9999.000000
+	string m_Notes = ""
+}
+
+C_OP_RampScalarLinearSimple C_OP_RampScalarLinearSimple_2
+{
+	int m_nOpEndCapState = 1
+	int m_nField = 16
+	float m_Rate = -2.000000
+	float m_flEndTime = 99999.000000
+	string m_Notes = ""
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	float m_flFadeStartTime = 0.200000
+	int(4) m_ColorFade = ( 0, 76, 41, 255 )
+	string m_Notes = ""
+}
+
+C_OP_LockToBone C_OP_LockToBone_0
+{
+	string m_HitboxSetName = "head"
+	string m_Notes = ""
+	int m_nOpEndCapState = 0
+}
+
+C_OP_SetRandomControlPointPosition C_OP_SetRandomControlPointPosition_0
+{
+	float(3) m_vecCPMinPos = ( 0.200000, 0.200000, 0.200000 )
+	string m_Notes = ""
+	int m_nCP1 = 6
+	float(3) m_vecCPMaxPos = ( 2.000000, 2.000000, 2.000000 )
+	bool m_bUseWorldLocation = true
+}
+
+C_OP_SetRandomControlPointPosition C_OP_SetRandomControlPointPosition_2
+{
+	float(3) m_vecCPMinPos = ( 0.200000, 0.200000, 0.200000 )
+	string m_Notes = ""
+	int m_nCP1 = 7
+	float(3) m_vecCPMaxPos = ( 2.000000, 2.000000, 2.000000 )
+	bool m_bUseWorldLocation = true
+}
+
+C_OP_SetParentControlPointsToChildCP C_OP_SetParentControlPointsToChildCP_0
+{
+	string m_Notes = ""
+	int m_nChildControlPoint = 6
+	int m_nNumControlPoints = 2
+	int m_nFirstSourcePoint = 6
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	string m_Notes = ""
+	float m_flLerpTime = 0.200000
+	int m_nFieldOutput = 16
+	float m_flOutput = 0.000000
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 2.000000
+	float m_fLifetimeMin = 1.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 3, 142, 85, 255 )
+	int(4) m_ColorMin = ( 232, 251, 244, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	float(3) m_vecOutputMax = ( 64.000000, 64.000000, 64.000000 )
+	float(3) m_vecOutputMin = ( -64.000000, -64.000000, -64.000000 )
+	bool m_bLocalSpace = true
+	string m_Notes = ""
+}
+
+C_INIT_CreationNoise C_INIT_CreationNoise_0
+{
+	float m_flOutputMax = 16.000000
+	float m_flOutputMin = 11.000000
+	float m_flNoiseScale = 2.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomYaw C_INIT_RandomYaw_0
+{
+	float m_flDegreesMax = 4.000000
+	float m_flDegreesMin = -4.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_CreateOnModel C_INIT_CreateOnModel_0
+{
+	string m_HitboxSetName = "head"
+	float m_flHitBoxScale = 0.800000
+	string m_Notes = ""
+	bool m_bLocalCoords = true
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	string m_Notes = ""
+	bool m_bDisableOperator = true
+	float(3) m_OffsetMin = ( 8.000000, 0.000000, 0.000000 )
+	float(3) m_OffsetMax = ( 12.000000, 0.000000, 0.000000 )
+	bool m_bLocalCoords = true
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	float m_flEmitRate = 3.000000
+	string m_Notes = ""
+}

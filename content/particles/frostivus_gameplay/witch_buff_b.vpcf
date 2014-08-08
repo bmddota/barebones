@@ -1,0 +1,135 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 200
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int(4) m_ConstantColor = ( 237, 89, 17, 55 )
+	float m_flMaxRecreationTime = -1.000000
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_FadeAndKill_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_LockToBone_0,
+		&C_OP_EndCapTimedDecay_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomAlpha_0,
+		&C_INIT_CreateOnModel_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomSequence_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_ContinuousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\smoke\\steam\\steam.vtex"
+	float m_flAnimationRate = 2.000000
+	string m_Notes = ""
+}
+
+C_OP_FadeAndKill C_OP_FadeAndKill_0
+{
+	float m_flStartFadeOutTime = 0.600000
+	float m_flEndFadeInTime = 0.200000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	string m_Notes = ""
+}
+
+C_OP_LockToBone C_OP_LockToBone_0
+{
+	float m_flJumpThreshold = 1.000000
+	string m_HitboxSetName = "hands"
+	int m_nControlPointNumber = 1
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMin = 20.000000
+	float m_flRadiusMax = 40.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	int m_nAlphaMax = 155
+	int m_nAlphaMin = 55
+	string m_Notes = ""
+}
+
+C_INIT_CreateOnModel C_INIT_CreateOnModel_0
+{
+	string m_Notes = ""
+	int m_nControlPointNumber = 1
+	float m_flHitBoxScale = 0.500000
+	string m_HitboxSetName = "hands"
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 0.750000
+	float m_fLifetimeMin = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMin = ( 47, 241, 170, 255 )
+	int(4) m_ColorMax = ( 0, 191, 121, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	int m_nSequenceMax = 1
+	string m_Notes = ""
+}
+
+C_OP_ContinuousEmitter C_OP_ContinuousEmitter_0
+{
+	float m_flEmitRate = 20.000000
+	string m_Notes = ""
+}

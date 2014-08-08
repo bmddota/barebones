@@ -1,0 +1,361 @@
+	// Dota Units File
+"DOTAUnits"
+{
+	"Version"	"1"
+  
+  "npc_dummy_unit"
+	{
+		// General
+		//
+		"BaseClass"					"npc_dota_base_additive"	// Class of entity of link to.
+		"Model"						"models/development/invisiblebox.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"0"
+		"UnitLabel"					"healing_ward"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"reflex_dummy_unit"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"				"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"			// Type of attack - melee, ranged, etc.
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"			// Speed of attack.
+		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"500"		// Range within a target can be attacked.
+		"ProjectileModel"			"" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"450"		// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+		"FollowRange"				"250"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"			// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+		// Bots
+		//----------------------------------------------------------------
+		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
+	}	
+
+  
+  //------------------------------------------------------------------------------------
+  //- This unit can be used to precache different models/particles/sounds              -
+  //- that are needed every game.  Uncomment any model/particle/sound you need to load -
+  //------------------------------------------------------------------------------------
+	"npc_precache_everything"
+	{
+		"BaseClass"					"npc_dota_creep"
+
+		"precache"
+		{
+			//"model"			"models/heroes/juggernaut/jugg_healing_ward.mdl"
+			//"model"			"models/heroes/tiny_01/tiny_01.mdl"
+			//"model"			"models/heroes/tiny_02/tiny_02.mdl"
+			//"model"			"models/heroes/tiny_03/tiny_03.mdl"
+			//"model"			"models/heroes/tiny_04/tiny_04.mdl"
+			//"model"			"models/heroes/tiny_01/tiny_01_tree.mdl"
+			//"model"			"models/props_gameplay/frog.mdl"
+			//"model"			"models/props_gameplay/chicken.mdl"
+			//"model"			"models/heroes/shadowshaman/shadowshaman_totem.mdl"
+			//"model"			"models/heroes/witchdoctor/witchdoctor_ward.mdl"
+			//"model"			"models/heroes/enigma/eidelon.mdl"
+			//"model"			"models/heroes/enigma/eidelon.mdl"
+			//"model"			"models/heroes/beastmaster/beastmaster_bird.mdl"
+			//"model"			"models/heroes/beastmaster/beastmaster_beast.mdl"
+			//"model"			"models/heroes/venomancer/venomancer_ward.mdl"
+			//"model"			"models/heroes/death_prophet/death_prophet_ghost.mdl"
+			//"model"			"models/heroes/pugna/pugna_ward.mdl"
+			//"model"			"models/heroes/witchdoctor/witchdoctor_ward.mdl"
+			//"model"			"models/heroes/dragon_knight/dragon_knight_dragon.mdl"
+			//"model"			"models/heroes/rattletrap/rattletrap_cog.mdl"
+			//"model"			"models/heroes/furion/treant.mdl"
+			//"model"			"models/heroes/nightstalker/nightstalker_night.mdl"
+			//"model"			"models/heroes/nightstalker/nightstalker.mdl"
+			//"model"			"models/heroes/broodmother/spiderling.mdl"
+			//"model"			"models/heroes/weaver/weaver_bug.mdl"
+			//"model"			"models/heroes/gyro/gyro_missile.mdl"
+			//"model"			"models/heroes/invoker/forge_spirit.mdl"
+			//"model"			"models/heroes/lycan/lycan_wolf.mdl"
+			//"model"			"models/heroes/lone_druid/true_form.mdl"
+			//"model"			"models/heroes/undying/undying_flesh_golem.mdl"
+			"model"			"models/development/invisiblebox.mdl"
+
+			//"particlefile"				"particles/units/heroes/hero_antimage.pcf"
+			//"particlefile"				"particles/units/heroes/hero_axe.pcf"
+			//"particlefile"				"particles/units/heroes/hero_bane.pcf"
+			//"particlefile"				"particles/units/heroes/hero_bloodseeker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_crystalmaiden.pcf"
+			//"particlefile"				"particles/units/heroes/hero_drow.pcf"
+			//"particlefile"				"particles/units/heroes/hero_earthshaker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_juggernaut.pcf"
+			//"particlefile"				"particles/units/heroes/hero_mirana.pcf"
+			//"particlefile"				"particles/units/heroes/hero_nevermore.pcf"
+			//"particlefile"				"particles/units/heroes/hero_morphling.pcf"
+			//"particlefile"				"particles/units/heroes/hero_phantom_lancer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_puck.pcf"
+			//"particlefile"				"particles/units/heroes/hero_pudge.pcf"
+			//"particlefile"				"particles/units/heroes/hero_razor.pcf"
+			//"particlefile"				"particles/units/heroes/hero_sandking.pcf"
+			//"particlefile"				"particles/units/heroes/hero_stormspirit.pcf"
+			//"particlefile"				"particles/units/heroes/hero_sven.pcf"
+			//"particlefile"				"particles/units/heroes/hero_tiny.pcf"
+			//"particlefile"				"particles/units/heroes/hero_vengeful.pcf"
+			//"particlefile"				"particles/units/heroes/hero_zuus.pcf"
+			//"particlefile"				"particles/units/heroes/hero_kunkka.pcf"
+			//"particlefile"				"particles/units/heroes/hero_lina.pcf"
+			//"particlefile"				"particles/units/heroes/hero_lich.pcf"
+			//"particlefile"				"particles/units/heroes/hero_lion.pcf"
+			//"particlefile"				"particles/units/heroes/hero_shadowshaman.pcf"
+			//"particlefile"				"particles/units/heroes/hero_slardar.pcf"
+			//"particlefile"				"particles/units/heroes/hero_tidehunter.pcf"
+			//"particlefile"				"particles/units/heroes/hero_witchdoctor.pcf"
+			//"particlefile"				"particles/units/heroes/hero_riki.pcf"
+			//"particlefile"				"particles/units/heroes/hero_enigma.pcf"
+			//"particlefile"				"particles/units/heroes/hero_tinker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_sniper.pcf"
+			//"particlefile"				"particles/units/heroes/hero_necrolyte.pcf"
+			//"particlefile"				"particles/units/heroes/hero_warlock.pcf"
+			//"particlefile"				"particles/units/heroes/hero_queenofpain.pcf"
+			//"particlefile"				"particles/units/heroes/hero_venomancer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_faceless_void.pcf"
+			//"particlefile"				"particles/units/heroes/hero_skeletonking.pcf"
+			//"particlefile"				"particles/units/heroes/hero_death_prophet.pcf"
+			//"particlefile"				"particles/units/heroes/hero_phantom_assassin.pcf"
+			//"particlefile"				"particles/units/heroes/hero_pugna.pcf"
+			//"particlefile"				"particles/units/heroes/hero_templar_assassin.pcf"
+			//"particlefile"				"particles/units/heroes/hero_viper.pcf"
+			//"particlefile"				"particles/units/heroes/hero_luna.pcf"
+			//"particlefile"				"particles/units/heroes/hero_dragon_knight.pcf"
+			//"particlefile"				"particles/units/heroes/hero_dazzle.pcf"
+			//"particlefile"				"particles/units/heroes/hero_rattletrap.pcf"
+			//"particlefile"				"particles/units/heroes/hero_leshrac.pcf"
+			//"particlefile"				"particles/units/heroes/hero_furion.pcf"
+			//"particlefile"				"particles/units/heroes/hero_life_stealer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_dark_seer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_clinkz.pcf"
+			//"particlefile"				"particles/units/heroes/hero_omniknight.pcf"
+			//"particlefile"				"particles/units/heroes/hero_enchantress.pcf"
+			//"particlefile"				"particles/units/heroes/hero_huskar.pcf"
+			//"particlefile"				"particles/units/heroes/hero_night_stalker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_broodmother.pcf"
+			//"particlefile"				"particles/units/heroes/hero_bounty_hunter.pcf"
+			//"particlefile"				"particles/units/heroes/hero_weaver.pcf"
+			//"particlefile"				"particles/units/heroes/hero_jakiro.pcf"
+			//"particlefile"				"particles/units/heroes/hero_batrider.pcf"
+			//"particlefile"				"particles/units/heroes/hero_chen.pcf"
+			//"particlefile"				"particles/units/heroes/hero_spectre.pcf"
+			//"particlefile"				"particles/units/heroes/hero_doom_bringer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_ancient_apparition.pcf"
+			//"particlefile"				"particles/units/heroes/hero_ursa.pcf"
+			//"particlefile"				"particles/units/heroes/hero_spirit_breaker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_gyrocopter.pcf"
+			//"particlefile"				"particles/units/heroes/hero_alchemist.pcf"
+			//"particlefile"				"particles/units/heroes/hero_invoker.pcf"
+			//"particlefile"				"particles/units/heroes/hero_silencer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+			//"particlefile"				"particles/units/heroes/hero_lycan.pcf"
+			//"particlefile"				"particles/units/heroes/hero_brewmaster.pcf"
+			//"particlefile"				"particles/units/heroes/hero_shadow_demon.pcf"
+			//"particlefile"				"particles/units/heroes/hero_lone_druid.pcf"
+			//"particlefile"				"particles/units/heroes/hero_chaos_knight.pcf"
+			//"particlefile"				"particles/units/heroes/hero_meepo.pcf"
+			//"particlefile"				"particles/units/heroes/hero_treant.pcf"
+			//"particlefile"				"particles/units/heroes/hero_ogre_magi.pcf"
+			//"particlefile"				"particles/units/heroes/hero_undying.pcf"
+			//"particlefile"				"particles/units/heroes/hero_rubick.pcf"
+			//"particlefile"				"particles/units/heroes/hero_disruptor.pcf"
+			//"particlefile"				"particles/units/heroes/hero_nyx_assassin.pcf"
+			//"particlefile"				"particles/units/heroes/hero_siren.pcf"
+			//"particlefile"				"particles/units/heroes/hero_keeper_of_the_light.pcf"
+			//"particlefile"				"particles/units/heroes/hero_wisp.pcf"
+			//"particlefile"				"particles/units/heroes/hero_visage.pcf"
+			//"particlefile"				"particles/units/heroes/hero_slark.pcf"
+			//"particlefile"				"particles/units/heroes/hero_medusa.pcf"
+			//"particlefile"				"particles/units/heroes/hero_troll_warlord.pcf"
+			//"particlefile"				"particles/units/heroes/hero_centaur.pcf"
+			//"particlefile"				"particles/units/heroes/hero_magnataur.pcf"
+			//"particlefile"				"particles/units/heroes/hero_shredder.pcf"
+			//"particlefile"				"particles/units/heroes/hero_bristleback.pcf"
+			//"particlefile"				"particles/units/heroes/hero_tusk.pcf"
+			//"particlefile"				"particles/units/heroes/hero_skywrath_mage.pcf"
+			//"particlefile"				"particles/units/heroes/hero_abaddon.pcf"
+			//"particlefile"				"particles/units/heroes/hero_elder_titan.pcf"
+			//"particlefile"				"particles/units/heroes/hero_legion_commander.pcf"
+			//"particlefile"				"particles/units/heroes/hero_ember_spirit.pcf"
+			//"particlefile"				"particles/units/heroes/hero_earth_spirit.pcf"
+			//"particlefile"				"particles/units/heroes/hero_abyssal_underlord.pcf"
+			//"particlefile"				"particles/units/heroes/hero_terrorblade.pcf"
+			//"particlefile"				"particles/units/heroes/hero_phoenix.pcf"
+			//"particlefile"				"particles/units/heroes/hero_windrunner"
+			//"particle_folder"				"particles/frostivus_herofx"
+			//"particle_folder"				"particles/frostivus_gameplay"
+			//"particle_folder"				"particles/test_particle"
+			
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_antimage.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_axe.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_bane.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_bloodseeker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_crystalmaiden.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_drowranger.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_earthshaker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_juggernaut.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_mirana.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_nevermore.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_morphling.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_phantom_lancer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_puck.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_pudge.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_razor.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_sandking.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_stormspirit.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_sven.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_tiny.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_vengefulspirit.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_zuus.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_kunkka.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_lina.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_lich.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_lion.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_shadowshaman.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_slardar.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_tidehunter.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_witchdoctor.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_riki.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_enigma.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_tinker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_sniper.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_necrolyte.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_warlock.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_queenofpain.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_venomancer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_faceless_void.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_skeletonking.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_death_prophet.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_phantom_assassin.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_pugna.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_templar_assassin.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_viper.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_luna.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_dragon_knight.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_dazzle.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_rattletrap.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_leshrac.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_furion.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_life_stealer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_dark_seer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_clinkz.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_omniknight.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_enchantress.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_huskar.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_nightstalker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_broodmother.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_bounty_hunter.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_weaver.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_jakiro.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_batrider.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_chen.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_spectre.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_doombringer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_ancient_apparition.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_ursa.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_spirit_breaker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_gyrocopter.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_invoker.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_silencer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_obsidian_destroyer.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_lycan.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_brewmaster.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_shadow_demon.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_lone_druid.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_chaos_knight.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_meepo.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_treant.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_ogre_magi.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_undying.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_rubick.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_disruptor.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_nyx_assassin.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_naga_siren.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_keeper_of_the_light.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_wisp.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_visage.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_slark.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_medusa.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_troll_warlord.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_centaur.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_magnataur.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_shredder.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_bristleback.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_tusk.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_skywrath_mage.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_abaddon.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_elder_titan.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_legion_commander.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_ember_spirit.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_earth_spirit.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_abyssal_underlord.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_terrorblade.txt"
+			//"soundfile"				"scripts/game_sounds_heroes/game_sounds_phoenix.txt"
+			//"soundfile"					"scripts/game_sounds_heroes/game_sounds_windrunner.txt"
+			//"soundfile"					"scripts/game_sounds_custom.txt"
+		}
+	}
+}

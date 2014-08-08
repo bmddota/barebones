@@ -1,0 +1,140 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 32
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_Decay_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_FadeOutSimple_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_PositionOffset_0,
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RemapCPtoScalar_0,
+		&C_INIT_RandomAlpha_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_leshrac_split_projected.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_leshrac_split_earth_b.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_leshrac_splitearth_lights.vpcf"
+		}
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	bool m_bRefract = true
+	float m_flRefractAmount = -0.040000
+	string m_hTexture = "materials\\particle\\warp_ripple4_normal.vtex"
+	bool m_bFitCycleToLifetime = true
+	float m_flAnimationRate = 1.500000
+	int m_nOrientationType = 2
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float m_fDrag = 0.050000
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	float m_flOpStartFadeInTime = 3.000000
+	float m_flOpEndFadeInTime = 3.000000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 0.750000
+	float m_flBias = 0.850000
+	float m_flStartScale = 0.350000
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	float m_flFadeOutTime = 0.750000
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 0.500000
+	float m_fLifetimeMin = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 64.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 64.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	float m_flDegreesMax = 90.000000
+	float m_flDegreesMin = -90.000000
+	string m_Notes = ""
+}
+
+C_INIT_RemapCPtoScalar C_INIT_RemapCPtoScalar_0
+{
+	float m_flOutputMax = 5000.000000
+	float m_flInputMax = 2500.000000
+	int m_nCPInput = 1
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 1
+	string m_Notes = ""
+}

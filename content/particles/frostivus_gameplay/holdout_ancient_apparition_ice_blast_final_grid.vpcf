@@ -1,0 +1,117 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 128
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 9.000000
+	int(4) m_ConstantColor = ( 255, 182, 40, 255 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_PositionLock_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_LerpEndCapScalar_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_MovementRotateParticleAroundAxis_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateSpiralSphere_0,
+		&C_INIT_RemapInitialDirectionToCPToVector_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		&C_OP_AttractToControlPoint_0
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	bool m_bMod2X = true
+	int m_nOrientationType = 3
+	string m_hTexture = "materials\\particle\\particle_modulate_04.vtex"
+	string m_Notes = ""
+}
+
+C_OP_PositionLock C_OP_PositionLock_0
+{
+	int m_nControlPointNumber = 3
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	float m_flDecayTime = 1.000000
+	string m_Notes = ""
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	float m_flOutput = 0.000000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_MovementRotateParticleAroundAxis C_OP_MovementRotateParticleAroundAxis_0
+{
+	int m_nCP = 3
+	float(3) m_vecRotAxis = ( 1.000000, 1.000000, 1.000000 )
+	float m_flRotRate = -180.000000
+	string m_Notes = ""
+}
+
+C_INIT_CreateSpiralSphere C_INIT_CreateSpiralSphere_0
+{
+	int m_nControlPointNumber = 3
+	float m_flInitialRadius = 64.000000
+	int m_nDensity = 1
+	bool m_bUseParticleCount = true
+	string m_Notes = ""
+}
+
+C_INIT_RemapInitialDirectionToCPToVector C_INIT_RemapInitialDirectionToCPToVector_0
+{
+	float m_flScale = 3.000000
+	int m_nCP = 3
+	int m_nFieldOutput = 21
+	bool m_bNormalize = true
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 128
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_0
+{
+	int m_nOpEndCapState = 1
+	float m_fForceAmount = -800.000000
+	float m_fFalloffPower = 0.000000
+	int m_nControlPointNumber = 3
+	string m_Notes = ""
+}

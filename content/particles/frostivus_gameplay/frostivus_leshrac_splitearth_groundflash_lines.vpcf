@@ -1,0 +1,180 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 20
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMin = ( 20.000000, 20.000000, 0.000000 )
+	float(3) m_BoundingBoxMax = ( -20.000000, -20.000000, 0.000000 )
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_InterpolateRadius_0,
+		&C_OP_InterpolateRadius_2,
+		&C_OP_FadeAndKill_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_SpinUpdate_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomRadius_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_CreateFromParentParticles_0,
+		&C_INIT_PositionOffset_0,
+		&C_INIT_PositionPlaceOnGround_0,
+		&C_INIT_RemapScalar_0,
+		&C_INIT_RandomAlpha_0,
+		&C_INIT_PositionOffset_2
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_leshrac_splitearth_sparkles.vpcf"
+		}
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	int m_nOrientationType = 3
+	bool m_bDisableZBuffering = false
+	string m_hTexture = "materials\\particle\\particle_flares\\particle_flare_001.vtex"
+	string m_Notes = ""
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	float m_flRadiusScale = 2.500000
+	int(4) m_ColorScale = ( 241, 13, 13, 255 )
+	string m_Notes = ""
+	string m_hTexture = "materials\\particle\\particle_flares\\particle_flare_001.vtex"
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flStartScale = 0.100000
+	float m_flEndTime = 0.150000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_2
+{
+	float m_flEndTime = 0.800000
+	float m_flBias = 0.200000
+	float m_flEndScale = 0.300000
+	float m_flStartTime = 0.600000
+	string m_Notes = ""
+}
+
+C_OP_FadeAndKill C_OP_FadeAndKill_0
+{
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+}
+
+C_OP_SpinUpdate C_OP_SpinUpdate_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMax = 100.000000
+	float m_flRadiusMin = 60.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 83, 15, 47, 255 )
+	int(4) m_ColorMin = ( 166, 20, 20, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 1.500000
+	float m_fLifetimeMin = 1.000000
+	string m_Notes = ""
+}
+
+C_INIT_CreateFromParentParticles C_INIT_CreateFromParentParticles_0
+{
+	bool m_bRandomDistribution = true
+	string m_Notes = ""
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 50.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 50.000000 )
+	string m_Notes = ""
+}
+
+C_INIT_PositionPlaceOnGround C_INIT_PositionPlaceOnGround_0
+{
+	bool m_bSetNormal = true
+	string m_Notes = ""
+}
+
+C_INIT_RemapScalar C_INIT_RemapScalar_0
+{
+	float m_flOutputMax = 7.000000
+	float m_flOutputMin = 3.000000
+	int m_nFieldOutput = 9
+	float m_flInputMin = 0.500000
+	int m_nFieldInput = 1
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	int m_nAlphaMax = 140
+	int m_nAlphaMin = 30
+	string m_Notes = ""
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_2
+{
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 5.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 5.000000 )
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 70
+	string m_Notes = ""
+}

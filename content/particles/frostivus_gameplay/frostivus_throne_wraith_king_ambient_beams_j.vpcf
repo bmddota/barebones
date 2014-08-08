@@ -1,0 +1,100 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 60
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 120.000000
+	int(4) m_ConstantColor = ( 79, 240, 136, 255 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_Decay_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_LerpEndCapScalar_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_PositionOffset_0,
+		&C_INIT_CreateWithinSphere_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\particle_glow_05.vtex"
+	string m_Notes = ""
+	float m_flAnimationRate = 0.500000
+	int m_nOrientationType = 2
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	int m_nOpEndCapState = 1
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	string m_Notes = ""
+	float m_flFadeInTime = 0.400000
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	string m_Notes = ""
+	float m_flLerpTime = 0.200000
+	int m_nFieldOutput = 16
+	float m_flOutput = 0.000000
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 1.000000
+	float m_fLifetimeMax = 2.000000
+}
+
+C_INIT_PositionOffset C_INIT_PositionOffset_0
+{
+	string m_Notes = ""
+	float(3) m_OffsetMin = ( 82.000000, -3.000000, 20.000000 )
+	float(3) m_OffsetMax = ( 82.000000, -3.000000, 20.000000 )
+	bool m_bLocalCoords = true
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	float(3) m_vecDistanceBias = ( 1.000000, 1.000000, 0.000000 )
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 1
+}

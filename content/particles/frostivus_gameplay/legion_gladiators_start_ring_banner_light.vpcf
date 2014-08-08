@@ -1,0 +1,146 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 250
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 150.000000
+	int(4) m_ConstantColor = ( 255, 255, 255, 150 )
+	int m_nConstantSequenceNumber1 = 1
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_Orient2DRelToCP_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_LerpEndCapScalar_0,
+		&C_OP_EndCapTimedDecay_0,
+		&C_OP_OscillateScalar_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RingWave_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_PositionPlaceOnGround_0,
+		&C_INIT_RandomScalar_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomRotation_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	string m_Notes = ""
+	float m_flRadiusScale = 1.500000
+	float m_flAlphaScale = 25.000000
+	float m_flStartFalloff = 0.100000
+	string m_hTexture = "materials\\particle\\legion\\legion_banner.vtex"
+}
+
+C_OP_Orient2DRelToCP C_OP_Orient2DRelToCP_0
+{
+	int m_nFieldOutput = 12
+	string m_Notes = ""
+	int m_nCP = 7
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flStartScale = 0.000000
+	string m_Notes = ""
+}
+
+C_OP_LerpEndCapScalar C_OP_LerpEndCapScalar_0
+{
+	float m_flOutput = 0.000000
+	float m_flLerpTime = 0.250000
+	string m_Notes = ""
+}
+
+C_OP_EndCapTimedDecay C_OP_EndCapTimedDecay_0
+{
+	float m_flDecayTime = 0.500000
+	string m_Notes = ""
+}
+
+C_OP_OscillateScalar C_OP_OscillateScalar_0
+{
+	float m_flEndTime_max = 9999999.000000
+	float m_FrequencyMax = 0.500000
+	float m_FrequencyMin = 0.250000
+	float m_RateMax = 1.000000
+	float m_RateMin = 0.500000
+	string m_Notes = ""
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	string m_Notes = ""
+	float m_flInitialRadius = 200.000000
+	bool m_bEvenDistribution = true
+	float m_flParticlesPerOrbit = 6.000000
+	int m_nControlPointNumber = 7
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	string m_Notes = ""
+	float m_fLifetimeMin = 0.500000
+	float m_fLifetimeMax = 0.500000
+}
+
+C_INIT_PositionPlaceOnGround C_INIT_PositionPlaceOnGround_0
+{
+	bool m_bIncludeWater = true
+	float m_flOffset = 200.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomScalar C_INIT_RandomScalar_0
+{
+	int m_nFieldOutput = 18
+	float m_flMax = 20.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 255, 182, 88, 255 )
+	int(4) m_ColorMin = ( 255, 234, 160, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	int m_nFieldOutput = 12
+	float m_flDegreesMax = 0.000000
+	float m_flDegrees = 90.000000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 6
+	string m_Notes = ""
+}

@@ -1,0 +1,81 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	CParticleOperator*[] m_Renderers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_SetPerChildControlPoint_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RingWave_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_linear.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_linear.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_linear.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_linear.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_linear.vpcf"
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_herofx/queen_shadow_strike_core_linear.vpcf"
+		}
+	]
+}
+
+C_OP_SetPerChildControlPoint C_OP_SetPerChildControlPoint_0
+{
+	string m_Notes = ""
+	int m_nNumControlPoints = 3
+	bool m_bNumBasedOnParticleCount = true
+}
+
+C_INIT_RingWave C_INIT_RingWave_0
+{
+	float m_flParticlesPerOrbit = 5.000000
+	bool m_bEvenDistribution = true
+	float m_flInitialRadius = 75.000000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	string m_Notes = ""
+	int m_nParticlesToEmit = 5
+}

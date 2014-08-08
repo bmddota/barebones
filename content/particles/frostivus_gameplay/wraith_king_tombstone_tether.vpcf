@@ -1,0 +1,43 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 15
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 15.000000
+	int(4) m_ConstantColor = ( 135, 198, 0, 255 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_wraithking_tombstone.vpcf"
+		}
+	]
+}

@@ -1,0 +1,184 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 3
+	string m_pszSnapshotName = ""
+	float(3) m_BoundingBoxMin = ( -30.000000, -30.000000, -30.000000 )
+	float(3) m_BoundingBoxMax = ( 30.000000, 30.000000, 30.000000 )
+	float m_flCullRadius = -1.000000
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	float m_flConstantRadius = 250.000000
+	float m_flConstantLifespan = 1.250000
+	int(4) m_ConstantColor = ( 0, 248, 163, 255 )
+	int m_nConstantSequenceNumber1 = 1
+	float m_flMaxDrawDistance = 400000.000000
+	float m_flNoDrawTimeToGoToSleep = 5.000000
+	bool m_bShouldSort = false
+	int m_nMinCPULevel = 1
+	float m_flMaxRecreationTime = -1.000000
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0,
+		&C_OP_RenderDeferredLight_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_Decay_0,
+		&C_OP_VectorNoise_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_SetPerChildControlPoint_0,
+		&C_OP_OscillateVector_0,
+		&C_OP_Spin_0,
+		&C_OP_FadeOutSimple_0,
+		&C_OP_ColorInterpolate_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_InitialVelocityNoise_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		&C_OP_TurbulenceForce_0,
+		&C_OP_TwistAroundAxis_0
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/frostivus_gameplay/frostivus_spirit_trail_b.vpcf"
+		}
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	string m_hTexture = "materials\\particle\\particle_flares\\aircraft_white.vtex"
+	string m_Notes = ""
+}
+
+C_OP_RenderDeferredLight C_OP_RenderDeferredLight_0
+{
+	float m_flAlphaScale = 2.000000
+	string m_Notes = ""
+	float m_flStartFalloff = 0.100000
+	string m_hTexture = "materials\\particle\\particle_flares\\aircraft_white.vtex"
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_VectorNoise C_OP_VectorNoise_0
+{
+	bool m_bOffset = true
+	string m_Notes = ""
+	bool m_bAdditive = true
+	float(3) m_vecOutputMin = ( -540.000000, -540.000000, -1.000000 )
+	int m_nFieldOutput = 0
+	float(3) m_vecOutputMax = ( 540.000000, 540.000000, 1.000000 )
+	float m_fl4NoiseScale = 0.050000
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	string m_Notes = ""
+	float m_fDrag = 0.080000
+	float(3) m_Gravity = ( 0.000000, 0.000000, 7000.000000 )
+}
+
+C_OP_SetPerChildControlPoint C_OP_SetPerChildControlPoint_0
+{
+	string m_Notes = ""
+}
+
+C_OP_OscillateVector C_OP_OscillateVector_0
+{
+	float m_flEndTime_max = 99999998430674944.000000
+	float m_flEndTime_min = 99999998430674944.000000
+	bool m_bProportional = false
+	float(3) m_FrequencyMax = ( 2.000000, 2.000000, 2.000000 )
+	float(3) m_RateMax = ( 400.000000, 400.000000, 20.000000 )
+	float(3) m_RateMin = ( -400.000000, -400.000000, -20.000000 )
+	bool m_bOffset = true
+	string m_Notes = ""
+	float(3) m_FrequencyMin = ( 0.500000, 0.500000, 0.500000 )
+}
+
+C_OP_Spin C_OP_Spin_0
+{
+	int m_nSpinRateDegrees = 12
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	float m_flFadeOutTime = 1.000000
+	string m_Notes = ""
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	float m_flFadeEndTime = 0.500000
+	int(4) m_ColorFade = ( 0, 0, 0, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	string m_Notes = ""
+	float(3) m_vecDistanceBias = ( 0.010000, 0.010000, 0.000000 )
+	float m_fRadiusMax = 48.000000
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_0
+{
+	string m_Notes = ""
+	float(3) m_vecOutputMax = ( 100.000000, 100.000000, 1500.000000 )
+	float(3) m_vecOutputMin = ( -100.000000, -100.000000, 1400.000000 )
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 1
+	string m_Notes = ""
+}
+
+C_OP_TurbulenceForce C_OP_TurbulenceForce_0
+{
+	bool m_bDisableOperator = true
+	string m_Notes = ""
+	float(3) m_vecNoiseAmount3 = ( -1300.000000, -1300.000000, -1300.000000 )
+	float m_flNoiseCoordScale3 = 5.000000
+	float(3) m_vecNoiseAmount2 = ( 1100.000000, 1100.000000, 1100.000000 )
+	float m_flNoiseCoordScale2 = 3.000000
+	float(3) m_vecNoiseAmount1 = ( -1510.000000, -1510.000000, -1510.000000 )
+	float m_flNoiseCoordScale1 = 0.100000
+	float(3) m_vecNoiseAmount0 = ( 1450.000000, 1450.000000, 1450.000000 )
+}
+
+C_OP_TwistAroundAxis C_OP_TwistAroundAxis_0
+{
+	string m_Notes = ""
+	float m_fForceAmount = -150.000000
+	float(3) m_TwistAxis = ( 0.100000, 0.000000, 1.000000 )
+}

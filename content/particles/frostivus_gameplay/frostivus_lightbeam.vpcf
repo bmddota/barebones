@@ -1,0 +1,152 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 7
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int(4) m_ConstantColor = ( 250, 92, 92, 255 )
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_FadeAndKill_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_SetSingleControlPointPosition_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomAlpha_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_RemapCPtoScalar_0,
+		&C_INIT_RemapParticleCountToScalar_0,
+		&C_INIT_CreateSequentialPath_0,
+		&C_INIT_RemapParticleCountToScalar_2,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RemapParticleCountToScalar_4
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	symbol m_nSequenceCombineMode = SEQUENCE_COMBINE_MODE_AVERAGE
+	bool m_bMod2X = true
+	string m_hTexture = "materials\\particle\\groundcracks_light.vtex"
+	float m_flAnimationRate = 0.000000
+	int m_nOrientationType = 2
+	string m_Notes = ""
+}
+
+C_OP_FadeAndKill C_OP_FadeAndKill_0
+{
+	float m_flEndFadeInTime = 0.050000
+	float m_flStartAlpha = 0.100000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float m_fDrag = 0.500000
+	string m_Notes = ""
+}
+
+C_OP_SetSingleControlPointPosition C_OP_SetSingleControlPointPosition_0
+{
+	float(3) m_vecCP1Pos = ( 0.000000, 0.000000, 40.000000 )
+	int m_nCP1 = 2
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 2.000000
+	float m_fLifetimeMin = 2.000000
+	string m_Notes = ""
+}
+
+C_INIT_RemapCPtoScalar C_INIT_RemapCPtoScalar_0
+{
+	int m_nCPInput = 1
+	float m_flInputMin = 100.000000
+	float m_flInputMax = 900.000000
+	float m_flOutputMin = 100.000000
+	float m_flOutputMax = 900.000000
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_0
+{
+	float m_flOutputMax = 0.000000
+	float m_flOutputMin = 1.000000
+	int m_nFieldOutput = 7
+	int m_nInputMax = 25
+	string m_Notes = ""
+}
+
+C_INIT_CreateSequentialPath C_INIT_CreateSequentialPath_0
+{
+	float m_flNumToAssign = 25.000000
+	string m_Notes = ""
+	CPathParameters m_PathParams = CPathParameters
+	{
+		int m_nEndControlPointNumber = 2
+	}
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_2
+{
+	bool m_bScaleInitialRange = true
+	float m_flOutputMin = 1.000000
+	int m_nInputMax = 25
+	float m_flOutputMax = 1.100000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	bool m_bRandomlyFlipDirection = false
+	float m_flDegreesMax = 90.000000
+	float m_flDegreesMin = 90.000000
+	string m_Notes = ""
+}
+
+C_INIT_RemapParticleCountToScalar C_INIT_RemapParticleCountToScalar_4
+{
+	float m_flOutputMax = 0.500000
+	float m_flOutputMin = 1.000000
+	int m_nFieldOutput = 1
+	int m_nInputMax = 25
+	bool m_bScaleInitialRange = true
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 15
+	string m_Notes = ""
+}

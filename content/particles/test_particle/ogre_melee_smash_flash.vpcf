@@ -1,0 +1,198 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	bool m_bPreventNameBasedLookup = false
+	int m_nMaxParticles = 16
+	string m_pszSnapshotName = ""
+	string m_hLowViolenceDef = ""
+	string m_hReferenceReplacement = ""
+	string m_hFallback = ""
+	int m_nConstantSequenceNumber = 1
+	bool m_bShouldSort = false
+	CParticleOperator*[] m_Renderers = 
+	[
+		&C_OP_RenderSprites_0
+	]
+	CParticleOperator*[] m_Operators = 
+	[
+		&C_OP_FadeOutSimple_0,
+		&C_OP_FadeInSimple_0,
+		&C_OP_Decay_0,
+		&C_OP_InterpolateRadius_0,
+		&C_OP_InterpolateRadius_2,
+		&C_OP_LerpScalar_0,
+		&C_OP_OscillateScalar_0,
+		&C_OP_BasicMovement_0,
+		&C_OP_ColorInterpolate_0
+	]
+	CParticleOperator*[] m_Initializers = 
+	[
+		&C_INIT_RandomSequence_0,
+		&C_INIT_RemapScalar_0,
+		&C_INIT_RandomYawFlip_0,
+		&C_INIT_RandomYaw_0,
+		&C_INIT_RandomRotation_0,
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomLifeTime_0,
+		&C_INIT_CreateWithinBox_0,
+		&C_INIT_RandomRadius_0
+	]
+	CParticleOperator*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperator*[] m_ForceGenerators = 
+	[
+		
+	]
+	CParticleOperator*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		
+	]
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_0
+{
+	int m_bAdditive = 1
+	bool m_bDisableZBuffering = true
+	string m_hTexture = "materials\\particle\\lens_flare\\lens_flare.vtex"
+	float m_flAnimationRate = 4.000000
+	int m_nOrientationType = 2
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_0
+{
+	string m_Notes = ""
+}
+
+C_OP_FadeInSimple C_OP_FadeInSimple_0
+{
+	float m_flFadeInTime = 1.000000
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_0
+{
+	float m_flEndScale = 2.000000
+	float m_flStartScale = 0.100000
+	float m_flStartTime = 0.850000
+	string m_Notes = ""
+}
+
+C_OP_InterpolateRadius C_OP_InterpolateRadius_2
+{
+	float m_flBias = 0.850000
+	float m_flEndScale = 2.000000
+	float m_flEndTime = 0.850000
+	float m_flStartTime = 0.100000
+	float m_flStartScale = 0.200000
+	string m_Notes = ""
+}
+
+C_OP_LerpScalar C_OP_LerpScalar_0
+{
+	float m_flOutput = 1.570796
+	int m_nFieldOutput = 12
+	string m_Notes = ""
+}
+
+C_OP_OscillateScalar C_OP_OscillateScalar_0
+{
+	int m_nField = 4
+	float m_RateMin = -11.000000
+	float m_RateMax = 11.000000
+	float m_FrequencyMin = 0.125000
+	float m_FrequencyMax = 0.500000
+	float m_flOscAdd = 0.100000
+	string m_Notes = ""
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 200.000000 )
+	float m_flOpStartFadeInTime = 0.100000
+	float m_flOpEndFadeInTime = 0.150000
+	string m_Notes = ""
+}
+
+C_OP_ColorInterpolate C_OP_ColorInterpolate_0
+{
+	float m_flFadeEndTime = 0.000000
+	float m_flFadeStartTime = 1.000000
+	int(4) m_ColorFade = ( 252, 255, 0, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomSequence C_INIT_RandomSequence_0
+{
+	bool m_bRunForParentApplyKillList = false
+	int m_nSequenceMax = 1
+	string m_Notes = ""
+}
+
+C_INIT_RemapScalar C_INIT_RemapScalar_0
+{
+	float m_flOutputMax = 5.000000
+	bool m_bScaleInitialRange = true
+	float m_flOutputMin = 5.000000
+	int m_nFieldInput = 9
+	string m_Notes = ""
+}
+
+C_INIT_RandomYawFlip C_INIT_RandomYawFlip_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomYaw C_INIT_RandomYaw_0
+{
+	float m_flDegreesMax = 90.000000
+	string m_Notes = ""
+}
+
+C_INIT_RandomRotation C_INIT_RandomRotation_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	int(4) m_ColorMax = ( 246, 77, 252, 255 )
+	int(4) m_ColorMin = ( 148, 153, 255, 255 )
+	string m_Notes = ""
+}
+
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
+{
+	float m_fLifetimeMax = 0.200000
+	float m_fLifetimeMin = 0.100000
+	string m_Notes = ""
+}
+
+C_INIT_CreateWithinBox C_INIT_CreateWithinBox_0
+{
+	string m_Notes = ""
+}
+
+C_INIT_RandomRadius C_INIT_RandomRadius_0
+{
+	float m_flRadiusMax = 105.000000
+	float m_flRadiusMin = 45.000000
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 15
+	string m_Notes = ""
+}
