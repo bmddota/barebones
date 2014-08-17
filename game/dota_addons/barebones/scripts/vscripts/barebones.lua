@@ -160,19 +160,33 @@ function GameMode:OnDisconnect(keys)
   local userid = keys.userid
 
 end
-
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
   print("[BAREBONES] GameRules State Changed")
   PrintTable(keys)
 
   local newState = GameRules:State_Get()
-  if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-    print("HERO_SELECT: " .. tostring(PlayerResource:HaveAllPlayersJoined()))
-    if PlayerResource:HaveAllPlayersJoined() then
-      GameMode:ActuallyPrecache()
-      GameMode:OnAllPlayersLoaded()
+  if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
+    self.bSeenWaitForPlayers = true
+  elseif newState == DOTA_GAMERULES_STATE_INIT then
+    Timers:RemoveTimer("alljointimer")
+  elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+    local et = 6
+    if self.bSeenWaitForPlayers then
+      et = .01
     end
+    Timers:CreateTimer("alljointimer", {
+      useGameTime = true,
+      endTime = et,
+      callback = function()
+        if PlayerResource:HaveAllPlayersJoined() then
+          GameMode:ActuallyPrecache()
+          GameMode:OnAllPlayersLoaded()
+          return 
+        end
+        return 1
+      end
+      })
   elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
     GameMode:OnGameInProgress()
   end
@@ -496,6 +510,8 @@ function GameMode:InitGameMode()
 
   self.nRadiantKills = 0
   self.nDireKills = 0
+
+  self.bSeenWaitForPlayers = false
 
   print('[BAREBONES] Done loading Barebones gamemode!\n\n')
 end
