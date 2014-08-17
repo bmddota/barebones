@@ -57,17 +57,9 @@ end
 
 
 --[[
-  This function should be used to set up Async precache calls.  The Precache() function in addon_game_mode.lua
-  is called too early and does not maintain a stateful undertstanding of any PrecacheSync calls that are made.
-  This causes the client to never precache things configured in that block.
-
-  Clients will only precache things that they are forced to load via KeyValues or Async Precache calls.  Clients
-  will load in the precache{} block for the hero that they select, as well as any precache{} KV blocks present
-  in the Ability# defined abilities that they start with on that hero.  Clients will not by default load in 
-  resources for datadriven items since they don't spawn with them on selection, or custom units that they 
-  don't spawn as.  Additionally, if you use PlayerResource:ReplaceHeroWith(...) or CreateHeroForPlayer(...),
-  clients will not automatically precache the models/particles/sounds/abilities for those heroes.  This is where
-  Async calls come in.
+  This function should be used to set up Async precache calls at the beginning of the game.  The Precache() function 
+  in addon_game_mode.lua used to and may still sometimes have issues with client's appropriately precaching stuff.
+  If this occurs it causes the client to never precache things configured in that block.
 
   In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
   after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
@@ -79,10 +71,10 @@ end
   time, you can call the functions individually (for example if you want to precache units in a new wave of
   holdout).
 ]]
-function GameMode:ActuallyPrecache()
-  print("[BAREBONES] Performing precache")    
-  PrecacheItemByNameAsync("item_example_item", function(...) end)
-  PrecacheItemByNameAsync("example_ability", function(...) end)
+function GameMode:PostLoadPrecache()
+  print("[BAREBONES] Performing Post-Load precache")    
+  --PrecacheItemByNameAsync("item_example_item", function(...) end)
+  --PrecacheItemByNameAsync("example_ability", function(...) end)
 
   --PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
 end
@@ -129,6 +121,13 @@ function GameMode:OnHeroInGame(hero)
   -- These lines will create an item and add it to the player, effectively ensuring they start with the item
   local item = CreateItem("item_multiteam_action", hero, hero)
   hero:AddItem(item)
+
+  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
+    --with the "example_ability" ability
+
+  local abil = hero:GetAbilityByIndex(1)
+  hero:RemoveAbility(abil:GetAbilityName())
+  hero:AddAbility("example_ability")]]
 end
 
 --[[
@@ -180,7 +179,7 @@ function GameMode:OnGameRulesStateChange(keys)
       endTime = et,
       callback = function()
         if PlayerResource:HaveAllPlayersJoined() then
-          GameMode:ActuallyPrecache()
+          GameMode:PostLoadPrecache()
           GameMode:OnAllPlayersLoaded()
           return 
         end
@@ -602,6 +601,7 @@ function GameMode:ExampleConsoleCommand()
     local playerID = cmdPlayer:GetPlayerID()
     if playerID ~= nil and playerID ~= -1 then
       -- Do something here for the player who called this command
+      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
     end
   end
 

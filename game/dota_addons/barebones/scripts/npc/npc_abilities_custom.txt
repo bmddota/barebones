@@ -23,7 +23,7 @@
 		
 		"precache"
 		{
-			"particle"					"particles/econ/generic/generic_aoe_explosion_sphere_1.vpcf"
+			"particle"					"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
 

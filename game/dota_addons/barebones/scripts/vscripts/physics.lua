@@ -34,6 +34,8 @@ function Physics:start()
   local wspawn = Entities:CreateByClassname("info_target") -- Entities:FindByClassname(nil, 'CWorld')
   --wspawn:SetContextThink("PhysicsThink", Dynamic_Wrap( Physics, 'Think' ), PHYSICS_THINK )
   wspawn:SetThink("Think", self, "physics", PHYSICS_THINK)
+
+  Convars:RegisterCommand( "phystest", Dynamic_Wrap(Physics, 'PhysicsTestCommand'), "Test different Physics library commands", FCVAR_CHEAT )
 end
 
 function Physics:Think()
@@ -759,6 +761,429 @@ function Physics:Unit(unit)
   unit.nStuckTimeout = 5
   unit.nStuckFrames = 0
   unit.fBounceMultiplier = 1.0
+end
+
+
+
+-- Physics Testing commands
+function Physics:PhysicsTestCommand(...)
+
+  local args = {...}
+  PrintTable(args)
+  local text = table.concat (args, " ")
+  print(text)
+  local ply = Convars:GetCommandClient()
+  local plyID = ply:GetPlayerID()
+
+  local hero = ply:GetAssignedHero()
+
+  if string.find(text, "^regrow") then
+    GridNav:RegrowAllTrees()
+  end
+
+  if string.find(text, "^spider") then
+    local mapGnv = {}
+    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+
+    print(worldMin)
+    print(worldMax)
+
+    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+    local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
+    local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
+
+    print(boundX1 .. " -- " .. boundX2)
+    print(boundY1 .. " -- " .. boundY2)
+
+    print('----------------------')
+
+    InitLogFile("addons/dotadash/spider.txt", "")
+    AppendToLogFile("addons/dotadash/spider.txt", "P1")
+    AppendToLogFile("addons/dotadash/spider.txt", "#spider created pbm")
+    AppendToLogFile("addons/dotadash/spider.txt", tostring(boundX2 - boundX1 + 1) .. " " .. tostring(boundY2 - boundY1 + 1))
+
+    local pseudoGNV = {}
+    local WALLS = self.WALLS
+    for i=1,#WALLS do
+      local from = WALLS[i].from
+      local to = WALLS[i].to
+      local cur = from
+      local dist = to - from
+      dist.z = 0
+      local dir = dist:Normalized()
+      dist = dist:Length()
+      local norm = RotatePosition(Vector(0,0,0), QAngle(0,90,0), dir)
+
+      for j=1,math.floor(dist/30) do
+        local pos = cur + norm * 64
+        local pos2 = cur - norm * 64
+        local x = GridNav:WorldToGridPosX(pos.x)
+        local y = GridNav:WorldToGridPosY(pos.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+
+        x = GridNav:WorldToGridPosX(pos2.x)
+        y = GridNav:WorldToGridPosY(pos2.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+
+        x = GridNav:WorldToGridPosX(cur.x)
+        y = GridNav:WorldToGridPosY(cur.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+
+        cur = from + dir*j*30
+      end
+
+      cur = to
+      local pos = cur + norm * 64
+      local pos2 = cur - norm * 64
+      local blocked = not GridNav:IsTraversable(pos) or GridNav:IsBlocked(pos)
+      if blocked then
+        local x = GridNav:WorldToGridPosX(pos.x)
+        local y = GridNav:WorldToGridPosY(pos.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+      end
+
+      blocked = not GridNav:IsTraversable(pos2) or GridNav:IsBlocked(pos2)
+      if blocked then
+        local x = GridNav:WorldToGridPosX(pos2.x)
+        local y = GridNav:WorldToGridPosY(pos2.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+      end
+
+      blocked = not GridNav:IsTraversable(cur) or GridNav:IsBlocked(cur)
+      if blocked then
+        local x = GridNav:WorldToGridPosX(cur.x)
+        local y = GridNav:WorldToGridPosY(cur.y)
+        if pseudoGNV[x] == nil then
+          pseudoGNV[x] = {}
+        end
+        pseudoGNV[x][y] = true
+      end
+    end
+
+    --PrintTable(pseudoGNV)
+    --print('---------------')
+
+    local s = ""
+
+    for i=boundY2,boundY1,-1 do
+      for j=boundX1,boundX2 do
+        local position = Vector(GridNav:GridPosToWorldCenterX(j), GridNav:GridPosToWorldCenterY(i), 0)
+        local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or (pseudoGNV[j] ~= nil and pseudoGNV[j][i])
+
+        if blocked then
+          s = s .. "1"
+        else
+          s = s .. "0"
+        end
+
+        if j == boundX2 then
+          AppendToLogFile("addons/dotadash/spider.txt", s)
+          s = ""
+        else
+          s = s .. " "
+        end
+      end
+    end
+  end
+
+  if string.find(text, "^anggrid") then
+    local timestamp = GetSystemDate() .. " " .. GetSystemTime()
+    timestamp = timestamp:gsub(":","_"):gsub(" ","_")
+    local fileName = "log/" .. GetMapName() .. timestamp .. ".txt"
+    print(fileName)
+
+    local anggrid = {}
+    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+
+    print(worldMin)
+    print(worldMax)
+
+    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+    local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
+    local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
+    local offsetX = boundX1 * -1 + 1
+    local offsetY = boundY1 * -1 + 1
+
+    print(boundX1 .. " -- " .. boundX2)
+    print(boundY1 .. " -- " .. boundY2)
+    print(offsetX)
+    print(offsetY)
+
+    local vecs = {
+      {vec = Vector(0,1,0):Normalized(), x=0,y=1},-- N
+      {vec = Vector(1,1,0):Normalized(), x=1,y=1}, -- NE
+      {vec = Vector(1,0,0):Normalized(), x=1,y=0}, -- E
+      {vec = Vector(1,-1,0):Normalized(), x=1,y=-1}, -- SE
+      {vec = Vector(0,-1,0):Normalized(), x=0,y=-1}, -- S
+      {vec = Vector(-1,-1,0):Normalized(), x=-1,y=-1}, -- SW
+      {vec = Vector(-1,0,0):Normalized(), x=-1,y=0}, -- W
+      {vec = Vector(-1,1,0):Normalized(), x=-1,y=1} -- NW
+    }
+
+    print('----------------------')
+
+    anggrid[1] = {}
+    for j=boundY1,boundY2 do
+      anggrid[1][j + offsetY] = -1
+    end
+    anggrid[1][boundY2 + offsetY] = -1
+
+    for i=boundX1+1,boundX2-1 do
+      anggrid[i+offsetX] = {}
+      anggrid[i+offsetX][1] = -1
+      for j=(boundY1+1),boundY2-1 do
+        local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
+        local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) --or (pseudoGNV[i] ~= nil and pseudoGNV[i][j])
+        local seg = 0
+        local sum = Vector(0,0,0)
+        local count = 0
+        local inseg = false
+
+        if blocked then
+          for k=1,#vecs do
+            local vec = vecs[k].vec
+            local xoff = vecs[k].x
+            local yoff = vecs[k].y
+            local pos = Vector(GridNav:GridPosToWorldCenterX(i+xoff), GridNav:GridPosToWorldCenterY(j+yoff), 0)
+            local blo = not GridNav:IsTraversable(pos) or GridNav:IsBlocked(pos) --or (pseudoGNV[i+xoff] ~= nil and pseudoGNV[i+xoff][j+yoff])
+
+            if not blo then
+              count = count + 1
+              inseg = true
+              sum = sum + vec
+            else
+              if inseg then
+                inseg = false
+                seg = seg + 1
+              end
+            end
+          end
+
+          if seg > 1 then
+            print ('OVERSEG x=' .. i .. ' y=' .. j)
+            anggrid[i+offsetX][j+offsetY] = -1
+          elseif count > 5 then
+            print ('PROTRUDE x=' .. i .. ' y=' .. j)
+            anggrid[i+offsetX][j+offsetY] = -1
+          elseif count == 0 then
+            anggrid[i+offsetX][j+offsetY] = -1
+          else
+            local sum = sum:Normalized()
+            local angle = math.floor((math.acos(Vector(1,0,0):Dot(sum:Normalized()))/ math.pi * 180))
+            if sum.y < 0 then
+              angle = -1 * angle
+            end
+            anggrid[i+offsetX][j+offsetY] = angle
+          end
+        else
+          anggrid[i+offsetX][j+offsetY] = -1
+        end
+      end
+      anggrid[i+offsetX][boundY2+offsetY] = -1
+    end
+
+    anggrid[boundX2+offsetX] = {}
+    for j=boundY1,boundY2 do
+      anggrid[boundX2+offsetX][j+offsetY] = -1
+    end
+    anggrid[boundX2+offsetX][boundY2+offsetY] = -1
+
+    print('--------------')
+    print(#anggrid)
+    print(#anggrid[1])
+    print(#anggrid[2])
+    print(#anggrid[3])
+
+    MAP_DATA.anggrid = anggrid
+    Physics:AngleGrid(anggrid)
+  end
+  
+  local ap = abilPoints
+
+  local fname = string.match(text, "^angsave%s+(.+)")
+  if fname ~= nil then
+    -- Process map
+    local addString = function (stack, s)
+        table.insert(stack, s)    -- push 's' into the the stack
+        for i=table.getn(stack)-1, 1, -1 do
+          if string.len(stack[i]) > string.len(stack[i+1]) then
+            break
+          end
+          stack[i] = stack[i] .. table.remove(stack)
+        end
+      end
+
+    local s = {""}
+    addString(s, "{")
+    local anggrid = Physics.anggrid
+    for x=1,#anggrid do
+      addString(s, "{")
+      for y=1,#anggrid[x] do
+        addString(s, tostring(anggrid[x][y]))
+        if y < #anggrid[x] then
+          addString(s, ",")
+        end
+      end
+      addString(s, "}")
+      if x < #anggrid then
+        addString(s, ",")
+      end
+    end
+    addString(s, "}")
+
+    s = table.concat(s)
+    print('------------')
+    print(fname)
+    print(s)
+
+    InitLogFile("addons/dotadash/" .. fname .. ".txt", s)
+  end
+
+  if string.find(text, "^units") then
+    local m = string.match(text, "(%d+)")
+    if m ~= nil then
+      unitNum = unitNum + m
+      print (unitNum)
+      for i=1,m do 
+        local unit = CreateUnitByName('npc_dummy_blank', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+        unit:AddNewModifier(unit, nil, "modifier_phased", {})
+        unit:SetModel('models/heroes/lycan/lycan_wolf.mdl')
+        unit:SetOriginalModel('models/heroes/lycan/lycan_wolf.mdl')
+        
+        Physics:Unit(unit)
+        unit:SetPhysicsFriction(0)
+        unit:SetPhysicsVelocity(RandomVector(2000))
+        unit:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
+      end
+    end
+  end
+  
+  
+  if string.find(text, "^hibtest") then
+    local m = string.match(text, "(%d+)")
+    if m ~= nil and m == "0" then
+      self:CreateTimer('units2',{
+        useGameTime = true,
+        endTime = GameRules:GetGameTime(),
+        callback = function(reflex, args)
+          local pushNum = math.floor(#units / 10) + 1
+          for i=1,pushNum do
+            local unit = units[RandomInt(1, #units)]
+            unit:AddPhysicsVelocity(RandomVector(RandomInt(1000,2000)))
+          end
+          
+          return GameRules:GetGameTime() + 1
+        end
+      })
+    elseif m ~= nil then
+      unitNum = unitNum + m
+      print (unitNum)
+      for i=1,m do 
+        local unit = CreateUnitByName('npc_dummy_blank', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+        unit:AddNewModifier(unit, nil, "modifier_phased", {})
+        unit:SetModel('models/heroes/lycan/lycan_wolf.mdl')
+        unit:SetOriginalModel('models/heroes/lycan/lycan_wolf.mdl')
+        
+        Physics:Unit(unit)
+        unit:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
+        
+        units[#units + 1] = unit
+      end
+    end
+  end
+  
+  local vel1,vel2,vel3 = string.match(text, "^vel%s+(-?%d+)%s+(-?%d+)%s+(-?%d+)")
+  if vel1 ~= nil and vel2 ~= nil and vel3 ~= nil then
+    hero:AddPhysicsVelocity(Vector(tonumber(vel1), tonumber(vel2), tonumber(vel3)))
+  end
+  
+  local velmax1 = string.match(text, "^velmax%s+(%d+)")
+  if velmax1 ~= nil then
+    hero:SetPhysicsVelocityMax(tonumber(velmax1))
+    print('-velmax' .. tonumber(velmax1))
+  end
+  
+  local acc1,acc2,acc3 = string.match(text, "^acc%s+(-?%d+)%s+(-?%d+)%s+(-?%d+)")
+  if acc1 ~= nil and acc2 ~= nil and acc3 ~= nil then
+    hero:SetPhysicsAcceleration(Vector(tonumber(acc1), tonumber(acc2), tonumber(acc3)))
+  end
+  
+  local fric1 = string.match(text, "^fric%s+(-?%d+)")
+  if fric1 ~= nil then
+    hero:SetPhysicsFriction(tonumber(fric1) / 100 )
+  end
+  
+  local slide1 = string.match(text, "^slidemult%s+(-?%d+)")
+  if slide1 ~= nil then
+    hero:SetSlideMultiplier(tonumber(slide1) / 100 )
+  end
+  
+  if string.find(text, "^prevent") then
+    hero:PreventDI(not hero:IsPreventDI())
+  end
+
+  if string.find(text, "^phys") and hero.IsSlide == nil then
+    Physics:Unit(hero)
+  end
+  
+  if string.find(text, "^onframe") then
+    hero:OnPhysicsFrame(function(unit)
+      --PrintTable(unit)
+      --print('----------------')
+    end)
+  end
+  
+  if string.find(text, "^slide$") then
+    hero:Slide(not hero:IsSlide())
+    print(hero:IsSlide())
+  end
+  
+  if string.find(text, "^nav$") then
+    hero:FollowNavMesh(not hero:IsFollowNavMesh())
+  end
+  
+  local clamp1 = string.match(text, "^clamp%s+(%d+)")
+  if clamp1 ~= nil then
+    hero:SetVelocityClamp( tonumber(clamp1))
+  end
+  
+  if string.find(text, "^hibernate") then
+    hero:Hibernate(not hero:IsHibernate())
+    print(hero:IsHibernate())
+  end
+  
+  if string.find(text, "^navtype") then
+      local navType = hero:GetNavCollisionType()
+      navType = (navType + 1) % 4
+      print('navtype: ' .. tostring(navType))
+      hero:SetNavCollisionType(navType)
+  end
+  
+  if string.find(text, "^ground") then
+    local ground = hero:GetGroundBehavior()
+    ground = (ground + 1) % 3
+    print('ground: ' .. tostring(ground))
+    hero:SetGroundBehavior(ground)
+  end
 end
 
 Physics:start()
