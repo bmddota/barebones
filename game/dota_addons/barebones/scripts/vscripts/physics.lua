@@ -31,7 +31,7 @@ function Physics:start()
   self.offsetX = nil
   self.offsetY = nil
   
-  local wspawn = Entities:First() -- Entities:FindByClassname(nil, 'CWorld')
+  local wspawn = Entities:CreateByClassname("info_target") -- Entities:FindByClassname(nil, 'CWorld')
   --wspawn:SetContextThink("PhysicsThink", Dynamic_Wrap( Physics, 'Think' ), PHYSICS_THINK )
   wspawn:SetThink("Think", self, "physics", PHYSICS_THINK)
 end

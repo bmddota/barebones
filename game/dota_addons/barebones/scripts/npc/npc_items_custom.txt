@@ -33,14 +33,15 @@
 		
 		"precache"
 		{
-			"particlefile"				"particles/frostivus_herofx.pcf"
-      "soundfile"				"scripts/game_sounds_heroes/game_sounds_abaddon.txt"
+			"particle"							"particles/frostivus_herofx/queen_shadow_strike_linear_parent.vpcf"
+			"particle_folder"				"particles/test_particle"
+      "soundfile"							"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
 		"OnSpellStart"
     {
       "LinearProjectile"
       {
-        "EffectName"			"queen_shadow_strike_linear_parent"
+        "EffectName"			"particles/frostivus_herofx/queen_shadow_strike_linear_parent.vpcf"
 				"MoveSpeed"				"%speed"
 				//"StartPosition"	  "attach_attack1"
         "FixedDistance"   "%distance"
@@ -80,7 +81,7 @@
 		{
 			"modifier_item_shield"
 			{
-				"EffectName"		"damage_immunity"
+				"EffectName"		"particles/test_particle/damage_immunity.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"CASTER"
 				
@@ -153,7 +154,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"250 230 210 190"
+		"AbilityManaCost"				"1000 1000 210 190"
 		"ItemCost"						"100"
 		"ItemInitialCharges"			"0"
 		"ItemDroppable"					"1"
@@ -168,7 +169,7 @@
 		
 		"precache"
 		{
-			"particlefile"				"particles/test_particle.pcf"
+			"particle_folder"				"particles/test_particle"
 		}
 		
 		"OnSpellStart"
@@ -214,7 +215,7 @@
 		{
 			"modifier_item_shield_2"
 			{
-				"EffectName"		"damage_immunity"
+				"EffectName"		"particles/test_particle/damage_immunity.vpcfdamage_immunity"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"CASTER"
 				
@@ -294,6 +295,11 @@
 		//"ItemInitialCharges"			"1"
 		"SideShop"						"1"
 
+		"precache"
+		{
+			"particle_folder"				"particles/test_particle"
+		}
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -315,7 +321,7 @@
     {
 			"multiteam_example_aoe_ability"
 			{
-				"EffectName"		"damage_immunity"
+				"EffectName"		"particles/test_particle/damage_immunity.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"TARGET"
 				
@@ -347,205 +353,6 @@
       	"var_type"        "FIELD_INTEGER"
         "speed"        		"10 20 30 40"
       }
-	  }
-	}
-
-  //
-  // Damage Dealing phantom item
-  //
-  "item_deal_damage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1124"	// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"                 "DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/salve_blue.mdl"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_greater_clarity"
-		"ItemKillable"					"0"
-
-		"ItemBaseLevel"					"10"
-		"MaxUpgradeLevel"				"20"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"20000"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"90"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		"ItemPermanent"					"0"
-		"ItemPurchaseable"			"0"
-		"ItemInitialCharges"			"1"
-		"SideShop"						"1"
-
-
-		
-    "Modifiers"
-    {
-			"dealDamage1"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"1"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage2"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"2"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage4"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"4"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage8"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"8"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage16"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"16"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage32"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"32"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage64"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"64"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage128"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"128"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage256"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"256"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage512"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"512"
-					    "Target"	"TARGET"
-					}
-		    }
-			}	
-			"dealDamage1024"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"1024"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage2048"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"2048"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
-			"dealDamage4096"
-			{
-		    "OnCreated"
-		    {
-					"Damage"
-					{
-					   "Type"	"DAMAGE_TYPE_PURE"
-					    "Damage"	"4096"
-					    "Target"	"TARGET"
-					}
-		    }
-			}
 	  }
 	}
 }

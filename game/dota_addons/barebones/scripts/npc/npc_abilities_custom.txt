@@ -23,8 +23,7 @@
 		
 		"precache"
 		{
-			//"particle_folder"				"particles/test_particle"
-			//"particle"				"particles/econ/generic/generic_aoe_explosion_sphere_1.vpcf"
+			"particle"					"particles/econ/generic/generic_aoe_explosion_sphere_1.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
 
@@ -201,9 +200,9 @@
     
     "precache"
     {
-      "particlefile"        "particles/test_particle.pcf"
-      "particlefile"        "particles/units/heroes/hero_pugna.pcf"
-      "soundfile"           "scripts/game_sounds_heroes/game_sounds_gyrocopter.txt"
+      "particle_folder"        "particles/test_particle"
+      "particle_folder"        "particles/units/heroes/hero_pugna"
+      "soundfile"	           "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
     }
 
     // Item Info
@@ -228,7 +227,7 @@
     {
       "AttachEffect"
       {
-        "EffectName"      "pugna_netherblast"
+        "EffectName"      "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
         "EffectAttachType"    "follow_origin"
         "EffectRadius"      "250"
         "EffectDurationScale" "1"
@@ -293,9 +292,9 @@
     
     "precache"
     {
-      "particlefile"        "particles/test_particle.pcf"
-      "particlefile"        "particles/units/heroes/hero_pugna.pcf"
-      "soundfile"           "scripts/game_sounds_heroes/game_sounds_gyrocopter.txt"
+      "particle_folder"        "particles/test_particle"
+      "particle_folder"        "particles/units/heroes/hero_pugna"
+      "soundfile"        	   "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
     }
 
     // Item Info
