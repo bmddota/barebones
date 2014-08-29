@@ -1606,7 +1606,7 @@ Physics:CreateColliderProfile("repel",
     action = function(self, unit, v)
       local pos = unit:GetAbsOrigin()
       local vPos = v:GetAbsOrigin()
-      local dir = vPos - pos
+      local dir = pos - vPos
       local len = dir:Length()
       if len > self.minRadius then
         local radDiff = self.radius - self.fullRadius
@@ -1623,7 +1623,7 @@ Physics:CreateColliderProfile("repel",
 
         force = force * (self.skipFrames + 1)
 
-        v:AddPhysicsVelocity(dir:Normalized() * force)
+        v:AddPhysicsVelocity(-1 * dir:Normalized() * force)
       end
     end
   })
@@ -1722,6 +1722,7 @@ Physics:CreateColliderProfile("boxblocker",
   {
     type = COLLIDER_BOX,
     box = {Vector(0,0,0), Vector(200,100,500), Vector(0,100,0)},
+    slide = true,
     recollideTime = 0,
     skipFrames = 0,
     buffer = 0,
@@ -1811,6 +1812,10 @@ Physics:CreateColliderProfile("boxblocker",
       normal = normal:Normalized()
 
       Physics:BlockInBox(unit, toside, normal, self.buffer, self.findClearSpace)
+
+      if self.slide then
+        unit:AddPhysicsVelocity(unit:GetPhysicsVelocity():Dot(normal * -1) * normal)
+      end
     end
   })
 
