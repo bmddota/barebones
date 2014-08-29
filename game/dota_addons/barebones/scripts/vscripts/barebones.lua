@@ -76,6 +76,8 @@ function GameMode:PostLoadPrecache()
   --PrecacheItemByNameAsync("item_example_item", function(...) end)
   --PrecacheItemByNameAsync("example_ability", function(...) end)
 
+  PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
   --PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
 end
 
@@ -410,7 +412,7 @@ function GameMode:InitGameMode()
   GameRules:SetGoldTickTime(GOLD_TICK_TIME)
   GameRules:SetRuneSpawnTime(RUNE_SPAWN_TIME)
   GameRules:SetUseBaseGoldBountyOnHeroes(USE_STANDARD_HERO_GOLD_BOUNTY)
-  GameRules:SetHeroMinimapIconSize( MINIMAP_ICON_SIZE )
+  GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
   GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
   GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
   print('[BAREBONES] GameRules set')
@@ -481,6 +483,8 @@ function GameMode:InitGameMode()
                   userid = userID,
                   index = ply:entindex()-1
                 })
+
+                ply:GetAssignedHero():SetControllableByPlayer(0, true)
               end
             end
           end
