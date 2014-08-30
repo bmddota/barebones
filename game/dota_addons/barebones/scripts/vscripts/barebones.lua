@@ -254,7 +254,7 @@ function GameMode:OnAbilityUsed(keys)
   print('[BAREBONES] AbilityUsed')
   PrintTable(keys)
 
-  local player = EntIndexToHScript(keys.player)
+  local player = EntIndexToHScript(keys.PlayerID)
   local abilityname = keys.abilityname
 end
 
