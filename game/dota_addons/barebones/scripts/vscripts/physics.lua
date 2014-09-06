@@ -526,6 +526,14 @@ function Physics:Unit(unit)
   function unit:OnHibernate(fun)
     unit.PhysicsHibernateCallback = fun
   end
+
+  function unit:OnPreBounce(fun)
+    unit.PhysicsOnPreBounce = fun
+  end
+
+  function unit:OnBounce(fun)
+    unit.PhysicsOnBounce = fun
+  end
   
   function unit:SetNavGridLookahead (lookahead)
     unit.nNavGridLookahead = lookahead
@@ -911,7 +919,20 @@ function Physics:Unit(unit)
               --FindClearSpaceForUnit(unit, newPos, true)
               --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
             end
+
+            if unit.PhysicsOnPreBounce then
+              local status, nextCall = pcall(unit.PhysicsOnPreBounce, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnPreBounce: ' .. nextCall)
+              end
+            end
             newVelocity = ((-2 * newVelocity:Dot(normal) * normal) + newVelocity) * unit.fBounceMultiplier
+            if unit.PhysicsOnBounce then
+              local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnBounce: ' .. nextCall)
+              end
+            end
           end
         else
           unit:SetAbsOrigin(newPos)
@@ -1249,7 +1270,9 @@ function Physics:PhysicsTestCommand(...)
     print(#anggrid[2])
     print(#anggrid[3])
 
-    MAP_DATA.anggrid = anggrid
+    if MAP_DATA  then
+      MAP_DATA.anggrid = anggrid
+    end
     Physics:AngleGrid(anggrid)
   end
   
@@ -1470,6 +1493,32 @@ function Physics:DistanceToLine(point, lineA, lineB)
     return 0
   end
   return num
+end
+
+function Physics:CreateBox(a, b, width, center)
+  print(a)
+  print(b)
+  print(width)
+  print(center)
+  local az = Vector(a.x,a.y,0)
+  local bz = Vector(b.x,b.y,0)
+  local heightVec = bz - az
+  local height = heightVec:Length()
+  local dir = heightVec:Normalized()
+
+  local box = {}
+  if center then
+    local rot = RotatePosition(Vector(0,0,0), QAngle(0, -90, 0), dir)
+    box[1] = a + -1 * rot * width / 2
+    box[2] = box[1] + height
+    box[3] = a + rot * width / 2
+  else
+    box[1] = a
+    box[2] = b
+    box[3] = a + RotatePosition(Vector(0,0,0), QAngle(0, -90, 0), dir) * width
+  end
+
+  return box
 end
 
 function Physics:PrecalculateBox(box)
@@ -1813,7 +1862,7 @@ Physics:CreateColliderProfile("boxblocker",
 
       Physics:BlockInBox(unit, toside, normal, self.buffer, self.findClearSpace)
 
-      if self.slide then
+      if self.slide and IsPhysicsUnit(unit) then
         unit:AddPhysicsVelocity(unit:GetPhysicsVelocity():Dot(normal * -1) * normal)
       end
     end
