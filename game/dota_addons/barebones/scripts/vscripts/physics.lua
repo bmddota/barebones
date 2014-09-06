@@ -156,10 +156,16 @@ function Physics:Think()
           if IsValidEntity(unit) then
             local ents = nil
             if collider.filter then
-              local status = nil
-              status, ents = pcall(collider.filter, collider)
-              if not status then
-                print('[PHYSICS] Collision Filter Failure!: ' .. ents)
+              if type(collider.filter) == "function" then
+                local status = nil
+                status, ents = pcall(collider.filter, collider)
+                if not status then
+                  print('[PHYSICS] Collision Filter Failure!: ' .. ents)
+                end
+              elseif type(collider.filter) == "table" then
+                ents = collider.filter
+              else
+                ents = {collider.filter}
               end
             else
               ents = Entities:FindAllInSphere(unit:GetAbsOrigin(), collider.radius + 200)
