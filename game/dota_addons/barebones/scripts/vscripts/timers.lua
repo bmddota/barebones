@@ -188,7 +188,9 @@ function Timers:CreateTimer(name, args)
     args.endTime = now + args.endTime
   end
 
-  Timers.timers[name] = args
+  Timers.timers[name] = args 
+
+  return name
 end
 
 function Timers:RemoveTimer(name)
