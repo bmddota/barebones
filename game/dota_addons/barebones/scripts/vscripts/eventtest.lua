@@ -31,7 +31,7 @@ function GameMode:StartEventTest()
 	ListenToGameEvent("npc_spawned", Dynamic_Wrap(GameMode, 'On_npc_spawned'), self)
 	ListenToGameEvent("npc_replaced", Dynamic_Wrap(GameMode, 'On_npc_replaced'), self)
 	ListenToGameEvent("entity_killed", Dynamic_Wrap(GameMode, 'On_entity_killed'), self)
-	ListenToGameEvent("entity_hurt", Dynamic_Wrap(GameMode, 'On_entity_hurt'), self)
+	--ListenToGameEvent("entity_hurt", Dynamic_Wrap(GameMode, 'On_entity_hurt'), self)
 	ListenToGameEvent("bonus_updated", Dynamic_Wrap(GameMode, 'On_bonus_updated'), self)
 	ListenToGameEvent("player_stats_updated", Dynamic_Wrap(GameMode, 'On_player_stats_updated'), self)
 	ListenToGameEvent("achievement_event", Dynamic_Wrap(GameMode, 'On_achievement_event'), self)
@@ -133,6 +133,7 @@ function GameMode:StartEventTest()
 	ListenToGameEvent("nommed_tree", Dynamic_Wrap(GameMode, 'On_nommed_tree'), self)
 	ListenToGameEvent("dota_rune_activated_server", Dynamic_Wrap(GameMode, 'On_dota_rune_activated_server'), self)
 	ListenToGameEvent("dota_player_gained_level", Dynamic_Wrap(GameMode, 'On_dota_player_gained_level'), self)
+	ListenToGameEvent("dota_player_pick_hero", Dynamic_Wrap(GameMode, 'On_dota_player_pick_hero'), self)
 	ListenToGameEvent("dota_player_learned_ability", Dynamic_Wrap(GameMode, 'On_dota_player_learned_ability'), self)
 	ListenToGameEvent("dota_player_used_ability", Dynamic_Wrap(GameMode, 'On_dota_player_used_ability'), self)
 	ListenToGameEvent("dota_non_player_used_ability", Dynamic_Wrap(GameMode, 'On_dota_non_player_used_ability'), self)
@@ -229,6 +230,7 @@ function GameMode:StartEventTest()
 	ListenToGameEvent("compendium_selections_loaded", Dynamic_Wrap(GameMode, 'On_compendium_selections_loaded'), self)
 	ListenToGameEvent("compendium_set_selection_failed", Dynamic_Wrap(GameMode, 'On_compendium_set_selection_failed'), self)
 	ListenToGameEvent("community_cached_names_updated", Dynamic_Wrap(GameMode, 'On_community_cached_names_updated'), self)
+	ListenToGameEvent("dota_team_kill_credit", Dynamic_Wrap(GameMode, 'On_dota_team_kill_credit'), self)
 end
 
 function GameMode:On_team_info(data)
@@ -1033,6 +1035,10 @@ function GameMode:On_dota_player_gained_level(data)
   PrintTable(data)
 end
 
+function GameMode:On_dota_player_pick_hero(data)
+  print("[BAREBONES] dota_player_pick_hero")
+  PrintTable(data)
+end
 
 function GameMode:On_dota_player_learned_ability(data)
   print("[BAREBONES] dota_player_learned_ability")
@@ -1603,8 +1609,12 @@ function GameMode:On_compendium_set_selection_failed(data)
   PrintTable(data)
 end
 
-
 function GameMode:On_community_cached_names_updated(data)
   print("[BAREBONES] community_cached_names_updated")
+  PrintTable(data)
+end
+
+function GameMode:On_dota_team_kill_credit(data)
+  print("[BAREBONES] dota_team_kill_credit")
   PrintTable(data)
 end

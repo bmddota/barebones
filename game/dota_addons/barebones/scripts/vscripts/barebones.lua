@@ -15,9 +15,9 @@ GOLD_TICK_TIME = 5                      -- How long should we wait in seconds be
 RECOMMENDED_BUILDS_DISABLED = false     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
 CAMERA_DISTANCE_OVERRIDE = 1134.0        -- How far out should we allow the camera to go?  1134 is the default in Dota
 
-MINIMAP_ICON_SIZE = 500                 -- What icon size should we use for our heroes?
+MINIMAP_ICON_SIZE = 1                   -- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1             -- What icon size should we use for creeps?
-MINIMAP_RUNE_ICON_SIZE = 500            -- What icon size should we use for runes?
+MINIMAP_RUNE_ICON_SIZE = 1              -- What icon size should we use for runes?
 
 RUNE_SPAWN_TIME = 120                    -- How long in seconds should we wait between rune spawns?
 CUSTOM_BUYBACK_COST_ENABLED = true      -- Should we use a custom buyback cost setting?
@@ -353,6 +353,27 @@ function GameMode:OnPlayerTakeTowerDamage(keys)
   local damage = keys.damage
 end
 
+-- A player picked a hero
+function GameMode:OnPlayerPickHero(keys)
+  print ('[BAREBONES] OnPlayerPickHero')
+  PrintTable(keys)
+
+  local heroClass = keys.hero
+  local heroEntity = EntIndexToHScript(keys.heroindex)
+  local player = EntIndexToHScript(keys.player)
+end
+
+-- A player killed another player in a multi-team context
+function GameMode:OnTeamKillCredit(keys)
+  print ('[BAREBONES] OnTeamKillCredit')
+  PrintTable(keys)
+
+  local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
+  local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
+  local numKills = keys.herokills
+  local killerTeamNumber = keys.teamnumber
+end
+
 -- An entity died
 function GameMode:OnEntityKilled( keys )
   print( '[BAREBONES] OnEntityKilled Called' )
@@ -442,6 +463,8 @@ function GameMode:InitGameMode()
   ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(GameMode, 'OnAbilityUsed'), self)
   ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(GameMode, 'OnGameRulesStateChange'), self)
   ListenToGameEvent('npc_spawned', Dynamic_Wrap(GameMode, 'OnNPCSpawned'), self)
+  ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(GameMode, 'OnPlayerPickHero'), self)
+  ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(GameMode, 'OnTeamKillCredit'), self)
   ListenToGameEvent("player_reconnected", Dynamic_Wrap(GameMode, 'OnPlayerReconnect'), self)
   --ListenToGameEvent('player_spawn', Dynamic_Wrap(GameMode, 'OnPlayerSpawn'), self)
   --ListenToGameEvent('dota_unit_event', Dynamic_Wrap(GameMode, 'OnDotaUnitEvent'), self)
@@ -492,7 +515,7 @@ function GameMode:InitGameMode()
     end
   end, 'Connects and assigns fake Players.', 0)
 
-  --[[ This block is only used for testing events handling in the event that Valve adds more in the future
+  --[[This block is only used for testing events handling in the event that Valve adds more in the future
   Convars:RegisterCommand('events_test', function()
       GameMode:StartEventTest()
     end, "events test", 0)]]
@@ -613,3 +636,4 @@ function GameMode:ExampleConsoleCommand()
 end
 
 --require('eventtest')
+--GameMode:StartEventTest()

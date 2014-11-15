@@ -156,16 +156,10 @@ function Physics:Think()
           if IsValidEntity(unit) then
             local ents = nil
             if collider.filter then
-              if type(collider.filter) == "function" then
-                local status = nil
-                status, ents = pcall(collider.filter, collider)
-                if not status then
-                  print('[PHYSICS] Collision Filter Failure!: ' .. ents)
-                end
-              elseif type(collider.filter) == "table" then
-                ents = collider.filter
-              else
-                ents = {collider.filter}
+              local status = nil
+              status, ents = pcall(collider.filter, collider)
+              if not status then
+                print('[PHYSICS] Collision Filter Failure!: ' .. ents)
               end
             else
               ents = Entities:FindAllInSphere(unit:GetAbsOrigin(), collider.radius + 200)
@@ -531,14 +525,6 @@ function Physics:Unit(unit)
   
   function unit:OnHibernate(fun)
     unit.PhysicsHibernateCallback = fun
-  end
-
-  function unit:OnPreBounce(fun)
-    unit.PhysicsOnPreBounce = fun
-  end
-
-  function unit:OnBounce(fun)
-    unit.PhysicsOnBounce = fun
   end
   
   function unit:SetNavGridLookahead (lookahead)
@@ -925,20 +911,7 @@ function Physics:Unit(unit)
               --FindClearSpaceForUnit(unit, newPos, true)
               --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
             end
-
-            if unit.PhysicsOnPreBounce then
-              local status, nextCall = pcall(unit.PhysicsOnPreBounce, unit, normal)
-              if not status then
-                print('[PHYSICS] Failed OnPreBounce: ' .. nextCall)
-              end
-            end
             newVelocity = ((-2 * newVelocity:Dot(normal) * normal) + newVelocity) * unit.fBounceMultiplier
-            if unit.PhysicsOnBounce then
-              local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
-              if not status then
-                print('[PHYSICS] Failed OnBounce: ' .. nextCall)
-              end
-            end
           end
         else
           unit:SetAbsOrigin(newPos)
@@ -1276,9 +1249,7 @@ function Physics:PhysicsTestCommand(...)
     print(#anggrid[2])
     print(#anggrid[3])
 
-    if MAP_DATA  then
-      MAP_DATA.anggrid = anggrid
-    end
+    MAP_DATA.anggrid = anggrid
     Physics:AngleGrid(anggrid)
   end
   
@@ -1502,15 +1473,9 @@ function Physics:DistanceToLine(point, lineA, lineB)
 end
 
 function Physics:CreateBox(a, b, width, center)
-  print(a)
-  print(b)
-  print(width)
-  print(center)
-  local az = Vector(a.x,a.y,0)
-  local bz = Vector(b.x,b.y,0)
-  local heightVec = bz - az
+  local heightVec = b - a
   local height = heightVec:Length()
-  local dir = heightVec:Normalized()
+  local dir = height:Normalized()
 
   local box = {}
   if center then
