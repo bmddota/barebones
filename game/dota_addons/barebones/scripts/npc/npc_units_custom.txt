@@ -3,7 +3,7 @@
 {
 	"Version"	"1"
   
-  "npc_dummy_unit"
+	"npc_dummy_unit"
 	{
 		// General
 		//
@@ -226,7 +226,7 @@
 			//"model"			"models/heroes/lycan/lycan_wolf.vmdl"
 			//"model"			"models/heroes/lone_druid/true_form.vmdl"
 			//"model"			"models/heroes/undying/undying_flesh_golem.vmdl"
-			"model_folder"			"models/development"
+			"model_folder"		"models/development"
 
 			//"particle_folder"				"particles/units/heroes/hero_antimage"
 			//"particle_folder"				"particles/units/heroes/hero_axe"

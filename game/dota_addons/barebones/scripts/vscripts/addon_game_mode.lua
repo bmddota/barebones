@@ -1,10 +1,30 @@
--- Generated from template
+-- module_loader by Adynathos.
+BASE_MODULES = {
+	'util',
+	'timers',
+	'physics',
+	--'eventtest',
+	--'test',
+	'barebones',
+}
 
-require('util')
-require('timers')
-require('physics')
-require('multiteam')
-require('barebones')
+local function load_module(mod_name)
+	-- load the module in a monitored environment
+	local status, err_msg = pcall(function()
+		require(mod_name)
+	end)
+
+	if status then
+		log(' module ' .. mod_name .. ' OK')
+	else
+		err(' module ' .. mod_name .. ' FAILED: '..err_msg)
+	end
+end
+
+-- Load all modules
+for i, mod_name in pairs(BASE_MODULES) do
+	load_module(mod_name)
+end
 
 function Precache( context )
 	--[[

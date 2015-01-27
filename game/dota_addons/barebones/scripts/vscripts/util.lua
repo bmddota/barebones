@@ -1,3 +1,33 @@
+--MODULE LOADER STUFF
+
+BASE_LOG_PREFIX   = '[ML]'
+LOG_FILE = "log/Barebones.txt"
+
+InitLogFile(LOG_FILE, "[[ Barebones ]]")
+
+function log(msg)
+  print(BASE_LOG_PREFIX .. msg)
+  AppendToLogFile(LOG_FILE, msg .. '\n')
+end
+
+function err(msg)
+  display('[X] '..msg, COLOR_RED)
+end
+
+function warning(msg)
+  display('[W] '..msg, COLOR_DYELLOW)
+end
+
+function display(text, color)
+  color = color or COLOR_LGREEN
+
+  log('> '..text)
+
+  Say(nil, color..text, false)
+end
+
+--END OF MODULE LOADER STUFF
+
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
     if type(t) ~= "table" then return end
