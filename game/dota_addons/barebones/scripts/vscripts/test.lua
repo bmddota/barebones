@@ -3,6 +3,16 @@ if hero == nil then
   Physics:Unit(hero)
 end
 
+--[[if true then
+  boxcollider4 = Physics:AddCollider("aabox2", Physics:ColliderFromProfile("aaboxreflect"))
+  boxcollider4.box = {Vector(-400,-800,0), Vector(-200,-200,500)}
+  boxcollider4.draw = true
+  boxcollider4.test = function(self, unit)
+    return IsPhysicsUnit(unit)
+  end
+  return
+end]]
+
 if testCount == nil then
   if not enigma then
     enigma = CreateUnitByName('npc_dummy_unit', Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
@@ -108,6 +118,7 @@ if testCount == 0 then
 
   collider = hero:AddColliderFromProfile("blocker")
   collider.radius = 400
+  collider.draw = {color = Vector(200,200,200), alpha = 5}
 
   ring = {unit = hero, radius = 400, alpha = 0, rgb = Vector(200,50,50)}
 
@@ -152,11 +163,15 @@ if testCount == 1 then
   collider.moveSelf = true
   ring2 = {unit = testUnit, radius = 400, alpha = 0, rgb = Vector(200,50,200)}
   ring3 = {unit = testUnit2, radius = 400, alpha = 0, rgb = Vector(200,50,200)}
+
+  boxcollider2.draw = true
+  boxcollider.draw = {color = Vector(200,200,200), alpha = 5}
 end
 
 -- Half radius
 if testCount == 2 then
   collider.radius = 200
+  collider.draw = true
   ring.radius = 200
   ring2.radius = 200
   ring3.radius = 200
@@ -212,6 +227,7 @@ if testCount == 4 then
   boxcollider.test = function(self, unit)
     return IsPhysicsUnit(unit)
   end
+  boxcollider.draw = {color = Vector(200,200,200), alpha = 5}
   --[[
 
   Timers:CreateTimer(1, function() 
@@ -225,7 +241,7 @@ if testCount == 4 then
     units[4]:SetRenderColor(0,250,0)
 
     end)]]
-  box1 = {origin = Vector(-130,0,0), min = Vector(-100,350,128), max = Vector(1000,550,180),  direction = RotatePosition(Vector(0,0,0), QAngle(0,-15,0), Vector(1,0,0)), alpha = 5, rgb = Vector(200,50,200)}
+  box1 = {origin = Vector(-135,0,0), min = Vector(-100,350,128), max = Vector(1000,550,180),  direction = RotatePosition(Vector(0,0,0), QAngle(0,-15,0), Vector(1,0,0)), alpha = 5, rgb = Vector(200,50,200)}
 end
 
 if testCount == 5 then
