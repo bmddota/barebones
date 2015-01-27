@@ -1,6 +1,6 @@
 --MODULE LOADER STUFF
 
-BASE_LOG_PREFIX   = '[ML]'
+BASE_LOG_PREFIX = '[B]'
 LOG_FILE = "log/Barebones.txt"
 
 InitLogFile(LOG_FILE, "[[ Barebones ]]")
