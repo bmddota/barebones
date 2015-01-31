@@ -10,4 +10,4 @@ The best way to get started with creating Dota 2 custom games.
 
 ---
 ###TODO:
-* Add lots more utility functions.
+* Always looking to add more useful utility functions.
