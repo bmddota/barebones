@@ -5,7 +5,9 @@ The best way to get started with creating Dota 2 custom games.
 
 * Changed all the indentation to use tabs. Fixed the KV indentation.
 * Added some useful code.
+
 ---
+
 ###TODO:
 
 * Add more utility functions.
