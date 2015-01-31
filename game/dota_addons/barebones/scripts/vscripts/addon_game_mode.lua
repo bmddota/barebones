@@ -5,6 +5,7 @@ BASE_MODULES = {
 	'physics',
 	--'eventtest',
 	--'test',
+	'lib.statcollection',
 	'barebones',
 }
 

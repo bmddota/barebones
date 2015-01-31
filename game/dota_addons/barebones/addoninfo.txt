@@ -4,10 +4,10 @@
 	"addontitle"	"Barebones"
 	"addonversion"	"0.1"
 	"addontagline"	"Barebones"
-	"addonauthor"	"BMD"
+	"addonauthor"	"XXX"
 	"addonSteamGroupName"	""
 	"addonauthorSteamID"	""
 	"addonContent_Campaign"	"0"
-	"addonURL0"	"https://github.com/bmddota/barebones/"
+	"addonURL0"	""
 	"addonDescription"	"Barebones"
 }

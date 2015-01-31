@@ -1,5 +1,147 @@
---MODULE LOADER STUFF
+-- GREAT UTILITY FUNCTIONS
 
+-- adds ability to a unit, sets the level to 1, then returns ability handle.
+function AddAbilityToUnit(hUnit, sName)
+	if not hUnit or sName == "" then return end
+
+	if not hUnit:HasAbility(sName) then
+		hUnit:AddAbility(sName)
+	end
+	local abil = hUnit:FindAbilityByName(sName)
+	abil:SetLevel(1)
+
+	return abil
+end
+
+function GetOppositeTeam( unit )
+	if unit:GetTeam() == DOTA_TEAM_GOODGUYS then
+		return DOTA_TEAM_BADGUYS
+	else
+		return DOTA_TEAM_GOODGUYS
+	end
+end
+
+-- returns true 50% of the time.
+function CoinFlip(  )
+	return RollPercentage(50)
+end
+
+-- theta is in radians.
+function RotateVector2D(v,theta)
+	local xp = v.x*math.cos(theta)-v.y*math.sin(theta)
+	local yp = v.x*math.sin(theta)+v.y*math.cos(theta)
+	return Vector(xp,yp,v.z):Normalized()
+end
+
+function PrintVector(v)
+	print('x: ' .. v.x .. ' y: ' .. v.y .. ' z: ' .. v.z)
+end
+
+function TableContains( list, element )
+	if list == nil then return false end
+	for k,v in pairs(list) do
+		if k == element then
+			return true
+		end
+	end
+	return false
+end
+
+function GetIndex(list, element)
+	if list == nil then return false end
+	for i=1,#list do
+		if list[i] == element then
+			return i
+		end
+	end
+	return -1
+end
+
+-- useful with GameRules:SendCustomMessage
+function ColorIt( sStr, sColor )
+	if sStr == nil or sColor == nil then
+		return
+	end
+
+	--Default is cyan.
+	local color = "00FFFF"
+
+	if sColor == "green" then
+		color = "ADFF2F"
+	elseif sColor == "purple" then
+		color = "EE82EE"
+	elseif sColor == "blue" then
+		color = "00BFFF"
+	elseif sColor == "orange" then
+		color = "FFA500"
+	elseif sColor == "pink" then
+		color = "DDA0DD"
+	elseif sColor == "red" then
+		color = "FF6347"
+	elseif sColor == "cyan" then
+		color = "00FFFF"
+	elseif sColor == "yellow" then
+		color = "FFFF00"
+	elseif sColor == "brown" then
+		color = "A52A2A"
+	elseif sColor == "magenta" then
+		color = "FF00FF"
+	elseif sColor == "teal" then
+		color = "008080"
+	end
+	return "<font color='#" .. color .. "'>" .. sStr .. "</font>"
+end
+
+--[[
+	p: the raw point (Vector)
+	center: center of the square. (Vector)
+	length: length of 1 side of square. (Float)
+]]
+function IsPointWithinSquare(p, center, length)
+	if (p.x > center.x-length and p.x < center.x+length) and 
+		(p.y > center.y-length and p.y < center.y+length) then
+		return true
+	else
+		return false
+	end
+end
+
+--[[
+  Continuous collision algorithm for circular 2D bodies, see
+  http://www.gvu.gatech.edu/people/official/jarek/graphics/material/collisionFitzgeraldForsthoefel.pdf
+  
+  body1 and body2 are tables that contain:
+  v: velocity (Vector)
+  c: center (Vector)
+  r: radius (Float)
+
+  Returns the time-till-collision.
+]]
+function TimeTillCollision(body1,body2)
+	local W = body2.v-body1.v
+	local D = body2.c-body1.c
+	local A = DotProduct(W,W)
+	local B = 2*DotProduct(D,W)
+	local C = DotProduct(D,D)-(body1.r+body2.r)*(body1.r+body2.r)
+	local d = B*B-(4*A*C)
+	if d>=0 then
+		local t1=(-B-math.sqrt(d))/(2*A)
+		if t1<0 then t1=2 end
+		local t2=(-B+math.sqrt(d))/(2*A)
+		if t2<0 then t2=2 end
+		local m = math.min(t1,t2)
+		--if ((-0.02<=m) and (m<=1.02)) then
+		return m
+			--end
+	end
+	return 2
+end
+
+function DotProduct(v1,v2)
+  return (v1.x*v2.x)+(v1.y*v2.y)
+end
+
+--MODULE LOADER STUFF
 BASE_LOG_PREFIX = '[B]'
 LOG_FILE = "log/Barebones.txt"
 
@@ -25,7 +167,6 @@ function display(text, color)
 
 	Say(nil, color..text, false)
 end
-
 --END OF MODULE LOADER STUFF
 
 function PrintTable(t, indent, done)

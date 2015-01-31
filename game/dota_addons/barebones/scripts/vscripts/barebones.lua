@@ -4,8 +4,8 @@ ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respa
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = true        -- Should we let people select the same hero as each other
 
-HERO_SELECTION_TIME = 30.0              -- How long should we let people select their hero?
-PRE_GAME_TIME = 30.0                    -- How long after people select their heroes should the horn blow and the game start?
+HERO_SELECTION_TIME = 1.0              -- How long should we let people select their hero?
+PRE_GAME_TIME = 0.0                    -- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0                   -- How long should we let people look at the scoreboard before closing the server automatically?
 TREE_REGROW_TIME = 60.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
 
@@ -42,6 +42,19 @@ KILLS_TO_END_GAME_FOR_TEAM = 50         -- How many kills for a team should sign
 USE_CUSTOM_HERO_LEVELS = true           -- Should we allow heroes to have custom levels?
 MAX_LEVEL = 50                          -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = true             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
+
+-- Let's have a bool called Testing to run code that we want to test.
+-- Set this to false before you push out Workshop versions!
+Testing = true
+-- It's useful to set up an out of world vector. Ex. a location under the ground, in a corner of the map.
+OutOfWorldVector = Vector(-2000,-2000,-600)
+
+-- Set up the GetDotaStats stats for this mod.
+if not Testing then
+  statcollection.addStats({
+    modID = 'XXXXXXXXXXXXXXXXXXX' --GET THIS FROM http://getdotastats.com/#d2mods__my_mods
+  })
+end
 
 -- Fill this table up with the required XP per level if you want to change it
 XP_PER_LEVEL_TABLE = {}
@@ -106,6 +119,33 @@ end
 function GameMode:OnHeroInGame(hero)
 	print("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
+	if not self.greetPlayers then
+		-- At this point a player now has a hero spawned in your map.
+
+	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Barebones! ", "magenta") .. ColorIt("v0.1", "blue");
+	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("XXX", "orange")
+		-- Send the first greeting in 4 secs.
+		Timers:CreateTimer(4, function()
+	        GameRules:SendCustomMessage(firstLine, 0, 0)
+	        GameRules:SendCustomMessage(secondLine, 0, 0)
+		end)
+
+		self.greetPlayers = true
+	end
+
+	-- Store a reference to the player handle inside this hero handle.
+	hero.player = PlayerResource:GetPlayer(hero:GetPlayerID())
+	-- Store the player's name inside this hero handle.
+	hero.playerName = PlayerResource:GetPlayerName(hero:GetPlayerID())
+	-- Store this hero handle in this table.
+	table.insert(self.vPlayers, hero)
+
+	if Testing then
+		Say(nil, "Testing is on.", false)
+	end
+
+    ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
+
 	-- This line for example will set the starting gold of every hero to 500 unreliable gold
 	hero:SetGold(500, false)
 
@@ -133,6 +173,23 @@ function GameMode:OnGameInProgress()
 		print("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
 		return 30.0 -- Rerun this timer every 30 game-time seconds
 	end)
+end
+
+function GameMode:PlayerSay( keys )
+  local hero = nil
+  if keys.ply == nil and keys.hero ~= nil then
+    hero = keys.hero
+  else
+    hero = keys.ply:GetAssignedHero()
+  end
+  local txt = keys.text
+
+  if txt == nil or txt == "" then
+    return
+  end
+
+  -- At this point we have valid text from a player.
+	print("P" .. hero:GetPlayerID() .. ": " .. keys.text)
 end
 
 -- Cleanup a player when they leave
@@ -474,6 +531,16 @@ function GameMode:InitGameMode()
 
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
+
+	Convars:RegisterCommand('player_say', function(...)
+		local arg = {...}
+		table.remove(arg,1)
+		local cmdPlayer = Convars:GetCommandClient()
+		local keys = {}
+		keys.ply = cmdPlayer
+		keys.text = table.concat(arg, " ")
+		self:PlayerSay(keys) -- This function is what your old "player_say" event latch called
+	end, 'player say', 0)
 
 	-- Fill server with fake clients
 	-- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
