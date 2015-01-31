@@ -6,64 +6,64 @@ LOG_FILE = "log/Barebones.txt"
 InitLogFile(LOG_FILE, "[[ Barebones ]]")
 
 function log(msg)
-  print(BASE_LOG_PREFIX .. msg)
-  AppendToLogFile(LOG_FILE, msg .. '\n')
+	print(BASE_LOG_PREFIX .. msg)
+	AppendToLogFile(LOG_FILE, msg .. '\n')
 end
 
 function err(msg)
-  display('[X] '..msg, COLOR_RED)
+	display('[X] '..msg, COLOR_RED)
 end
 
 function warning(msg)
-  display('[W] '..msg, COLOR_DYELLOW)
+	display('[W] '..msg, COLOR_DYELLOW)
 end
 
 function display(text, color)
-  color = color or COLOR_LGREEN
+	color = color or COLOR_LGREEN
 
-  log('> '..text)
+	log('> '..text)
 
-  Say(nil, color..text, false)
+	Say(nil, color..text, false)
 end
 
 --END OF MODULE LOADER STUFF
 
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
-    if type(t) ~= "table" then return end
+	if type(t) ~= "table" then return end
 
-    done = done or {}
-    done[t] = true
-    indent = indent or 0
+	done = done or {}
+	done[t] = true
+	indent = indent or 0
 
-    local l = {}
-    for k, v in pairs(t) do
-        table.insert(l, k)
-    end
+	local l = {}
+	for k, v in pairs(t) do
+		table.insert(l, k)
+	end
 
-    table.sort(l)
-    for k, v in ipairs(l) do
-        -- Ignore FDesc
-        if v ~= 'FDesc' then
-            local value = t[v]
+	table.sort(l)
+	for k, v in ipairs(l) do
+		-- Ignore FDesc
+		if v ~= 'FDesc' then
+			local value = t[v]
 
-            if type(value) == "table" and not done[value] then
-                done [value] = true
-                print(string.rep ("\t", indent)..tostring(v)..":")
-                PrintTable (value, indent + 2, done)
-            elseif type(value) == "userdata" and not done[value] then
-                done [value] = true
-                print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
-                PrintTable ((getmetatable(value) and getmetatable(value).__index) or getmetatable(value), indent + 2, done)
-            else
-                if t.FDesc and t.FDesc[v] then
-                    print(string.rep ("\t", indent)..tostring(t.FDesc[v]))
-                else
-                    print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
-                end
-            end
-        end
-    end
+			if type(value) == "table" and not done[value] then
+				done [value] = true
+				print(string.rep ("\t", indent)..tostring(v)..":")
+				PrintTable (value, indent + 2, done)
+			elseif type(value) == "userdata" and not done[value] then
+				done [value] = true
+				print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
+				PrintTable ((getmetatable(value) and getmetatable(value).__index) or getmetatable(value), indent + 2, done)
+			else
+				if t.FDesc and t.FDesc[v] then
+					print(string.rep ("\t", indent)..tostring(t.FDesc[v]))
+				else
+					print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
+				end
+			end
+		end
+	end
 end
 
 -- Colors
@@ -118,32 +118,32 @@ function _LogDeepPrintMetaTable( debugMetaTable, prefix )
 	end
 end
 
-function _LogDeepPrintTable(debugInstance, prefix, isOuterScope, chaseMetaTables ) 
-    prefix = prefix or ""
-    local string_accum = ""
-    if debugInstance == nil then 
+function _LogDeepPrintTable(debugInstance, prefix, isOuterScope, chaseMetaTables )
+	prefix = prefix or ""
+	local string_accum = ""
+	if debugInstance == nil then
 		LogEndLine( prefix .. "<nil>" )
 		return
-    end
+	end
 	local terminatescope = false
 	local oldPrefix = ""
-    if isOuterScope then  -- special case for outer call - so we dont end up iterating strings, basically
-        if type(debugInstance) == "table" then 
-            LogEndLine( prefix .. "{" )
+	if isOuterScope then  -- special case for outer call - so we dont end up iterating strings, basically
+		if type(debugInstance) == "table" then
+			LogEndLine( prefix .. "{" )
 			oldPrefix = prefix
-            prefix = prefix .. "   "
+			prefix = prefix .. "   "
 			terminatescope = true
-        else 
-            LogEndLine( prefix .. " = " .. (type(debugInstance) == "string" and ("\"" .. debugInstance .. "\"") or debugInstance))
-        end
-    end
-    local debugOver = debugInstance
+	else
+		LogEndLine( prefix .. " = " .. (type(debugInstance) == "string" and ("\"" .. debugInstance .. "\"") or debugInstance))
+	end
+	end
+	local debugOver = debugInstance
 
 	-- First deal with metatables
 	if chaseMetaTables == true then
 		if getmetatable( debugOver ) ~= nil and getmetatable( debugOver ).__index ~= nil then
-			local thisMetaTable = getmetatable( debugOver ).__index 
-			if vlua.find(_LogDeepprint_alreadyseen, thisMetaTable ) ~= nil then 
+			local thisMetaTable = getmetatable( debugOver ).__index
+			if vlua.find(_LogDeepprint_alreadyseen, thisMetaTable ) ~= nil then
 				LogEndLine( string.format( "%s%-32s\t= %s (table, already seen)", prefix, "metatable", tostring( thisMetaTable ) ) )
 			else
 				LogEndLine(prefix .. "metatable = " .. tostring( thisMetaTable ) )
@@ -157,12 +157,12 @@ function _LogDeepPrintTable(debugInstance, prefix, isOuterScope, chaseMetaTables
 
 	-- Now deal with the elements themselves
 	-- debugOver sometimes a string??
-    for idx, data_value in pairs(debugOver) do
-        if type(data_value) == "table" then 
-            if vlua.find(_LogDeepprint_alreadyseen, data_value) ~= nil then 
-                LogEndLine( string.format( "%s%-32s\t= %s (table, already seen)", prefix, idx, tostring( data_value ) ) )
-            else
-                local is_array = #data_value > 0
+	for idx, data_value in pairs(debugOver) do
+		if type(data_value) == "table" then
+			if vlua.find(_LogDeepprint_alreadyseen, data_value) ~= nil then
+				LogEndLine( string.format( "%s%-32s\t= %s (table, already seen)", prefix, idx, tostring( data_value ) ) )
+			else
+				local is_array = #data_value > 0
 				local test = 1
 				for idx2, val2 in pairs(data_value) do
 					if type( idx2 ) ~= "number" or idx2 ~= test then
@@ -175,29 +175,29 @@ function _LogDeepPrintTable(debugInstance, prefix, isOuterScope, chaseMetaTables
 				if is_array == true then
 					valtype = "array table"
 				end
-                LogEndLine( string.format( "%s%-32s\t= %s (%s)", prefix, idx, tostring(data_value), valtype ) )
-                LogEndLine(prefix .. (is_array and "[" or "{"))
-                table.insert(_LogDeepprint_alreadyseen, data_value)
-                _LogDeepPrintTable(data_value, prefix .. "   ", false, true)
-                LogEndLine(prefix .. (is_array and "]" or "}"))
-            end
-		elseif type(data_value) == "string" then 
-            LogEndLine( string.format( "%s%-32s\t= \"%s\" (%s)", prefix, idx, data_value, type(data_value) ) )
-		else 
-            LogEndLine( string.format( "%s%-32s\t= %s (%s)", prefix, idx, tostring(data_value), type(data_value) ) )
-        end
-    end
+				LogEndLine( string.format( "%s%-32s\t= %s (%s)", prefix, idx, tostring(data_value), valtype ) )
+				LogEndLine(prefix .. (is_array and "[" or "{"))
+				table.insert(_LogDeepprint_alreadyseen, data_value)
+				_LogDeepPrintTable(data_value, prefix .. "   ", false, true)
+				LogEndLine(prefix .. (is_array and "]" or "}"))
+			end
+		elseif type(data_value) == "string" then
+			LogEndLine( string.format( "%s%-32s\t= \"%s\" (%s)", prefix, idx, data_value, type(data_value) ) )
+		else
+			LogEndLine( string.format( "%s%-32s\t= %s (%s)", prefix, idx, tostring(data_value), type(data_value) ) )
+		end
+	end
 	if terminatescope == true then
 		LogEndLine( oldPrefix .. "}" )
 	end
 end
 
 
-function LogDeepPrintTable( debugInstance, prefix, isPublicScriptScope ) 
-    prefix = prefix or ""
-    _LogDeepprint_alreadyseen = {}
-    table.insert(_LogDeepprint_alreadyseen, debugInstance)
-    _LogDeepPrintTable(debugInstance, prefix, true, isPublicScriptScope )
+function LogDeepPrintTable( debugInstance, prefix, isPublicScriptScope )
+	prefix = prefix or ""
+	_LogDeepprint_alreadyseen = {}
+	table.insert(_LogDeepprint_alreadyseen, debugInstance)
+	_LogDeepPrintTable(debugInstance, prefix, true, isPublicScriptScope )
 end
 
 
@@ -212,58 +212,58 @@ _LogDeepprint_alreadyseen = {}
 
 
 -- the inner recursion for the LogDeep print
-function _LogDeepToString(debugInstance, prefix) 
-    local string_accum = ""
-    if debugInstance == nil then 
-        return "LogDeep Print of NULL" .. "\n"
-    end
-    if prefix == "" then  -- special case for outer call - so we dont end up iterating strings, basically
-        if type(debugInstance) == "table" or type(debugInstance) == "table" or type(debugInstance) == "UNKNOWN" or type(debugInstance) == "table" then 
-            string_accum = string_accum .. (type(debugInstance) == "table" and "[" or "{") .. "\n"
-            prefix = "   "
-        else 
-            return " = " .. (type(debugInstance) == "string" and ("\"" .. debugInstance .. "\"") or debugInstance) .. "\n"
-        end
-    end
-    local debugOver = type(debugInstance) == "UNKNOWN" and getclass(debugInstance) or debugInstance
-    for idx, val in pairs(debugOver) do
-        local data_value = debugInstance[idx]
-        if type(data_value) == "table" or type(data_value) == "table" or type(data_value) == "UNKNOWN" or type(data_value) == "table" then 
-            if vlua.find(_LogDeepprint_alreadyseen, data_value) ~= nil then 
-                string_accum = string_accum .. prefix .. idx .. " ALREADY SEEN " .. "\n"
-            else 
-                local is_array = type(data_value) == "table"
-                string_accum = string_accum .. prefix .. idx .. " = ( " .. type(data_value) .. " )" .. "\n"
-                string_accum = string_accum .. prefix .. (is_array and "[" or "{") .. "\n"
-                table.insert(_LogDeepprint_alreadyseen, data_value)
-                string_accum = string_accum .. _LogDeepToString(data_value, prefix .. "   ")
-                string_accum = string_accum .. prefix .. (is_array and "]" or "}") .. "\n"
-            end
-        else 
-            --string_accum = string_accum .. prefix .. idx .. "\t= " .. (type(data_value) == "string" and ("\"" .. data_value .. "\"") or data_value) .. "\n"
+function _LogDeepToString(debugInstance, prefix)
+	local string_accum = ""
+	if debugInstance == nil then
+		return "LogDeep Print of NULL" .. "\n"
+	end
+	if prefix == "" then  -- special case for outer call - so we dont end up iterating strings, basically
+		if type(debugInstance) == "table" or type(debugInstance) == "table" or type(debugInstance) == "UNKNOWN" or type(debugInstance) == "table" then
+			string_accum = string_accum .. (type(debugInstance) == "table" and "[" or "{") .. "\n"
+			prefix = "   "
+	else
+		return " = " .. (type(debugInstance) == "string" and ("\"" .. debugInstance .. "\"") or debugInstance) .. "\n"
+	end
+	end
+	local debugOver = type(debugInstance) == "UNKNOWN" and getclass(debugInstance) or debugInstance
+	for idx, val in pairs(debugOver) do
+		local data_value = debugInstance[idx]
+		if type(data_value) == "table" or type(data_value) == "table" or type(data_value) == "UNKNOWN" or type(data_value) == "table" then
+			if vlua.find(_LogDeepprint_alreadyseen, data_value) ~= nil then
+				string_accum = string_accum .. prefix .. idx .. " ALREADY SEEN " .. "\n"
+			else
+				local is_array = type(data_value) == "table"
+				string_accum = string_accum .. prefix .. idx .. " = ( " .. type(data_value) .. " )" .. "\n"
+				string_accum = string_accum .. prefix .. (is_array and "[" or "{") .. "\n"
+				table.insert(_LogDeepprint_alreadyseen, data_value)
+				string_accum = string_accum .. _LogDeepToString(data_value, prefix .. "   ")
+				string_accum = string_accum .. prefix .. (is_array and "]" or "}") .. "\n"
+			end
+		else
+			--string_accum = string_accum .. prefix .. idx .. "\t= " .. (type(data_value) == "string" and ("\"" .. data_value .. "\"") or data_value) .. "\n"
 			string_accum = string_accum .. prefix .. idx .. "\t= " .. "\"" .. tostring(data_value) .. "\"" .. "\n"
-        end
-    end
-    if prefix == "   " then 
-        string_accum = string_accum .. (type(debugInstance) == "table" and "]" or "}") .. "\n" -- hack for "proving" at end - this is DUMB!
-    end
-    return string_accum
+		end
+	end
+	if prefix == "   " then
+		string_accum = string_accum .. (type(debugInstance) == "table" and "]" or "}") .. "\n" -- hack for "proving" at end - this is DUMB!
+	end
+	return string_accum
 end
 
 
 scripthelp_LogDeepString = "Convert a class/array/instance/table to a string"
 
-function LogDeepToString(debugInstance, prefix) 
-    prefix = prefix or ""
-    _LogDeepprint_alreadyseen = {}
-    table.insert(_LogDeepprint_alreadyseen, debugInstance)
-    return _LogDeepToString(debugInstance, prefix)
+function LogDeepToString(debugInstance, prefix)
+	prefix = prefix or ""
+	_LogDeepprint_alreadyseen = {}
+	table.insert(_LogDeepprint_alreadyseen, debugInstance)
+	return _LogDeepToString(debugInstance, prefix)
 end
 
 
 scripthelp_LogDeepPrint = "Print out a class/array/instance/table to the console"
 
-function LogDeepPrint(debugInstance, prefix) 
-    prefix = prefix or ""
-    LogEndLine(LogDeepToString(debugInstance, prefix))
+function LogDeepPrint(debugInstance, prefix)
+	prefix = prefix or ""
+	LogEndLine(LogDeepToString(debugInstance, prefix))
 end

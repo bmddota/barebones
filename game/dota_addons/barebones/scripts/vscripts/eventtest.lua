@@ -234,1387 +234,1387 @@ function GameMode:StartEventTest()
 end
 
 function GameMode:On_team_info(data)
-  print("[BAREBONES] team_info")
-  PrintTable(data)
+	print("[BAREBONES] team_info")
+	PrintTable(data)
 end
 
 
 function GameMode:On_team_score(data)
-  print("[BAREBONES] team_score")
-  PrintTable(data)
+	print("[BAREBONES] team_score")
+	PrintTable(data)
 end
 
 
 function GameMode:On_teamplay_broadcast_audio(data)
-  print("[BAREBONES] teamplay_broadcast_audio")
-  PrintTable(data)
+	print("[BAREBONES] teamplay_broadcast_audio")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_team(data)
-  print("[BAREBONES] player_team")
-  PrintTable(data)
+	print("[BAREBONES] player_team")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_class(data)
-  print("[BAREBONES] player_class")
-  PrintTable(data)
+	print("[BAREBONES] player_class")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_death (data)
-  print("[BAREBONES] player_death")
-  PrintTable(data)
+	print("[BAREBONES] player_death")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_hurt (data)
-  print("[BAREBONES] player_hurt")
-  PrintTable(data)
+	print("[BAREBONES] player_hurt")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_chat (data)
-  print("[BAREBONES] player_chat")
-  PrintTable(data)
+	print("[BAREBONES] player_chat")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_score(data)
-  print("[BAREBONES] player_score")
-  PrintTable(data)
+	print("[BAREBONES] player_score")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_spawn(data)
-  print("[BAREBONES] player_spawn")
-  PrintTable(data)
+	print("[BAREBONES] player_spawn")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_shoot(data)
-  print("[BAREBONES] player_shoot")
-  PrintTable(data)
+	print("[BAREBONES] player_shoot")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_use(data)
-  print("[BAREBONES] player_use")
-  PrintTable(data)
+	print("[BAREBONES] player_use")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_changename(data)
-  print("[BAREBONES] player_changename")
-  PrintTable(data)
+	print("[BAREBONES] player_changename")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_hintmessage(data)
-  print("[BAREBONES] player_hintmessage")
-  PrintTable(data)
+	print("[BAREBONES] player_hintmessage")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_reconnected (data)
-  print("[BAREBONES] player_reconnected")
-  PrintTable(data)
+	print("[BAREBONES] player_reconnected")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_init(data)
-  print("[BAREBONES] game_init")
-  PrintTable(data)
+	print("[BAREBONES] game_init")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_newmap(data)
-  print("[BAREBONES] game_newmap")
-  PrintTable(data)
+	print("[BAREBONES] game_newmap")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_start(data)
-  print("[BAREBONES] game_start")
-  PrintTable(data)
+	print("[BAREBONES] game_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_end(data)
-  print("[BAREBONES] game_end")
-  PrintTable(data)
+	print("[BAREBONES] game_end")
+	PrintTable(data)
 end
 
 
 function GameMode:On_round_start(data)
-  print("[BAREBONES] round_start")
-  PrintTable(data)
+	print("[BAREBONES] round_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_round_end(data)
-  print("[BAREBONES] round_end")
-  PrintTable(data)
+	print("[BAREBONES] round_end")
+	PrintTable(data)
 end
 
 
 function GameMode:On_round_start_pre_entity(data)
-  print("[BAREBONES] round_start_pre_entity")
-  PrintTable(data)
+	print("[BAREBONES] round_start_pre_entity")
+	PrintTable(data)
 end
 
 
 function GameMode:On_teamplay_round_start(data)
-  print("[BAREBONES] teamplay_round_start")
-  PrintTable(data)
+	print("[BAREBONES] teamplay_round_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hostname_changed(data)
-  print("[BAREBONES] hostname_changed")
-  PrintTable(data)
+	print("[BAREBONES] hostname_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_difficulty_changed(data)
-  print("[BAREBONES] difficulty_changed")
-  PrintTable(data)
+	print("[BAREBONES] difficulty_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_finale_start(data)
-  print("[BAREBONES] finale_start")
-  PrintTable(data)
+	print("[BAREBONES] finale_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_message(data)
-  print("[BAREBONES] game_message")
-  PrintTable(data)
+	print("[BAREBONES] game_message")
+	PrintTable(data)
 end
 
 
 function GameMode:On_break_breakable(data)
-  print("[BAREBONES] break_breakable")
-  PrintTable(data)
+	print("[BAREBONES] break_breakable")
+	PrintTable(data)
 end
 
 
 function GameMode:On_break_prop(data)
-  print("[BAREBONES] break_prop")
-  PrintTable(data)
+	print("[BAREBONES] break_prop")
+	PrintTable(data)
 end
 
 
 function GameMode:On_npc_spawned(data)
-  print("[BAREBONES] npc_spawned")
-  PrintTable(data)
+	print("[BAREBONES] npc_spawned")
+	PrintTable(data)
 end
 
 
 function GameMode:On_npc_replaced(data)
-  print("[BAREBONES] npc_replaced")
-  PrintTable(data)
+	print("[BAREBONES] npc_replaced")
+	PrintTable(data)
 end
 
 
 function GameMode:On_entity_killed(data)
-  print("[BAREBONES] entity_killed")
-  PrintTable(data)
+	print("[BAREBONES] entity_killed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_entity_hurt(data)
-  print("[BAREBONES] entity_hurt")
-  PrintTable(data)
+	print("[BAREBONES] entity_hurt")
+	PrintTable(data)
 end
 
 
 function GameMode:On_bonus_updated(data)
-  print("[BAREBONES] bonus_updated")
-  PrintTable(data)
+	print("[BAREBONES] bonus_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_stats_updated(data)
-  print("[BAREBONES] player_stats_updated")
-  PrintTable(data)
+	print("[BAREBONES] player_stats_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_achievement_event(data)
-  print("[BAREBONES] achievement_event")
-  PrintTable(data)
+	print("[BAREBONES] achievement_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_achievement_earned(data)
-  print("[BAREBONES] achievement_earned")
-  PrintTable(data)
+	print("[BAREBONES] achievement_earned")
+	PrintTable(data)
 end
 
 
 function GameMode:On_achievement_write_failed(data)
-  print("[BAREBONES] achievement_write_failed")
-  PrintTable(data)
+	print("[BAREBONES] achievement_write_failed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_physgun_pickup(data)
-  print("[BAREBONES] physgun_pickup")
-  PrintTable(data)
+	print("[BAREBONES] physgun_pickup")
+	PrintTable(data)
 end
 
 
 function GameMode:On_flare_ignite_npc(data)
-  print("[BAREBONES] flare_ignite_npc")
-  PrintTable(data)
+	print("[BAREBONES] flare_ignite_npc")
+	PrintTable(data)
 end
 
 
 function GameMode:On_helicopter_grenade_punt_miss(data)
-  print("[BAREBONES] helicopter_grenade_punt_miss")
-  PrintTable(data)
+	print("[BAREBONES] helicopter_grenade_punt_miss")
+	PrintTable(data)
 end
 
 
 function GameMode:On_user_data_downloaded(data)
-  print("[BAREBONES] user_data_downloaded")
-  PrintTable(data)
+	print("[BAREBONES] user_data_downloaded")
+	PrintTable(data)
 end
 
 
 function GameMode:On_ragdoll_dissolved(data)
-  print("[BAREBONES] ragdoll_dissolved")
-  PrintTable(data)
+	print("[BAREBONES] ragdoll_dissolved")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gameinstructor_draw(data)
-  print("[BAREBONES] gameinstructor_draw")
-  PrintTable(data)
+	print("[BAREBONES] gameinstructor_draw")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gameinstructor_nodraw(data)
-  print("[BAREBONES] gameinstructor_nodraw")
-  PrintTable(data)
+	print("[BAREBONES] gameinstructor_nodraw")
+	PrintTable(data)
 end
 
 
 function GameMode:On_map_transition(data)
-  print("[BAREBONES] map_transition")
-  PrintTable(data)
+	print("[BAREBONES] map_transition")
+	PrintTable(data)
 end
 
 
 function GameMode:On_instructor_server_hint_create(data)
-  print("[BAREBONES] instructor_server_hint_create")
-  PrintTable(data)
+	print("[BAREBONES] instructor_server_hint_create")
+	PrintTable(data)
 end
 
 
 function GameMode:On_instructor_server_hint_stop(data)
-  print("[BAREBONES] instructor_server_hint_stop")
-  PrintTable(data)
+	print("[BAREBONES] instructor_server_hint_stop")
+	PrintTable(data)
 end
 
 
 function GameMode:On_chat_new_message(data)
-  print("[BAREBONES] chat_new_message")
-  PrintTable(data)
+	print("[BAREBONES] chat_new_message")
+	PrintTable(data)
 end
 
 
 function GameMode:On_chat_members_changed(data)
-  print("[BAREBONES] chat_members_changed")
-  PrintTable(data)
+	print("[BAREBONES] chat_members_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_rules_state_change(data)
-  print("[BAREBONES] game_rules_state_change")
-  PrintTable(data)
+	print("[BAREBONES] game_rules_state_change")
+	PrintTable(data)
 end
 
 
 function GameMode:On_inventory_updated(data)
-  print("[BAREBONES] inventory_updated")
-  PrintTable(data)
+	print("[BAREBONES] inventory_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_cart_updated(data)
-  print("[BAREBONES] cart_updated")
-  PrintTable(data)
+	print("[BAREBONES] cart_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_store_pricesheet_updated(data)
-  print("[BAREBONES] store_pricesheet_updated")
-  PrintTable(data)
+	print("[BAREBONES] store_pricesheet_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gc_connected(data)
-  print("[BAREBONES] gc_connected")
-  PrintTable(data)
+	print("[BAREBONES] gc_connected")
+	PrintTable(data)
 end
 
 
 function GameMode:On_item_schema_initialized(data)
-  print("[BAREBONES] item_schema_initialized")
-  PrintTable(data)
+	print("[BAREBONES] item_schema_initialized")
+	PrintTable(data)
 end
 
 
 function GameMode:On_drop_rate_modified(data)
-  print("[BAREBONES] drop_rate_modified")
-  PrintTable(data)
+	print("[BAREBONES] drop_rate_modified")
+	PrintTable(data)
 end
 
 
 function GameMode:On_event_ticket_modified(data)
-  print("[BAREBONES] event_ticket_modified")
-  PrintTable(data)
+	print("[BAREBONES] event_ticket_modified")
+	PrintTable(data)
 end
 
 
 function GameMode:On_modifier_event(data)
-  print("[BAREBONES] modifier_event")
-  PrintTable(data)
+	print("[BAREBONES] modifier_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_kill(data)
-  print("[BAREBONES] dota_player_kill")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_kill")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_deny(data)
-  print("[BAREBONES] dota_player_deny")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_deny")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_barracks_kill(data)
-  print("[BAREBONES] dota_barracks_kill")
-  PrintTable(data)
+	print("[BAREBONES] dota_barracks_kill")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_tower_kill(data)
-  print("[BAREBONES] dota_tower_kill")
-  PrintTable(data)
+	print("[BAREBONES] dota_tower_kill")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_roshan_kill(data)
-  print("[BAREBONES] dota_roshan_kill")
-  PrintTable(data)
+	print("[BAREBONES] dota_roshan_kill")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_courier_lost(data)
-  print("[BAREBONES] dota_courier_lost")
-  PrintTable(data)
+	print("[BAREBONES] dota_courier_lost")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_courier_respawned(data)
-  print("[BAREBONES] dota_courier_respawned")
-  PrintTable(data)
+	print("[BAREBONES] dota_courier_respawned")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_glyph_used(data)
-  print("[BAREBONES] dota_glyph_used")
-  PrintTable(data)
+	print("[BAREBONES] dota_glyph_used")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_super_creeps(data)
-  print("[BAREBONES] dota_super_creeps")
-  PrintTable(data)
+	print("[BAREBONES] dota_super_creeps")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_purchase(data)
-  print("[BAREBONES] dota_item_purchase")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_purchase")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_gifted(data)
-  print("[BAREBONES] dota_item_gifted")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_gifted")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_rune_pickup(data)
-  print("[BAREBONES] dota_rune_pickup")
-  PrintTable(data)
+	print("[BAREBONES] dota_rune_pickup")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_rune_spotted(data)
-  print("[BAREBONES] dota_rune_spotted")
-  PrintTable(data)
+	print("[BAREBONES] dota_rune_spotted")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_spotted(data)
-  print("[BAREBONES] dota_item_spotted")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_spotted")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_no_battle_points(data)
-  print("[BAREBONES] dota_no_battle_points")
-  PrintTable(data)
+	print("[BAREBONES] dota_no_battle_points")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_informational(data)
-  print("[BAREBONES] dota_chat_informational")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_informational")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_action_item(data)
-  print("[BAREBONES] dota_action_item")
-  PrintTable(data)
+	print("[BAREBONES] dota_action_item")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_ban_notification(data)
-  print("[BAREBONES] dota_chat_ban_notification")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_ban_notification")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_event(data)
-  print("[BAREBONES] dota_chat_event")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_timed_reward(data)
-  print("[BAREBONES] dota_chat_timed_reward")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_timed_reward")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_pause_event(data)
-  print("[BAREBONES] dota_pause_event")
-  PrintTable(data)
+	print("[BAREBONES] dota_pause_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_kill_streak(data)
-  print("[BAREBONES] dota_chat_kill_streak")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_kill_streak")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_chat_first_blood(data)
-  print("[BAREBONES] dota_chat_first_blood")
-  PrintTable(data)
+	print("[BAREBONES] dota_chat_first_blood")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_update_hero_selection(data)
-  print("[BAREBONES] dota_player_update_hero_selection")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_update_hero_selection")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_update_selected_unit(data)
-  print("[BAREBONES] dota_player_update_selected_unit")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_update_selected_unit")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_update_query_unit(data)
-  print("[BAREBONES] dota_player_update_query_unit")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_update_query_unit")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_update_killcam_unit(data)
-  print("[BAREBONES] dota_player_update_killcam_unit")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_update_killcam_unit")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_take_tower_damage(data)
-  print("[BAREBONES] dota_player_take_tower_damage")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_take_tower_damage")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_hud_error_message(data)
-  print("[BAREBONES] dota_hud_error_message")
-  PrintTable(data)
+	print("[BAREBONES] dota_hud_error_message")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_action_success(data)
-  print("[BAREBONES] dota_action_success")
-  PrintTable(data)
+	print("[BAREBONES] dota_action_success")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_starting_position_changed(data)
-  print("[BAREBONES] dota_starting_position_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_starting_position_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_money_changed(data)
-  print("[BAREBONES] dota_money_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_money_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_enemy_money_changed(data)
-  print("[BAREBONES] dota_enemy_money_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_enemy_money_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_portrait_unit_stats_changed(data)
-  print("[BAREBONES] dota_portrait_unit_stats_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_portrait_unit_stats_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_portrait_unit_modifiers_changed(data)
-  print("[BAREBONES] dota_portrait_unit_modifiers_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_portrait_unit_modifiers_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_force_portrait_update(data)
-  print("[BAREBONES] dota_force_portrait_update")
-  PrintTable(data)
+	print("[BAREBONES] dota_force_portrait_update")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_inventory_changed(data)
-  print("[BAREBONES] dota_inventory_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_inventory_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_picked_up(data)
-  print("[BAREBONES] dota_item_picked_up")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_picked_up")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_inventory_item_changed(data)
-  print("[BAREBONES] dota_inventory_item_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_inventory_item_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_ability_changed(data)
-  print("[BAREBONES] dota_ability_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_ability_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_portrait_ability_layout_changed(data)
-  print("[BAREBONES] dota_portrait_ability_layout_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_portrait_ability_layout_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_inventory_item_added(data)
-  print("[BAREBONES] dota_inventory_item_added")
-  PrintTable(data)
+	print("[BAREBONES] dota_inventory_item_added")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_inventory_changed_query_unit(data)
-  print("[BAREBONES] dota_inventory_changed_query_unit")
-  PrintTable(data)
+	print("[BAREBONES] dota_inventory_changed_query_unit")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_link_clicked(data)
-  print("[BAREBONES] dota_link_clicked")
-  PrintTable(data)
+	print("[BAREBONES] dota_link_clicked")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_set_quick_buy(data)
-  print("[BAREBONES] dota_set_quick_buy")
-  PrintTable(data)
+	print("[BAREBONES] dota_set_quick_buy")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_quick_buy_changed(data)
-  print("[BAREBONES] dota_quick_buy_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_quick_buy_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_shop_changed(data)
-  print("[BAREBONES] dota_player_shop_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_shop_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_show_killcam(data)
-  print("[BAREBONES] dota_player_show_killcam")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_show_killcam")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_show_minikillcam(data)
-  print("[BAREBONES] dota_player_show_minikillcam")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_show_minikillcam")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gc_user_session_created(data)
-  print("[BAREBONES] gc_user_session_created")
-  PrintTable(data)
+	print("[BAREBONES] gc_user_session_created")
+	PrintTable(data)
 end
 
 
 function GameMode:On_team_data_updated(data)
-  print("[BAREBONES] team_data_updated")
-  PrintTable(data)
+	print("[BAREBONES] team_data_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_guild_data_updated(data)
-  print("[BAREBONES] guild_data_updated")
-  PrintTable(data)
+	print("[BAREBONES] guild_data_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_guild_open_parties_updated(data)
-  print("[BAREBONES] guild_open_parties_updated")
-  PrintTable(data)
+	print("[BAREBONES] guild_open_parties_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_fantasy_updated(data)
-  print("[BAREBONES] fantasy_updated")
-  PrintTable(data)
+	print("[BAREBONES] fantasy_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_fantasy_league_changed(data)
-  print("[BAREBONES] fantasy_league_changed")
-  PrintTable(data)
+	print("[BAREBONES] fantasy_league_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_fantasy_score_info_changed(data)
-  print("[BAREBONES] fantasy_score_info_changed")
-  PrintTable(data)
+	print("[BAREBONES] fantasy_score_info_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_info_updated(data)
-  print("[BAREBONES] player_info_updated")
-  PrintTable(data)
+	print("[BAREBONES] player_info_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_rules_state_change(data)
-  print("[BAREBONES] game_rules_state_change")
-  PrintTable(data)
+	print("[BAREBONES] game_rules_state_change")
+	PrintTable(data)
 end
 
 
 function GameMode:On_match_history_updated(data)
-  print("[BAREBONES] match_history_updated")
-  PrintTable(data)
+	print("[BAREBONES] match_history_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_match_details_updated(data)
-  print("[BAREBONES] match_details_updated")
-  PrintTable(data)
+	print("[BAREBONES] match_details_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_live_games_updated(data)
-  print("[BAREBONES] live_games_updated")
-  PrintTable(data)
+	print("[BAREBONES] live_games_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_recent_matches_updated(data)
-  print("[BAREBONES] recent_matches_updated")
-  PrintTable(data)
+	print("[BAREBONES] recent_matches_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_news_updated(data)
-  print("[BAREBONES] news_updated")
-  PrintTable(data)
+	print("[BAREBONES] news_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_persona_updated(data)
-  print("[BAREBONES] persona_updated")
-  PrintTable(data)
+	print("[BAREBONES] persona_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_tournament_state_updated(data)
-  print("[BAREBONES] tournament_state_updated")
-  PrintTable(data)
+	print("[BAREBONES] tournament_state_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_party_updated(data)
-  print("[BAREBONES] party_updated")
-  PrintTable(data)
+	print("[BAREBONES] party_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_lobby_updated(data)
-  print("[BAREBONES] lobby_updated")
-  PrintTable(data)
+	print("[BAREBONES] lobby_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dashboard_caches_cleared(data)
-  print("[BAREBONES] dashboard_caches_cleared")
-  PrintTable(data)
+	print("[BAREBONES] dashboard_caches_cleared")
+	PrintTable(data)
 end
 
 
 function GameMode:On_last_hit(data)
-  print("[BAREBONES] last_hit")
-  PrintTable(data)
+	print("[BAREBONES] last_hit")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_completed_game(data)
-  print("[BAREBONES] player_completed_game")
-  PrintTable(data)
+	print("[BAREBONES] player_completed_game")
+	PrintTable(data)
 end
 
 function GameMode:On_dota_combatlog(data)
-  print("[BAREBONES] dota_combatlog")
-  PrintTable(data)
+	print("[BAREBONES] dota_combatlog")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_reconnected(data)
-  print("[BAREBONES] player_reconnected")
-  PrintTable(data)
+	print("[BAREBONES] player_reconnected")
+	PrintTable(data)
 end
 
 
 function GameMode:On_nommed_tree(data)
-  print("[BAREBONES] nommed_tree")
-  PrintTable(data)
+	print("[BAREBONES] nommed_tree")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_rune_activated_server(data)
-  print("[BAREBONES] dota_rune_activated_server")
-  PrintTable(data)
+	print("[BAREBONES] dota_rune_activated_server")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_gained_level(data)
-  print("[BAREBONES] dota_player_gained_level")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_gained_level")
+	PrintTable(data)
 end
 
 function GameMode:On_dota_player_pick_hero(data)
-  print("[BAREBONES] dota_player_pick_hero")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_pick_hero")
+	PrintTable(data)
 end
 
 function GameMode:On_dota_player_learned_ability(data)
-  print("[BAREBONES] dota_player_learned_ability")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_learned_ability")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_used_ability(data)
-  print("[BAREBONES] dota_player_used_ability")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_used_ability")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_non_player_used_ability(data)
-  print("[BAREBONES] dota_non_player_used_ability")
-  PrintTable(data)
+	print("[BAREBONES] dota_non_player_used_ability")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_ability_channel_finished(data)
-  print("[BAREBONES] dota_ability_channel_finished")
-  PrintTable(data)
+	print("[BAREBONES] dota_ability_channel_finished")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_holdout_revive_complete(data)
-  print("[BAREBONES] dota_holdout_revive_complete")
-  PrintTable(data)
+	print("[BAREBONES] dota_holdout_revive_complete")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_player_killed(data)
-  print("[BAREBONES] dota_player_killed")
-  PrintTable(data)
+	print("[BAREBONES] dota_player_killed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_bindpanel_open(data)
-  print("[BAREBONES] bindpanel_open")
-  PrintTable(data)
+	print("[BAREBONES] bindpanel_open")
+	PrintTable(data)
 end
 
 
 function GameMode:On_bindpanel_close(data)
-  print("[BAREBONES] bindpanel_close")
-  PrintTable(data)
+	print("[BAREBONES] bindpanel_close")
+	PrintTable(data)
 end
 
 
 function GameMode:On_keybind_changed(data)
-  print("[BAREBONES] keybind_changed")
-  PrintTable(data)
+	print("[BAREBONES] keybind_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_drag_begin(data)
-  print("[BAREBONES] dota_item_drag_begin")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_drag_begin")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_drag_end(data)
-  print("[BAREBONES] dota_item_drag_end")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_drag_end")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_shop_item_drag_begin(data)
-  print("[BAREBONES] dota_shop_item_drag_begin")
-  PrintTable(data)
+	print("[BAREBONES] dota_shop_item_drag_begin")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_shop_item_drag_end(data)
-  print("[BAREBONES] dota_shop_item_drag_end")
-  PrintTable(data)
+	print("[BAREBONES] dota_shop_item_drag_end")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_purchased(data)
-  print("[BAREBONES] dota_item_purchased")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_purchased")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_used(data)
-  print("[BAREBONES] dota_item_used")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_used")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_item_auto_purchase(data)
-  print("[BAREBONES] dota_item_auto_purchase")
-  PrintTable(data)
+	print("[BAREBONES] dota_item_auto_purchase")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_unit_event(data)
-  print("[BAREBONES] dota_unit_event")
-  PrintTable(data)
+	print("[BAREBONES] dota_unit_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_quest_started(data)
-  print("[BAREBONES] dota_quest_started")
-  PrintTable(data)
+	print("[BAREBONES] dota_quest_started")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_quest_completed(data)
-  print("[BAREBONES] dota_quest_completed")
-  PrintTable(data)
+	print("[BAREBONES] dota_quest_completed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gameui_activated(data)
-  print("[BAREBONES] gameui_activated")
-  PrintTable(data)
+	print("[BAREBONES] gameui_activated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gameui_hidden(data)
-  print("[BAREBONES] gameui_hidden")
-  PrintTable(data)
+	print("[BAREBONES] gameui_hidden")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_fullyjoined(data)
-  print("[BAREBONES] player_fullyjoined")
-  PrintTable(data)
+	print("[BAREBONES] player_fullyjoined")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_spectate_hero(data)
-  print("[BAREBONES] dota_spectate_hero")
-  PrintTable(data)
+	print("[BAREBONES] dota_spectate_hero")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_match_done(data)
-  print("[BAREBONES] dota_match_done")
-  PrintTable(data)
+	print("[BAREBONES] dota_match_done")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_match_done_client(data)
-  print("[BAREBONES] dota_match_done_client")
-  PrintTable(data)
+	print("[BAREBONES] dota_match_done_client")
+	PrintTable(data)
 end
 
 
 function GameMode:On_set_instructor_group_enabled(data)
-  print("[BAREBONES] set_instructor_group_enabled")
-  PrintTable(data)
+	print("[BAREBONES] set_instructor_group_enabled")
+	PrintTable(data)
 end
 
 
 function GameMode:On_joined_chat_channel(data)
-  print("[BAREBONES] joined_chat_channel")
-  PrintTable(data)
+	print("[BAREBONES] joined_chat_channel")
+	PrintTable(data)
 end
 
 
 function GameMode:On_left_chat_channel(data)
-  print("[BAREBONES] left_chat_channel")
-  PrintTable(data)
+	print("[BAREBONES] left_chat_channel")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gc_chat_channel_list_updated(data)
-  print("[BAREBONES] gc_chat_channel_list_updated")
-  PrintTable(data)
+	print("[BAREBONES] gc_chat_channel_list_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_today_messages_updated(data)
-  print("[BAREBONES] today_messages_updated")
-  PrintTable(data)
+	print("[BAREBONES] today_messages_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_file_downloaded(data)
-  print("[BAREBONES] file_downloaded")
-  PrintTable(data)
+	print("[BAREBONES] file_downloaded")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_report_counts_updated(data)
-  print("[BAREBONES] player_report_counts_updated")
-  PrintTable(data)
+	print("[BAREBONES] player_report_counts_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_scaleform_file_download_complete(data)
-  print("[BAREBONES] scaleform_file_download_complete")
-  PrintTable(data)
+	print("[BAREBONES] scaleform_file_download_complete")
+	PrintTable(data)
 end
 
 
 function GameMode:On_item_purchased(data)
-  print("[BAREBONES] item_purchased")
-  PrintTable(data)
+	print("[BAREBONES] item_purchased")
+	PrintTable(data)
 end
 
 
 function GameMode:On_gc_mismatched_version(data)
-  print("[BAREBONES] gc_mismatched_version")
-  PrintTable(data)
+	print("[BAREBONES] gc_mismatched_version")
+	PrintTable(data)
 end
 
 
 function GameMode:On_demo_skip(data)
-  print("[BAREBONES] demo_skip")
-  PrintTable(data)
+	print("[BAREBONES] demo_skip")
+	PrintTable(data)
 end
 
 
 function GameMode:On_demo_start(data)
-  print("[BAREBONES] demo_start")
-  PrintTable(data)
+	print("[BAREBONES] demo_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_demo_stop(data)
-  print("[BAREBONES] demo_stop")
-  PrintTable(data)
+	print("[BAREBONES] demo_stop")
+	PrintTable(data)
 end
 
 
 function GameMode:On_map_shutdown(data)
-  print("[BAREBONES] map_shutdown")
-  PrintTable(data)
+	print("[BAREBONES] map_shutdown")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_workshop_fileselected(data)
-  print("[BAREBONES] dota_workshop_fileselected")
-  PrintTable(data)
+	print("[BAREBONES] dota_workshop_fileselected")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_workshop_filecanceled(data)
-  print("[BAREBONES] dota_workshop_filecanceled")
-  PrintTable(data)
+	print("[BAREBONES] dota_workshop_filecanceled")
+	PrintTable(data)
 end
 
 
 function GameMode:On_rich_presence_updated(data)
-  print("[BAREBONES] rich_presence_updated")
-  PrintTable(data)
+	print("[BAREBONES] rich_presence_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_hero_random(data)
-  print("[BAREBONES] dota_hero_random")
-  PrintTable(data)
+	print("[BAREBONES] dota_hero_random")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_rd_chat_turn(data)
-  print("[BAREBONES] dota_rd_chat_turn")
-  PrintTable(data)
+	print("[BAREBONES] dota_rd_chat_turn")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_favorite_heroes_updated(data)
-  print("[BAREBONES] dota_favorite_heroes_updated")
-  PrintTable(data)
+	print("[BAREBONES] dota_favorite_heroes_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_profile_closed(data)
-  print("[BAREBONES] profile_closed")
-  PrintTable(data)
+	print("[BAREBONES] profile_closed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_item_preview_closed(data)
-  print("[BAREBONES] item_preview_closed")
-  PrintTable(data)
+	print("[BAREBONES] item_preview_closed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dashboard_switched_section(data)
-  print("[BAREBONES] dashboard_switched_section")
-  PrintTable(data)
+	print("[BAREBONES] dashboard_switched_section")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_tournament_item_event(data)
-  print("[BAREBONES] dota_tournament_item_event")
-  PrintTable(data)
+	print("[BAREBONES] dota_tournament_item_event")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_hero_swap(data)
-  print("[BAREBONES] dota_hero_swap")
-  PrintTable(data)
+	print("[BAREBONES] dota_hero_swap")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_reset_suggested_items(data)
-  print("[BAREBONES] dota_reset_suggested_items")
-  PrintTable(data)
+	print("[BAREBONES] dota_reset_suggested_items")
+	PrintTable(data)
 end
 
 
 function GameMode:On_halloween_high_score_received(data)
-  print("[BAREBONES] halloween_high_score_received")
-  PrintTable(data)
+	print("[BAREBONES] halloween_high_score_received")
+	PrintTable(data)
 end
 
 
 function GameMode:On_halloween_phase_end(data)
-  print("[BAREBONES] halloween_phase_end")
-  PrintTable(data)
+	print("[BAREBONES] halloween_phase_end")
+	PrintTable(data)
 end
 
 
 function GameMode:On_halloween_high_score_request_failed(data)
-  print("[BAREBONES] halloween_high_score_request_failed")
-  PrintTable(data)
+	print("[BAREBONES] halloween_high_score_request_failed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_hud_skin_changed(data)
-  print("[BAREBONES] dota_hud_skin_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_hud_skin_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_inventory_player_got_item(data)
-  print("[BAREBONES] dota_inventory_player_got_item")
-  PrintTable(data)
+	print("[BAREBONES] dota_inventory_player_got_item")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_is_experienced(data)
-  print("[BAREBONES] player_is_experienced")
-  PrintTable(data)
+	print("[BAREBONES] player_is_experienced")
+	PrintTable(data)
 end
 
 
 function GameMode:On_player_is_notexperienced(data)
-  print("[BAREBONES] player_is_notexperienced")
-  PrintTable(data)
+	print("[BAREBONES] player_is_notexperienced")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_tutorial_lesson_start(data)
-  print("[BAREBONES] dota_tutorial_lesson_start")
-  PrintTable(data)
+	print("[BAREBONES] dota_tutorial_lesson_start")
+	PrintTable(data)
 end
 
 
 function GameMode:On_map_location_updated(data)
-  print("[BAREBONES] map_location_updated")
-  PrintTable(data)
+	print("[BAREBONES] map_location_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_richpresence_custom_updated(data)
-  print("[BAREBONES] richpresence_custom_updated")
-  PrintTable(data)
+	print("[BAREBONES] richpresence_custom_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_game_end_visible(data)
-  print("[BAREBONES] game_end_visible")
-  PrintTable(data)
+	print("[BAREBONES] game_end_visible")
+	PrintTable(data)
 end
 
 
 function GameMode:On_antiaddiction_update(data)
-  print("[BAREBONES] antiaddiction_update")
-  PrintTable(data)
+	print("[BAREBONES] antiaddiction_update")
+	PrintTable(data)
 end
 
 
 function GameMode:On_highlight_hud_element(data)
-  print("[BAREBONES] highlight_hud_element")
-  PrintTable(data)
+	print("[BAREBONES] highlight_hud_element")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hide_highlight_hud_element(data)
-  print("[BAREBONES] hide_highlight_hud_element")
-  PrintTable(data)
+	print("[BAREBONES] hide_highlight_hud_element")
+	PrintTable(data)
 end
 
 
 function GameMode:On_intro_video_finished(data)
-  print("[BAREBONES] intro_video_finished")
-  PrintTable(data)
+	print("[BAREBONES] intro_video_finished")
+	PrintTable(data)
 end
 
 
 function GameMode:On_matchmaking_status_visibility_changed(data)
-  print("[BAREBONES] matchmaking_status_visibility_changed")
-  PrintTable(data)
+	print("[BAREBONES] matchmaking_status_visibility_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_practice_lobby_visibility_changed(data)
-  print("[BAREBONES] practice_lobby_visibility_changed")
-  PrintTable(data)
+	print("[BAREBONES] practice_lobby_visibility_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_courier_transfer_item(data)
-  print("[BAREBONES] dota_courier_transfer_item")
-  PrintTable(data)
+	print("[BAREBONES] dota_courier_transfer_item")
+	PrintTable(data)
 end
 
 
 function GameMode:On_full_ui_unlocked(data)
-  print("[BAREBONES] full_ui_unlocked")
-  PrintTable(data)
+	print("[BAREBONES] full_ui_unlocked")
+	PrintTable(data)
 end
 
 
 function GameMode:On_client_connectionless_packet(data)
-  print("[BAREBONES] client_connectionless_packet")
-  PrintTable(data)
+	print("[BAREBONES] client_connectionless_packet")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hero_selector_preview_set(data)
-  print("[BAREBONES] hero_selector_preview_set")
-  PrintTable(data)
+	print("[BAREBONES] hero_selector_preview_set")
+	PrintTable(data)
 end
 
 
 function GameMode:On_antiaddiction_toast(data)
-  print("[BAREBONES] antiaddiction_toast")
-  PrintTable(data)
+	print("[BAREBONES] antiaddiction_toast")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hero_picker_shown(data)
-  print("[BAREBONES] hero_picker_shown")
-  PrintTable(data)
+	print("[BAREBONES] hero_picker_shown")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hero_picker_hidden(data)
-  print("[BAREBONES] hero_picker_hidden")
-  PrintTable(data)
+	print("[BAREBONES] hero_picker_hidden")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_local_quickbuy_changed(data)
-  print("[BAREBONES] dota_local_quickbuy_changed")
-  PrintTable(data)
+	print("[BAREBONES] dota_local_quickbuy_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_show_center_message(data)
-  print("[BAREBONES] show_center_message")
-  PrintTable(data)
+	print("[BAREBONES] show_center_message")
+	PrintTable(data)
 end
 
 
 function GameMode:On_hud_flip_changed(data)
-  print("[BAREBONES] hud_flip_changed")
-  PrintTable(data)
+	print("[BAREBONES] hud_flip_changed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_frosty_points_updated(data)
-  print("[BAREBONES] frosty_points_updated")
-  PrintTable(data)
+	print("[BAREBONES] frosty_points_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_defeated(data)
-  print("[BAREBONES] defeated")
-  PrintTable(data)
+	print("[BAREBONES] defeated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_reset_defeated(data)
-  print("[BAREBONES] reset_defeated")
-  PrintTable(data)
+	print("[BAREBONES] reset_defeated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_booster_state_updated(data)
-  print("[BAREBONES] booster_state_updated")
-  PrintTable(data)
+	print("[BAREBONES] booster_state_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_event_points_updated(data)
-  print("[BAREBONES] event_points_updated")
-  PrintTable(data)
+	print("[BAREBONES] event_points_updated")
+	PrintTable(data)
 end
 
 
 function GameMode:On_local_player_event_points(data)
-  print("[BAREBONES] local_player_event_points")
-  PrintTable(data)
+	print("[BAREBONES] local_player_event_points")
+	PrintTable(data)
 end
 
 
 function GameMode:On_custom_game_difficulty(data)
-  print("[BAREBONES] custom_game_difficulty")
-  PrintTable(data)
+	print("[BAREBONES] custom_game_difficulty")
+	PrintTable(data)
 end
 
 
 function GameMode:On_tree_cut(data)
-  print("[BAREBONES] tree_cut")
-  PrintTable(data)
+	print("[BAREBONES] tree_cut")
+	PrintTable(data)
 end
 
 
 function GameMode:On_ugc_details_arrived(data)
-  print("[BAREBONES] ugc_details_arrived")
-  PrintTable(data)
+	print("[BAREBONES] ugc_details_arrived")
+	PrintTable(data)
 end
 
 
 function GameMode:On_ugc_subscribed(data)
-  print("[BAREBONES] ugc_subscribed")
-  PrintTable(data)
+	print("[BAREBONES] ugc_subscribed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_ugc_unsubscribed(data)
-  print("[BAREBONES] ugc_unsubscribed")
-  PrintTable(data)
+	print("[BAREBONES] ugc_unsubscribed")
+	PrintTable(data)
 end
 
 
 function GameMode:On_prizepool_received(data)
-  print("[BAREBONES] prizepool_received")
-  PrintTable(data)
+	print("[BAREBONES] prizepool_received")
+	PrintTable(data)
 end
 
 
 function GameMode:On_microtransaction_success(data)
-  print("[BAREBONES] microtransaction_success")
-  PrintTable(data)
+	print("[BAREBONES] microtransaction_success")
+	PrintTable(data)
 end
 
 
 function GameMode:On_dota_rubick_ability_steal(data)
-  print("[BAREBONES] dota_rubick_ability_steal")
-  PrintTable(data)
+	print("[BAREBONES] dota_rubick_ability_steal")
+	PrintTable(data)
 end
 
 
 function GameMode:On_compendium_event_actions_loaded(data)
-  print("[BAREBONES] compendium_event_actions_loaded")
-  PrintTable(data)
+	print("[BAREBONES] compendium_event_actions_loaded")
+	PrintTable(data)
 end
 
 
 function GameMode:On_compendium_selections_loaded(data)
-  print("[BAREBONES] compendium_selections_loaded")
-  PrintTable(data)
+	print("[BAREBONES] compendium_selections_loaded")
+	PrintTable(data)
 end
 
 
 function GameMode:On_compendium_set_selection_failed(data)
-  print("[BAREBONES] compendium_set_selection_failed")
-  PrintTable(data)
+	print("[BAREBONES] compendium_set_selection_failed")
+	PrintTable(data)
 end
 
 function GameMode:On_community_cached_names_updated(data)
-  print("[BAREBONES] community_cached_names_updated")
-  PrintTable(data)
+	print("[BAREBONES] community_cached_names_updated")
+	PrintTable(data)
 end
 
 function GameMode:On_dota_team_kill_credit(data)
-  print("[BAREBONES] dota_team_kill_credit")
-  PrintTable(data)
+	print("[BAREBONES] dota_team_kill_credit")
+	PrintTable(data)
 end
