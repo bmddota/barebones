@@ -3,8 +3,7 @@ BASE_MODULES = {
 	'util',
 	'timers',
 	'physics',
-	--'eventtest',
-	--'test',
+	--colliders_test,
 	'lib.statcollection',
 	'barebones',
 }
@@ -28,6 +27,9 @@ for i, mod_name in pairs(BASE_MODULES) do
 end
 
 function Precache( context )
+	-- NOTE: IT IS RECOMMENDED TO USE A MINIMAL AMOUNT OF LUA PRECACHING, AND A MAXIMAL AMOUNT OF DATADRIVEN PRECACHING.
+	-- Precaching guide: https://moddota.com/forums/discussion/119/precache-fixing-and-avoiding-issues
+
 	--[[
 	This function is used to precache resources/units/items/abilities that will be needed
 	for sure in your game and that cannot or should not be precached asynchronously or 

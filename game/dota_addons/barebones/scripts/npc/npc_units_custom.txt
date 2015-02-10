@@ -186,10 +186,10 @@
 	}
 
   
-  //------------------------------------------------------------------------------------
-  //- This unit can be used to precache different models/particles/sounds              -
-  //- that are needed every game.  Uncomment any model/particle/sound you need to load -
-  //------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------
+	//- This unit can be used to precache different models/particles/sounds              -
+	//- that are needed every game.  Uncomment any model/particle/sound you need to load -
+	//------------------------------------------------------------------------------------
 	"npc_precache_everything"
 	{
 		"BaseClass"					"npc_dota_creep"

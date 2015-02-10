@@ -32,7 +32,7 @@ USE_CUSTOM_TOP_BAR_VALUES = true        -- Should we do customized top bar value
 TOP_BAR_VISIBLE = true                  -- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true             -- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals)  Requires USE_CUSTOM_TOP_BAR_VALUES
 
-ENABLE_TOWER_BACKDOOR_PROTECTION = false-- Should we enable backdoor protection for our towers?
+ENABLE_TOWER_BACKDOOR_PROTECTION = false  -- Should we enable backdoor protection for our towers?
 REMOVE_ILLUSIONS_ON_DEATH = false       -- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false             -- Should we disable the gold sound when players get gold?
 
@@ -85,12 +85,8 @@ end
 ]]
 function GameMode:PostLoadPrecache()
 	print("[BAREBONES] Performing Post-Load precache")
-	--PrecacheItemByNameAsync("item_example_item", function(...) end)
-	--PrecacheItemByNameAsync("example_ability", function(...) end)
 
-	PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
-	--PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
+	PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
 end
 
 --[[
@@ -114,14 +110,15 @@ end
   if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
   levels, changing the starting gold, removing/adding abilities, adding physics, etc.
 
-  The hero parameter is the hero entity that just spawned in
+  The hero parameter is the hero entity that just spawned in.
 ]]
 function GameMode:OnHeroInGame(hero)
 	print("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
-
+		
+		-- Note: ColorIt is a function in util.lua.
 	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Barebones! ", "magenta") .. ColorIt("v0.1", "blue");
 	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("XXX", "orange")
 		-- Send the first greeting in 4 secs.
@@ -144,6 +141,11 @@ function GameMode:OnHeroInGame(hero)
 		Say(nil, "Testing is on.", false)
 	end
 
+	-- This function comes from util.lua and will go through all the hero's abilities and set
+	-- their level to 1, and it spends the first given ability point in the process.
+	InitAbilities(hero)
+
+	-- Show a popup with game instructions.
     ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
 	-- This line for example will set the starting gold of every hero to 500 unreliable gold
@@ -152,19 +154,12 @@ function GameMode:OnHeroInGame(hero)
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	local item = CreateItem("item_example_item", hero, hero)
 	hero:AddItem(item)
-
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
-
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
 end
 
 --[[
-  This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
-  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
+	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
+	gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
+	is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
 	print("[BAREBONES] The game has officially begun")
@@ -176,20 +171,20 @@ function GameMode:OnGameInProgress()
 end
 
 function GameMode:PlayerSay( keys )
-  local hero = nil
-  if keys.ply == nil and keys.hero ~= nil then
-    hero = keys.hero
-  else
-    hero = keys.ply:GetAssignedHero()
-  end
-  local txt = keys.text
+	local ply = keys.ply
+	local hero = PlayerResource:GetPlayer(ply):GetAssignedHero()
+	local txt = keys.text
 
-  if txt == nil or txt == "" then
-    return
-  end
+	if keys.teamOnly then
+		-- This text was team-only.
+	end
+
+	if txt == nil or txt == "" then
+		return
+	end
 
   -- At this point we have valid text from a player.
-	print("P" .. hero:GetPlayerID() .. ": " .. keys.text)
+	print("P" .. ply .. " wrote: " .. keys.text)
 end
 
 -- Cleanup a player when they leave
@@ -372,28 +367,17 @@ function GameMode:OnRuneActivated (keys)
 	local rune = keys.rune
 
 	--[[ Rune Can be one of the following types
-
-  DOTA_RUNE_DOUBLEDAMAGE
-
-  DOTA_RUNE_HASTE
-
-  DOTA_RUNE_HAUNTED
-
-  DOTA_RUNE_ILLUSION
-
-  DOTA_RUNE_INVISIBILITY
-
-  DOTA_RUNE_MYSTERY
-
-  DOTA_RUNE_RAPIER
-
-  DOTA_RUNE_REGENERATION
-
-  DOTA_RUNE_SPOOKY
-
-  DOTA_RUNE_TURBO
-
-  ]]
+	DOTA_RUNE_DOUBLEDAMAGE
+	DOTA_RUNE_HASTE
+	DOTA_RUNE_HAUNTED
+	DOTA_RUNE_ILLUSION
+	DOTA_RUNE_INVISIBILITY
+	DOTA_RUNE_MYSTERY
+	DOTA_RUNE_RAPIER
+	DOTA_RUNE_REGENERATION
+	DOTA_RUNE_SPOOKY
+	DOTA_RUNE_TURBO
+	]]
 end
 
 -- A player took damage from a tower
@@ -535,11 +519,29 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand('player_say', function(...)
 		local arg = {...}
 		table.remove(arg,1)
+		local sayType = arg[1]
+		table.remove(arg,1)
+
 		local cmdPlayer = Convars:GetCommandClient()
-		local keys = {}
+		keys = {}
 		keys.ply = cmdPlayer
+		keys.teamOnly = false
 		keys.text = table.concat(arg, " ")
-		self:PlayerSay(keys) -- This function is what your old "player_say" event latch called
+
+		if (sayType == 4) then
+			-- Student messages
+		elseif (sayType == 3) then
+			-- Coach messages
+		elseif (sayType == 2) then
+			-- Team only
+			keys.teamOnly = true
+			-- Call your player_say function here like
+			self:PlayerSay(keys)
+		else
+			-- All chat
+			-- Call your player_say function here like
+			self:PlayerSay(keys)
+		end
 	end, 'player say', 0)
 
 	-- Fill server with fake clients

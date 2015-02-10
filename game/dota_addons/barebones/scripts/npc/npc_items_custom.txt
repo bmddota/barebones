@@ -1,3 +1,5 @@
+// DataDriven Item Guide: https://moddota.com/forums/discussion/4/datadriven-items
+
 "DOTAAbilities"
 {
 	//Shield

@@ -28,9 +28,13 @@
 
 			// BMD player_say event.
 			var oldChatSay:Function = globals.Loader_hud_chat.movieClip.gameAPI.ChatSay;
-			globals.Loader_hud_chat.movieClip.gameAPI.ChatSay = function(obj:Object, bool:Boolean){
-			  gameAPI.SendServerCommand( "player_say " + obj.toString());
-			  oldChatSay(obj, bool);
+			globals.Loader_hud_chat.movieClip.gameAPI.ChatSay = function(obj:Object, bool:Boolean) {
+				var type:int = globals.Loader_hud_chat.movieClip.m_nLastMessageMode
+				if (bool)
+					type = 4
+				
+				gameAPI.SendServerCommand( "player_say " + type + " " + obj.toString());
+				oldChatSay(obj, bool);
 			};
 
 			//this is not needed, but it shows you your UI has loaded (needs 'scaleform_spew 1' in console)

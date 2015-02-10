@@ -1,15 +1,63 @@
 -- GREAT UTILITY FUNCTIONS
 
--- adds ability to a unit, sets the level to 1, then returns ability handle.
-function AddAbilityToUnit(hUnit, sName)
-	if not hUnit or sName == "" then return end
+-- Returns a shallow copy of the passed table.
+function shallowcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in pairs(orig) do
+            copy[orig_key] = orig_value
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
 
-	if not hUnit:HasAbility(sName) then
-		hUnit:AddAbility(sName)
+-- Remove all abilities on a unit.
+function ClearAbilities( unit )
+	for i=0, unit:GetAbilityCount()-1 do
+		local abil = unit:GetAbilityByIndex(i)
+		if abil ~= nil then
+			unit:RemoveAbility(abil:GetAbilityName())
+		end
 	end
-	local abil = hUnit:FindAbilityByName(sName)
-	abil:SetLevel(1)
+	-- we have to put in dummies and remove dummies so the ability icon changes.
+	-- it's stupid but volvo made us
+	for i=1,6 do
+		unit:AddAbility("pokemonworld_empty" .. tostring(i))
+	end
+	for i=0, unit:GetAbilityCount()-1 do
+		local abil = unit:GetAbilityByIndex(i)
+		if abil ~= nil then
+			unit:RemoveAbility(abil:GetAbilityName())
+		end
+	end
+end
 
+-- goes through a unit's abilities and sets the abil's level to 1,
+-- spending an ability point if possible.
+function InitAbilities( hero )
+	for i=0, hero:GetAbilityCount()-1 do
+		local abil = hero:GetAbilityByIndex(i)
+		if abil ~= nil then
+			if hero:GetAbilityPoints() > 0 then
+				hero:UpgradeAbility(abil)
+			else
+				abil:SetLevel(1)
+			end
+		end
+	end
+end
+
+-- adds ability to a unit, sets the level to 1, then returns ability handle.
+function AddAbilityToUnit(unit, abilName)
+	if not unit:HasAbility(abilName) then
+		unit:AddAbility(abilName)
+	end
+	local abil = unit:FindAbilityByName(abilName)
+	abil:SetLevel(1)
 	return abil
 end
 
@@ -37,6 +85,7 @@ function PrintVector(v)
 	print('x: ' .. v.x .. ' y: ' .. v.y .. ' z: ' .. v.z)
 end
 
+-- Given element and list, returns true if element is in the list.
 function TableContains( list, element )
 	if list == nil then return false end
 	for k,v in pairs(list) do
@@ -47,8 +96,10 @@ function TableContains( list, element )
 	return false
 end
 
+-- Given element and list, returns the position of the element in the list.
+-- Returns -1 if element was not found, or if list is nil.
 function GetIndex(list, element)
-	if list == nil then return false end
+	if list == nil then return -1 end
 	for i=1,#list do
 		if list[i] == element then
 			return i
@@ -139,6 +190,10 @@ end
 
 function DotProduct(v1,v2)
   return (v1.x*v2.x)+(v1.y*v2.y)
+end
+
+function VectorString(v)
+  return 'x: ' .. v.x .. ' y: ' .. v.y .. ' z: ' .. v.z
 end
 
 --MODULE LOADER STUFF

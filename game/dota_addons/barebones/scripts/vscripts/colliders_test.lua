@@ -1,3 +1,6 @@
+-- THIS FILE IS FOR TESTING BMD'S PHYSICS COLLIDER FUNCTIONS
+-- HE USES IT IN THIS VIDEO: https://www.youtube.com/watch?v=AxBxQIcEMI8
+
 if hero == nil then
 	hero = PlayerResource:GetPlayer(0):GetAssignedHero()
 	Physics:Unit(hero)

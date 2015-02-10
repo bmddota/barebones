@@ -1,5 +1,6 @@
-
 // Dota Abilities Override File
+// DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
+
 "DOTAAbilities"
 {
 	"Version"		"1"
