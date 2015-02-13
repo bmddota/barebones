@@ -172,7 +172,7 @@ end
 
 function GameMode:PlayerSay( keys )
 	local ply = keys.ply
-	local hero = PlayerResource:GetPlayer(ply):GetAssignedHero()
+	local hero = ply:GetAssignedHero()
 	local txt = keys.text
 
 	if keys.teamOnly then
