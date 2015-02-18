@@ -15,6 +15,38 @@ function shallowcopy(orig)
     return copy
 end
 
+function AbilityIterator(unit, callback)
+    for i=0, unit:GetAbilityCount()-1 do
+        local abil = unit:GetAbilityByIndex(i)
+        if abil ~= nil then
+            callback(abil)
+        end
+    end
+end
+
+function string.starts(String,Start)
+   return string.sub(String,1,string.len(Start))==Start
+end
+
+function string.ends(String,End)
+   return End=='' or string.sub(String,-string.len(End))==End
+end
+
+function VectorString(v)
+  return 'x: ' .. v.x .. ' y: ' .. v.y .. ' z: ' .. v.z
+end
+
+function TableLength( t )
+    if t == nil or t == {} then
+        return 0
+    end
+    local len = 0
+    for k,v in pairs(t) do
+        len = len + 1
+    end
+    return len
+end
+
 -- Remove all abilities on a unit.
 function ClearAbilities( unit )
 	for i=0, unit:GetAbilityCount()-1 do
@@ -26,7 +58,7 @@ function ClearAbilities( unit )
 	-- we have to put in dummies and remove dummies so the ability icon changes.
 	-- it's stupid but volvo made us
 	for i=1,6 do
-		unit:AddAbility("pokemonworld_empty" .. tostring(i))
+		unit:AddAbility("barebones_empty" .. tostring(i))
 	end
 	for i=0, unit:GetAbilityCount()-1 do
 		local abil = unit:GetAbilityByIndex(i)
@@ -191,38 +223,6 @@ end
 function DotProduct(v1,v2)
   return (v1.x*v2.x)+(v1.y*v2.y)
 end
-
-function VectorString(v)
-  return 'x: ' .. v.x .. ' y: ' .. v.y .. ' z: ' .. v.z
-end
-
---MODULE LOADER STUFF
-BASE_LOG_PREFIX = '[B]'
-LOG_FILE = "log/Barebones.txt"
-
-InitLogFile(LOG_FILE, "[[ Barebones ]]")
-
-function log(msg)
-	print(BASE_LOG_PREFIX .. msg)
-	AppendToLogFile(LOG_FILE, msg .. '\n')
-end
-
-function err(msg)
-	display('[X] '..msg, COLOR_RED)
-end
-
-function warning(msg)
-	display('[W] '..msg, COLOR_DYELLOW)
-end
-
-function display(text, color)
-	color = color or COLOR_LGREEN
-
-	log('> '..text)
-
-	Say(nil, color..text, false)
-end
---END OF MODULE LOADER STUFF
 
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
