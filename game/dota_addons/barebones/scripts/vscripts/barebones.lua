@@ -576,6 +576,10 @@ function GameMode:InitGameMode()
 
 	self.bSeenWaitForPlayers = false
 
+	if RECOMMENDED_BUILDS_DISABLED then
+		GameRules:GetGameModeEntity():SetHUDVisible( DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS, false )
+	end
+
 	print('[BAREBONES] Done loading Barebones gamemode!\n\n')
 end
 
