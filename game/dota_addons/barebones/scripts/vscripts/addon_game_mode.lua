@@ -3,7 +3,6 @@ BASE_MODULES = {
 	'util',
 	'timers',
 	'physics',
-	--colliders_test,
 	'lib.statcollection',
 	'barebones',
 }
