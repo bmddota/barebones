@@ -4,16 +4,16 @@ ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respa
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = true        -- Should we let people select the same hero as each other
 
-HERO_SELECTION_TIME = 1.0              -- How long should we let people select their hero?
-PRE_GAME_TIME = 0.0                    -- How long after people select their heroes should the horn blow and the game start?
+HERO_SELECTION_TIME = 1              -- How long should we let people select their hero?
+PRE_GAME_TIME = 0                    -- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0                   -- How long should we let people look at the scoreboard before closing the server automatically?
 TREE_REGROW_TIME = 60.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
 
-GOLD_PER_TICK = 100                     -- How much gold should players get per tick?
-GOLD_TICK_TIME = 5                      -- How long should we wait in seconds between gold ticks?
+GOLD_PER_TICK = 4                     -- How much gold should players get per tick?
+GOLD_TICK_TIME = 2                      -- How long should we wait in seconds between gold ticks?
 
-RECOMMENDED_BUILDS_DISABLED = false     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
-CAMERA_DISTANCE_OVERRIDE = 1134.0        -- How far out should we allow the camera to go?  1134 is the default in Dota
+RECOMMENDED_BUILDS_DISABLED = true     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
+CAMERA_DISTANCE_OVERRIDE = 1400.0        -- How far out should we allow the camera to go?  1134 is the default in Dota
 
 MINIMAP_ICON_SIZE = 1                   -- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1             -- What icon size should we use for creeps?
@@ -25,8 +25,10 @@ CUSTOM_BUYBACK_COOLDOWN_ENABLED = true  -- Should we use a custom buyback time?
 BUYBACK_ENABLED = false                 -- Should we allow people to buyback when they die?
 
 DISABLE_FOG_OF_WAR_ENTIRELY = true      -- Should we disable fog of war entirely for both teams?
+										-- NOTE: This won't reveal particle effects for everyone. You need to create vision dummies for that.
+
 --USE_STANDARD_DOTA_BOT_THINKING = false  -- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
-USE_STANDARD_HERO_GOLD_BOUNTY = true    -- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
+USE_STANDARD_HERO_GOLD_BOUNTY = false    -- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
 
 USE_CUSTOM_TOP_BAR_VALUES = true        -- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true                  -- Should we display the top bar score/count at all?
@@ -41,18 +43,14 @@ KILLS_TO_END_GAME_FOR_TEAM = 50         -- How many kills for a team should sign
 
 USE_CUSTOM_HERO_LEVELS = true           -- Should we allow heroes to have custom levels?
 MAX_LEVEL = 50                          -- What level should we let heroes get to?
-USE_CUSTOM_XP_VALUES = true             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
+USE_CUSTOM_XP_VALUES = false             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
--- Let's have a bool called Testing to run code that we want to test.
--- Set this to false before you push out Workshop versions!
 Testing = true
--- It's useful to set up an out of world vector. Ex. a location under the ground, in a corner of the map.
-OutOfWorldVector = Vector(-2000,-2000,-600)
+OutOfWorldVector = Vector(11000, 11000, -200)
 
--- Set up the GetDotaStats stats for this mod.
 if not Testing then
   statcollection.addStats({
-    modID = 'XXXXXXXXXXXXXXXXXXX' --GET THIS FROM http://getdotastats.com/#d2mods__my_mods
+    modID = 'XXXXXXXXXXXXXXXXXXX'
   })
 end
 
@@ -68,21 +66,6 @@ if GameMode == nil then
 	GameMode = class({})
 end
 
---[[
-  This function should be used to set up Async precache calls at the beginning of the game.  The Precache() function 
-  in addon_game_mode.lua used to and may still sometimes have issues with client's appropriately precaching stuff.
-  If this occurs it causes the client to never precache things configured in that block.
-
-  In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
-  after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-  precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
-  defined on the unit.
-
-  This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
-  time, you can call the functions individually (for example if you want to precache units in a new wave of
-  holdout).
-]]
 function GameMode:PostLoadPrecache()
 	print("[BAREBONES] Performing Post-Load precache")
 
@@ -118,7 +101,6 @@ function GameMode:OnHeroInGame(hero)
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
 		
-		-- Note: ColorIt is a function in util.lua.
 	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Barebones! ", "magenta") .. ColorIt("v0.1", "blue");
 	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("XXX", "orange")
 		-- Send the first greeting in 4 secs.
@@ -141,8 +123,6 @@ function GameMode:OnHeroInGame(hero)
 		Say(nil, "Testing is on.", false)
 	end
 
-	-- This function comes from util.lua and will go through all the hero's abilities and set
-	-- their level to 1, and it spends the first given ability point in the process.
 	InitAbilities(hero)
 
 	-- Show a popup with game instructions.
@@ -511,8 +491,6 @@ function GameMode:InitGameMode()
 	--ListenToGameEvent('dota_player_killed', Dynamic_Wrap(GameMode, 'OnPlayerKilled'), self)
 	--ListenToGameEvent('player_team', Dynamic_Wrap(GameMode, 'OnPlayerTeam'), self)
 
-
-
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
 
@@ -578,11 +556,6 @@ function GameMode:InitGameMode()
 				end})
 		end
 	end, 'Connects and assigns fake Players.', 0)
-
-	--[[This block is only used for testing events handling in the event that Valve adds more in the future
-	Convars:RegisterCommand('events_test', function()
-		GameMode:StartEventTest()
-	end, "events test", 0)]]
 
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
