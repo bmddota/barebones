@@ -1,3 +1,5 @@
+// DataDriven Item Guide: https://moddota.com/forums/discussion/4/datadriven-items
+
 "DOTAAbilities"
 {
 	//Shield
@@ -8,7 +10,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"BaseClass"						"item_datadriven"
-    "AbilityCastAnimation"			"ACT_DOTA_DISABLED"
+		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"AbilityTextureName"			"item_example_item"
 
 		// Stats
@@ -34,17 +36,18 @@
 		"precache"
 		{
 			"particle"							"particles/frostivus_herofx/queen_shadow_strike_linear_parent.vpcf"
-			"particle_folder"				"particles/test_particle"
-      "soundfile"							"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle_folder"					"particles/test_particle"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
+		
 		"OnSpellStart"
-    {
-      "LinearProjectile"
-      {
-        "EffectName"			"particles/frostivus_herofx/queen_shadow_strike_linear_parent.vpcf"
+		{
+			"LinearProjectile"
+			{
+				"EffectName"			"particles/frostivus_herofx/queen_shadow_strike_linear_parent.vpcf"
 				"MoveSpeed"				"%speed"
 				//"StartPosition"	  "attach_attack1"
-        "FixedDistance"   "%distance"
+				"FixedDistance"   "%distance"
 				"StartRadius"			"%radius"
 				"EndRadius"				"%radius"
 				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -53,26 +56,26 @@
 				"HasFrontalCone"		"0"
 				"ProvidesVision"		"0"
 				"VisionRadius"			"0"
-      }
-      "FireSound"
+			}
+			"FireSound"
 			{
 				"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
 				"Target"			  "CASTER"
 			}
-      "ApplyModifier"
+			"ApplyModifier"
 			{
 				"Target"  		"CASTER"
 				"ModifierName"	"modifier_item_shield"
 			}
-    }
+		}
     
 		"OnProjectileHitUnit"
 		{			
-      "DeleteOnHit" "0"
+			"DeleteOnHit" "0"
 			"Damage"
 			{
 				"Target"  		"TARGET"
-        "Type"		"DAMAGE_TYPE_PURE"
+				"Type"		"DAMAGE_TYPE_PURE"
 				"Damage"	"%damage"
 			}
 		}
@@ -84,9 +87,8 @@
 				"EffectName"		"particles/test_particle/damage_immunity.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"CASTER"
-				
-				"Duration" "%duration"
-				"TextureName" "abaddon_aphotic_shield"
+				"Duration" 			"%duration"
+				"TextureName" 		"abaddon_aphotic_shield"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction"
@@ -109,7 +111,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"-50"
 			}
-      "03"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				  "150"
@@ -119,240 +121,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed"					  "1800"
 			}
-      "05"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"distance"		    "900"
 			}
-      "06"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER`"
 				"damage"		      "125"
 			}
 		}
-  }
-
-  //
-  // MultiTeam Action Item
-  //
-
-  "item_multiteam_action"
-	{
-		"ID"							"1719"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"BaseClass"						"item_datadriven"
-    "AbilityCastAnimation"			"ACT_DOTA_DISABLED"
-		"AbilityTextureName"			"item_greater_clarity"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 1100 1300 1500"
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"1000 1000 210 190"
-		"ItemCost"						"100"
-		"ItemInitialCharges"			"0"
-		"ItemDroppable"					"1"
-		"ItemSellable"					"1"
-		"ItemRequiresCharges"			"0"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-    "SecretShop"						"1"
-		
-		"MaxUpgradeLevel"				"4"
-		"ItemBaseLevel"					"2"
-		
-		"precache"
-		{
-			"particle_folder"				"particles/test_particle"
-		}
-		
-		"OnSpellStart"
-    {
-      "FireSound"
-			{
-				"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
-				"Target"			  "CASTER"
-			}
-      "ApplyModifier"
-			{
-				"Target"  		"CASTER"
-				"ModifierName"	"modifier_item_shield_2"
-			}
-      "RemoveModifier"
-			{
-				"Target" 				"CASTER"
-				"ModifierName"			"modifier_item_shield_1"			
-			}
-      "RemoveModifier"
-			{
-				"Target" 				"CASTER"
-				"ModifierName"			"modifier_item_shield_3"			
-			}
-      "RemoveModifier"
-			{
-				"Target" 				"CASTER"
-				"ModifierName"			"modifier_item_shield_4"			
-			}
-			"RunScript"
-      {
-      	"ScriptFile"      "scripts/vscripts/multiteam.lua"
-        "Function"        "MTPrint"
-        "Duration"				"%duration"
-        "damage_reduction"					"%damage_reduction"
-        "radius"					"%radius"
-        "speed"					"%speed"
-        "distance"					"%distance"
-      }
-    }
-    
-		"Modifiers"
-		{
-			"modifier_item_shield_2"
-			{
-				"EffectName"		"particles/test_particle/damage_immunity.vpcfdamage_immunity"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-				
-				"Duration" "%duration"
-				"TextureName" "abaddon_aphotic_shield"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%damage_reduction"
-				}
-			}
-		}
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 4.0 6.0 8.0"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"-50 -60 -70 -80"
-			}
-      "03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				  "150"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					  "1800"
-			}
-      "05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"distance"		    "900 1100 1300 1500"
-			}
-		}
-	}
-
-  "item_multiteam_action2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1720"	// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"                 "DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/salve_blue.mdl"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_greater_clarity"
-		"ItemKillable"					"0"
-
-		"MaxUpgradeLevel"				"4"
-		"ItemBaseLevel"					"3"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"20000"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		//"ItemPermanent"					"0"
-		"ItemPurchaseable"			"0"
-		//"ItemInitialCharges"			"1"
-		"SideShop"						"1"
-
-		"precache"
-		{
-			"particle_folder"				"particles/test_particle"
-		}
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target" "TARGET"
-				"ModifierName" "multiteam_example_aoe_ability"
-			}
-
-			"RunScript"
-      {
-      	"ScriptFile"      "scripts/vscripts/multiteam.lua"
-        "Function"        "MTPrint"
-        "Damage"					"%damage"
-        "Duration"				"%duration"
-      }
-		}
-		
-    "Modifiers"
-    {
-			"multiteam_example_aoe_ability"
-			{
-				"EffectName"		"particles/test_particle/damage_immunity.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"TARGET"
-				
-				"Duration" "%duration"
-				"TextureName" "abaddon_aphotic_shield"
-
-		    "Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%speed"
-				}
-			}
-	  }
-
-	  "AbilitySpecial"
-	  {
-	  	"01"
-      {
-        "var_type"        "FIELD_INTEGER"
-        "damage"        "400 600 800 1000"
-      }
-      "02"
-      {
-      	"var_type"        "FIELD_INTEGER"
-        "duration"        "2 4 6 8"
-      }
-
-      "03"
-      {
-      	"var_type"        "FIELD_INTEGER"
-        "speed"        		"10 20 30 40"
-      }
-	  }
 	}
 }

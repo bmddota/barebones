@@ -1,13 +1,11 @@
-
 // Dota Abilities Override File
 "DOTAAbilities"
 {
 	"Version"		"1"
-	
   
-  // -----------------------------------------------------------
-  // - UNCOMMENT ANY ITEM YOU DON'T WANT TO APPEAR IN THE SHOP -
-  // -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// - UNCOMMENT ANY ITEM YOU DON'T WANT TO APPEAR IN THE SHOP -
+	// -----------------------------------------------------------
   
 	//"item_blink"			"REMOVE"
 	//"item_blades_of_attack"			"REMOVE"
@@ -225,7 +223,7 @@
 	//"item_shadow_amulet"			"REMOVE"
 	
   
-  //"item_halloween_candy_corn"			"REMOVE"
+  	//"item_halloween_candy_corn"			"REMOVE"
 	//"item_mystery_hook"			"REMOVE"
 	//"item_mystery_arrow"			"REMOVE"
 	//"item_mystery_missile"			"REMOVE"

@@ -213,3 +213,10 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+*.vpk
+*.vpcf_c
+*.vsndevts_c
+*.vmat_c
+*.vtex_c
+*.bin
