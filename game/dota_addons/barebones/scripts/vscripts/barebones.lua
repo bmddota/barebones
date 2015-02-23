@@ -226,8 +226,8 @@ end
 function GameMode:OnEntityHurt(keys)
 	--print("[BAREBONES] Entity Hurt")
 	--PrintTable(keys)
-	local entCause = EntIndexToHScript(keys.entindex_attacker)
-	local entVictim = EntIndexToHScript(keys.entindex_killed)
+	local attacker = EntIndexToHScript(keys.entindex_attacker)
+	local victim = EntIndexToHScript(keys.entindex_killed)
 end
 
 -- An item was picked up off the ground
