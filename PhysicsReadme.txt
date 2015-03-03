@@ -74,7 +74,7 @@ GetPhysicsVelocityMax ()
     Returns the maximum velocity.  Default is 0, representing an unlimited velocity
 -----------------------------
 GetRebounceFrames ()
-	Returns the number of rebounce frames to wait between PHYSICS_NAV_BOUNCE collisions.  Default is 5.
+	Returns the number of rebounce frames to wait between PHYSICS_NAV_BOUNCE collisions.  Default is 2.
 -----------------------------
 SetStuckTimeout ()
 	Returns the number of frames necessary to determine if a unit is stuck in unpathable terrain and to activate AutoUnstuck

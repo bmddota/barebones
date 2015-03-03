@@ -450,6 +450,10 @@ function Physics:AngleGrid( anggrid, angoffsets )
 end
 
 function Physics:Unit(unit)
+  if IsPhysicsUnit(unit) then
+    --unit:StopPhysicsSimulation()
+    return
+  end
   function unit:StopPhysicsSimulation ()
     Physics.timers[unit.PhysicsTimerName] = nil
     unit.bStarted = false
@@ -878,19 +882,186 @@ function Physics:Unit(unit)
             FindClearSpaceForUnit(unit, newPos, true)
             unit.nSkipSlide = 1
           elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then        
-            local navPos = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(connect.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(connect.y)), 0)
+            --[[local navPos = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(connect.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(connect.y)), 0)
             
             local face = navPos - position
+
+            print (unit:GetAbsOrigin())
+            print(navPos)
             --print("face: " .. tostring(face))
-            if math.abs(face.x) > math.abs(face.y) then
+            if math.abs(face.x) < math.abs(face.y) then
+              print ("x < y")
               newVelocity = newVelocity - Vector(newVelocity.x, 0, 0)
+              if face.y < 0 then
+                print ("y < 0")
+                unit:SetAbsOrigin(Vector(unit:GetAbsOrigin().x, navPos.y - 64, unit:GetAbsOrigin().z))
+              else
+                print ("y > 0")
+                unit:SetAbsOrigin(Vector(unit:GetAbsOrigin().x, navPos.y + 64, unit:GetAbsOrigin().z))
+              end
             else
+              print ("x > y")
               newVelocity = newVelocity - Vector(0, newVelocity.y, 0)
+              if face.x < 0 then
+                print ("x < 0")
+                unit:SetAbsOrigin(Vector(navPos.x - 64, unit:GetAbsOrigin().y, unit:GetAbsOrigin().z))
+              else
+                print ("x > 0")
+                unit:SetAbsOrigin(Vector(navPos.x + 64, unit:GetAbsOrigin().y, unit:GetAbsOrigin().z))
+              end
             end
+            print (unit:GetAbsOrigin())
+            print('0-----0')]]
             --FindClearSpaceForUnit(unit, newPos, true)
             
             --newVelocity = Vector(0,0,0)
             --
+
+
+            local navX = GridNav:WorldToGridPosX(connect.x)
+            local navY = GridNav:WorldToGridPosY(connect.y)
+            local navPos = Vector(GridNav:GridPosToWorldCenterX(navX), GridNav:GridPosToWorldCenterY(navY), 0)
+            --unit.nRebounceFrames = unit.nMaxRebounce
+            
+            local normal = nil
+            local anggrid = self.anggrid
+            local offX = self.offsetX
+            local offY = self.offsetY
+            if anggrid then
+              local angSize = #anggrid
+              local angX = navX + offX
+              local angY = navY + offY
+
+              --print(offX .. ' -- ' .. angX .. ' == ' .. angY .. ' -- ' .. offY)
+              
+              local angle = anggrid[angX][angY]
+              if angle ~= -1 then
+                angle = angle
+                normal = RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
+                --print(normal)
+                --print('----------')
+              end
+            end
+            
+            if normal == nil then
+              --local face = navPos - position
+              --print("face: " .. tostring(face)) 
+              local dir = navPos - position
+              dir.z = 0
+              dir = dir:Normalized()
+              -- Nav bounce checks
+              --local angx = (math.acos(dir.x)/ math.pi * 180)
+              --local angy = (math.acos(dir.y)/ math.pi * 180)
+              --print(tostring(dir:Length()) .. " -- " .. tostring(dir))
+              --print(dir:Dot(Vector(1,0,0)))
+              --print(dir:Dot(Vector(-1,0,0)))
+              --print(dir:Dot(Vector(0,1,0)))
+              --print(dir:Dot(Vector(0,-1,0)))
+              --print('---------------')
+              local vVelocity = unit.vVelocity
+              if dir:Dot(Vector(1,0,0)) > .707 then
+                normal = Vector(1,0,0)
+                local navPos2 = navPos + Vector(-64,0,0)
+                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                if navConnect2 then
+                  if vVelocity.y > 0 then
+                    normal = Vector(0,1,0)
+                    navPos2 = navPos + Vector(0,-64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  else
+                    normal = Vector(0,-1,0)
+                    navPos2 = navPos + Vector(0,64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  end
+                end
+              elseif dir:Dot(Vector(-1,0,0)) > .707 then
+                normal = Vector(-1,0,0)
+                local navPos2 = navPos + Vector(64,0,0)
+                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                if navConnect2 then
+                  if vVelocity.y > 0 then
+                    normal = Vector(0,1,0)
+                    navPos2 = navPos + Vector(0,-64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  else
+                    normal = Vector(0,-1,0)
+                    navPos2 = navPos + Vector(0,64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  end
+                end
+              elseif dir:Dot(Vector(0,1,0)) > .707 then
+                normal = Vector(0,1,0)
+                local navPos2 = navPos + Vector(0,-64,0)
+                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                if navConnect2 then
+                  if vVelocity.x > 0 then
+                    normal = Vector(1,0,0)
+                    navPos2 = navPos + Vector(-64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  else
+                    normal = Vector(-1,0,0)
+                    navPos2 = navPos + Vector(64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  end
+                end
+              elseif dir:Dot(Vector(0,-1,0)) > .707 then
+                normal = Vector(0,-1,0)
+                local navPos2 = navPos + Vector(0,64,0)
+                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                if navConnect2 then
+                  if vVelocity.x > 0 then
+                    normal = Vector(-1,0,0)
+                    navPos2 = navPos + Vector(-64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  else
+                    normal = Vector(0,-1,0)
+                    navPos2 = navPos + Vector(64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      normal = Vector(diff.x, diff.y, diff.z)
+                    end
+                  end
+                end
+              end
+              --FindClearSpaceForUnit(unit, newPos, true)
+              --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
+            end
+
+            --[[if unit.PhysicsOnPreBounce then
+              local status, nextCall = pcall(unit.PhysicsOnPreBounce, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnPreBounce: ' .. nextCall)
+              end
+            end]]
+            newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
+            unit:SetAbsOrigin(unit:GetAbsOrigin() + normal * -64)
+            --[[if unit.PhysicsOnBounce then
+              local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnBounce: ' .. nextCall)
+              end
+            end]]
           elseif unit.nRebounceFrames <= 0 and unit.nNavCollision == PHYSICS_NAV_BOUNCE and navConnect then
             local navX = GridNav:WorldToGridPosX(connect.x)
             local navY = GridNav:WorldToGridPosY(connect.y)
@@ -1110,8 +1281,8 @@ function Physics:Unit(unit)
   unit.vSlideVelocity = Vector(0,0,0)
   unit.nNavGridLookahead = 1
   unit.nSkipSlide = 0
-  unit.nMaxRebounce = 5
-  unit.nRebounceFrames = 0
+  unit.nMaxRebounce = 2
+  unit.nRebounceFrames = 2
   unit.vLastGoodPosition = unit:GetAbsOrigin()
   unit.bAutoUnstuck = true
   unit.nStuckTimeout = 3
@@ -1128,16 +1299,71 @@ Physics.testUnits = {}
 function Physics:PhysicsTestCommand(...)
 
   local args = {...}
-  PrintTable(args)
   local text = table.concat (args, " ")
-  print(text)
   local ply = Convars:GetCommandClient()
   local plyID = ply:GetPlayerID()
 
   local hero = ply:GetAssignedHero()
 
+  if text == "" or string.find(text, "^help") then
+    print("PHYSTEST Help")
+    print('---------------------')
+    print("vel X Y Z        -- Adds the given velocity X,Y,Z to the current hero's velocity.")
+    print("velmax X         -- Sets the maximum velocity of the current hero to X.")
+    print("clamp X          -- Sets the to-zero velocity clamp to X hammer units per second.")
+    print("acc X Y Z        -- Sets the given acceleration X,Y,Z to the current hero's acceleration.")
+    print("fric X           -- Sets the frcition of the current hero to X / 100.")
+    print("prevent          -- Toggles Directional Influence prevention (aka right click moving).")
+    print("slidemult X      -- Sets the slide multiplier to X / 100.")
+    print("slide            -- Toggles Slide on/off.")
+    print("nav              -- Toggles FollowNavMesh on/off.  Nav collision will not trigger if this is not set.")
+    print("navtype          -- Cycles through the navtype collision types.")
+    print("hibernate        -- Toggles hibernate on/off.")
+    print("ground           -- Cycles through the ground behavior.")
+    print("mass X           -- Sets the mass of this unit to X for momentum collision calculations.")
+    print("bouncemult X     -- Sets the bounce multiplier to X / 100.")
+    print("unstuck          -- Toggles AutoUnstuck on/off.")
+    print("stuckframes X    -- Sets the number of frames to wait before triggering an Unstuck.")
+    print("rebounceframes X -- Sets the number of frames to wait between NAV_BOUNCE bounces.")
+    print("lookahead X      -- Sets the number of lookahead frames for nav collision detection.")
+    print("phys             -- Activates this hero as a physics unit.")
+    print("regrow           -- Regrow all trees on the map.")
+    print("anggrid          -- Process the map into an anglegrid to use with SLIDE/BOUNCE nav collision.")
+    print('---------------------')
+  end
+
   if string.find(text, "^regrow") then
     GridNav:RegrowAllTrees()
+  end
+
+  if string.find(text, "^unstuck") then    
+    hero:SetAutoUnstuck(not hero:GetAutoUnstuck())
+    print(hero:GetAutoUnstuck())
+  end
+
+  local mass1 = string.match(text, "^mass%s+(-?%d+)")
+  if mass1 ~= nil then
+    hero:SetMass(mass1)
+  end
+
+  local bmult1 = string.match(text, "^bouncemult%s+(-?%d+)")
+  if bmult1 ~= nil then
+    hero:SetBounceMultiplier(bmult1 / 100) 
+  end
+
+  local stuckTimeout1 = string.match(text, "^stuckframes%s+(%d+)")
+  if stuckTimeout1 ~= nil then
+    hero:SetStuckTimeout(stuckTimeout1)
+  end
+
+  local rebounce1 = string.match(text, "^rebounceframes%s+(%d+)")
+  if rebounce1 ~= nil then
+    hero:SetRebounceFrames(rebounce1)
+  end
+  
+  local lookahead1 = string.match(text, "^lookahead%s+(%d+)")
+  if lookahead1 ~= nil then
+    hero:SetNavGridLookahead(lookahead1)
   end
 
   if string.find(text, "^spider") then
@@ -1481,7 +1707,6 @@ function Physics:PhysicsTestCommand(...)
   local velmax1 = string.match(text, "^velmax%s+(%d+)")
   if velmax1 ~= nil then
     hero:SetPhysicsVelocityMax(tonumber(velmax1))
-    print('-velmax' .. tonumber(velmax1))
   end
   
   local acc1,acc2,acc3 = string.match(text, "^acc%s+(-?%d+)%s+(-?%d+)%s+(-?%d+)")
@@ -1501,6 +1726,7 @@ function Physics:PhysicsTestCommand(...)
   
   if string.find(text, "^prevent") then
     hero:PreventDI(not hero:IsPreventDI())
+    print(hero:IsPreventDI())
   end
 
   if string.find(text, "^phys") and hero.IsSlide == nil then
@@ -1521,6 +1747,7 @@ function Physics:PhysicsTestCommand(...)
   
   if string.find(text, "^nav$") then
     hero:FollowNavMesh(not hero:IsFollowNavMesh())
+    print(hero:IsFollowNavMesh())
   end
   
   local clamp1 = string.match(text, "^clamp%s+(%d+)")
@@ -1536,14 +1763,32 @@ function Physics:PhysicsTestCommand(...)
   if string.find(text, "^navtype") then
       local navType = hero:GetNavCollisionType()
       navType = (navType + 1) % 4
-      print('navtype: ' .. tostring(navType))
+      local navStr = "NOTHING"
+      if navType == PHYSICS_NAV_NOTHING then
+        navStr = "NOTHING"
+      elseif navType == PHYSICS_NAV_HALT then
+        navStr = "HALT"
+      elseif navType == PHYSICS_NAV_BOUNCE then
+        navStr = "BOUNCE"
+      elseif navType == PHYSICS_NAV_SLIDE then
+        navStr = "SLIDE"
+      end
+      print('navtype: ' .. navStr)
       hero:SetNavCollisionType(navType)
   end
   
   if string.find(text, "^ground") then
     local ground = hero:GetGroundBehavior()
     ground = (ground + 1) % 3
-    print('ground: ' .. tostring(ground))
+    local groundStr = "NOTHING"
+    if ground == PHYSICS_GROUND_NOTHING then
+      groundStr = "NOTHING"
+    elseif ground == PHYSICS_GROUND_ABOVE then
+      groundStr = "ABOVE"
+    elseif ground == PHYSICS_GROUND_LOCK then
+      groundStr = "LOCK"
+    end
+    print('ground: ' .. groundStr)
     hero:SetGroundBehavior(ground)
   end
 end
@@ -2036,7 +2281,7 @@ Physics:CreateColliderProfile("boxblocker",
       Physics:BlockInBox(unit, toside, normal, self.buffer, self.findClearSpace)
 
       if self.slide and IsPhysicsUnit(unit) then
-        unit:AddPhysicsVelocity(unit:GetPhysicsVelocity():Dot(normal * -1) * normal)
+        unit:AddPhysicsVelocity(math.max(0,unit:GetPhysicsVelocity():Dot(normal * -1)) * normal)
       end
     end
   })
@@ -2244,7 +2489,7 @@ Physics:CreateColliderProfile("aaboxblocker",
       Physics:BlockInAABox(unit, xblock, value, buffer, findClearSpace)
 
       if self.slide and IsPhysicsUnit(unit) then
-        unit:AddPhysicsVelocity(unit:GetPhysicsVelocity():Dot(normal * -1) * normal)
+        unit:AddPhysicsVelocity(math.max(0,unit:GetPhysicsVelocity():Dot(normal * -1)) * normal)
       end
     end
   })
