@@ -759,6 +759,14 @@ function Physics:Unit(unit)
   function unit:OnSlide(fun)
     unit.PhysicsOnSlide = fun
   end
+
+  function unit:AdaptiveNavGridLookahead (adaptive)
+    unit.bAdaptiveNavGridLookahead = adaptive
+  end
+  
+  function unit:IsAdaptiveNavGridLookahead ()
+    return unit.bAdaptiveNavGridLookahead
+  end
   
   function unit:SetNavGridLookahead (lookahead)
     unit.nNavGridLookahead = lookahead
@@ -794,7 +802,7 @@ function Physics:Unit(unit)
     unit.nStuckFrames = 0
     return unit.nStuckTimeout
   end
-  
+  \
   function unit:SetAutoUnstuck (unstuck)
     unit.bAutoUnstuck = unstuck
   end
@@ -993,7 +1001,11 @@ function Physics:Unit(unit)
           
           local connect = newPos-- + diff * bound
           local navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
-          local tot = unit.nNavGridLookahead + 1
+          local lookaheadNum = unit.nNavGridLookahead
+          if unit.bAdaptiveNavGridLookahead then
+            lookaheadNum = math.ceil(unit.vVelocity:Length() / 32)
+          end
+          local tot = lookaheadNum + 1
           local div = 1 / tot
           local index = 1
           while not navConnect and index < tot do
@@ -1147,6 +1159,7 @@ function Physics:Unit(unit)
             end
 
             newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
+            unit.vVelocity = newVelocity
             local ndir = dir * -1
             local scalar = math.min((32+bound) / math.abs(ndir.x), (32+bound) / math.abs(ndir.y))
 
@@ -1298,6 +1311,7 @@ function Physics:Unit(unit)
               end
             end
             newVelocity = ((-2 * newVelocity:Dot(normal) * normal) + newVelocity) * unit.fBounceMultiplier
+            unit.vVelocity = newVelocity
             if unit.PhysicsOnBounce then
               local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
               if not status then
@@ -1378,6 +1392,7 @@ function Physics:Unit(unit)
   unit.bStarted = true
   unit.vSlideVelocity = Vector(0,0,0)
   unit.nNavGridLookahead = 1
+  unit.bAdaptiveNavGridLookahead = false
   unit.nSkipSlide = 0
   unit.nMaxRebounce = 2
   unit.nRebounceFrames = 2

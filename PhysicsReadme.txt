@@ -40,6 +40,9 @@ IsPhysicsUnit (unit)
 =============================
 PhysicsUnit Functions:
 =============================
+AdaptiveNavGridLookahead (boolean)
+    Whether this unit should use an adaptive navgrid lookahead system to more reliably detect GNV collisions at high speed
+-----------------------------
 AddPhysicsAcceleration (accelerationVector)
     Adds a new acceleration vector to the current internal acceleration vector.
 -----------------------------
@@ -97,6 +100,9 @@ Hibernate (boolean)
 	When hibernating the unit performs no physics calculation until new force/acceleration/sliding is applied.  
 	Additionally, OnPhysicsFrame will not be called if this unit is hibernating.
 	Default is that a unit will hibernate.
+-----------------------------
+IsAdaptiveNavGridLookahead ()
+    Returns whether this unit will use an adaptive navgrid lookahead system to more reliably detect GNV collisions at high speed
 -----------------------------
 IsFollowNavMesh ()
     Returns whether this unit will respect the navigation mesh when moving the unit around.
