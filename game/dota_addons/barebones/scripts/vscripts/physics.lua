@@ -802,7 +802,7 @@ function Physics:Unit(unit)
     unit.nStuckFrames = 0
     return unit.nStuckTimeout
   end
-  \
+  
   function unit:SetAutoUnstuck (unstuck)
     unit.bAutoUnstuck = unstuck
   end
