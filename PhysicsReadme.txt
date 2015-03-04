@@ -26,9 +26,12 @@ Physics Library Functions
 =============================
 Physics:Unit (unit)
 	Makes a unit into a "physics" unit which can be manipulated using the PhysicsUnit functions
------------------------------	
+-----------------------------
+Physics:GenerateAngleGrid()
+	This function is used to generate and apply an angle grid (calculated GNV normal map) for the current map so as to yield better bounces for PHYSICS_NAV_BOUNCE and PHYSICS_NAV_SLIDE collisions.
+-----------------------------
 Physics:AngleGrid (anggrid, angoffsets)
-	This function is an advanced means of setting a normal map for GridNav collisions so as to yield better bounces for PHYSICS_NAV_BOUNCE collisions.
+	This function is an advanced means of setting a normal map for GridNav collisions so as to yield better bounces for PHYSICS_NAV_BOUNCE and PHYSICS_NAV_SLIDE collisions.
 -----------------------------
 IsPhysicsUnit (unit)
 	This global function returns true if the unit in question has been converted to a "physics" unit.

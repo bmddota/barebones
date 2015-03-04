@@ -429,6 +429,117 @@ end
       "TBD"
 ]]
 
+function Physics:GenerateAngleGrid()
+  local anggrid = {}
+  local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+  local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+
+  print(worldMin)
+  print(worldMax)
+
+  local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+  local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+  local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
+  local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
+  local offsetX = boundX1 * -1 + 1
+  local offsetY = boundY1 * -1 + 1
+
+  print(boundX1 .. " -- " .. boundX2)
+  print(boundY1 .. " -- " .. boundY2)
+  print(offsetX)
+  print(offsetY)
+
+  local vecs = {
+    {vec = Vector(0,1,0):Normalized(), x=0,y=1},-- N
+    {vec = Vector(1,1,0):Normalized(), x=1,y=1}, -- NE
+    {vec = Vector(1,0,0):Normalized(), x=1,y=0}, -- E
+    {vec = Vector(1,-1,0):Normalized(), x=1,y=-1}, -- SE
+    {vec = Vector(0,-1,0):Normalized(), x=0,y=-1}, -- S
+    {vec = Vector(-1,-1,0):Normalized(), x=-1,y=-1}, -- SW
+    {vec = Vector(-1,0,0):Normalized(), x=-1,y=0}, -- W
+    {vec = Vector(-1,1,0):Normalized(), x=-1,y=1} -- NW
+  }
+
+  print('----------------------')
+
+  anggrid[1] = {}
+  for j=boundY1,boundY2 do
+    anggrid[1][j + offsetY] = -1
+  end
+  anggrid[1][boundY2 + offsetY] = -1
+
+  for i=boundX1+1,boundX2-1 do
+    anggrid[i+offsetX] = {}
+    anggrid[i+offsetX][1] = -1
+    for j=(boundY1+1),boundY2-1 do
+      local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
+      local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) --or (pseudoGNV[i] ~= nil and pseudoGNV[i][j])
+      local seg = 0
+      local sum = Vector(0,0,0)
+      local count = 0
+      local inseg = false
+
+      if blocked then
+        for k=1,#vecs do
+          local vec = vecs[k].vec
+          local xoff = vecs[k].x
+          local yoff = vecs[k].y
+          local pos = Vector(GridNav:GridPosToWorldCenterX(i+xoff), GridNav:GridPosToWorldCenterY(j+yoff), 0)
+          local blo = not GridNav:IsTraversable(pos) or GridNav:IsBlocked(pos) --or (pseudoGNV[i+xoff] ~= nil and pseudoGNV[i+xoff][j+yoff])
+
+          if not blo then
+            count = count + 1
+            inseg = true
+            sum = sum + vec
+          else
+            if inseg then
+              inseg = false
+              seg = seg + 1
+            end
+          end
+        end
+
+        if seg > 1 then
+          print ('OVERSEG x=' .. i .. ' y=' .. j)
+          anggrid[i+offsetX][j+offsetY] = -1
+        elseif count > 5 then
+          print ('PROTRUDE x=' .. i .. ' y=' .. j)
+          anggrid[i+offsetX][j+offsetY] = -1
+        elseif count == 0 then
+          anggrid[i+offsetX][j+offsetY] = -1
+        else
+          local sum = sum:Normalized()
+          local angle = math.floor((math.acos(Vector(1,0,0):Dot(sum:Normalized()))/ math.pi * 180))
+          if sum.y < 0 then
+            angle = -1 * angle
+          end
+          anggrid[i+offsetX][j+offsetY] = angle
+        end
+      else
+        anggrid[i+offsetX][j+offsetY] = -1
+      end
+    end
+    anggrid[i+offsetX][boundY2+offsetY] = -1
+  end
+
+  anggrid[boundX2+offsetX] = {}
+  for j=boundY1,boundY2 do
+    anggrid[boundX2+offsetX][j+offsetY] = -1
+  end
+  anggrid[boundX2+offsetX][boundY2+offsetY] = -1
+
+  print('--------------')
+  print(#anggrid)
+  print(#anggrid[1])
+  print(#anggrid[2])
+  print(#anggrid[3])
+
+  if MAP_DATA  then
+    MAP_DATA.anggrid = anggrid
+  end
+  Physics:AngleGrid(anggrid)
+end
+
 function Physics:AngleGrid( anggrid, angoffsets )
   self.anggrid = anggrid
   print('[PHYSICS] Angle Grid Set')
@@ -908,16 +1019,17 @@ function Physics:Unit(unit)
               local angle = anggrid[angX][angY]
               if angle ~= -1 then
                 angle = angle
-                normal = RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
+                normal = -1 * RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
+                --print(angle)
                 --print(normal)
                 --print('----------')
               end
             end
             
+            local dir = navPos - position
             if normal == nil then
               --local face = navPos - position
               --print("face: " .. tostring(face)) 
-              local dir = navPos - position
               dir.z = 0
               dir = dir:Normalized()
               -- Nav bounce checks
@@ -1026,10 +1138,11 @@ function Physics:Unit(unit)
               end
             end]]
             newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
-            local scalar = -1 * math.min((32+bound) / math.abs(normal.x), (32+bound) / math.abs(normal.y))
+            local ndir = dir * -1
+            local scalar = math.min((32+bound) / math.abs(ndir.x), (32+bound) / math.abs(ndir.y))
 
             unit.nSkipSlide = 1
-            unit:SetAbsOrigin(navPos + Vector(scalar*normal.x, scalar*normal.y, position.z))
+            unit:SetAbsOrigin(navPos + Vector(scalar*ndir.x, scalar*ndir.y, position.z))
             --[[if unit.PhysicsOnBounce then
               local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
               if not status then
@@ -1464,119 +1577,7 @@ function Physics:PhysicsTestCommand(...)
   end
 
   if string.find(text, "^anggrid") then
-    local timestamp = GetSystemDate() .. " " .. GetSystemTime()
-    timestamp = timestamp:gsub(":","_"):gsub(" ","_")
-    local fileName = "log/" .. GetMapName() .. timestamp .. ".txt"
-    print(fileName)
-
-    local anggrid = {}
-    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
-    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
-
-    print(worldMin)
-    print(worldMax)
-
-    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
-    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
-    local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
-    local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
-    local offsetX = boundX1 * -1 + 1
-    local offsetY = boundY1 * -1 + 1
-
-    print(boundX1 .. " -- " .. boundX2)
-    print(boundY1 .. " -- " .. boundY2)
-    print(offsetX)
-    print(offsetY)
-
-    local vecs = {
-      {vec = Vector(0,1,0):Normalized(), x=0,y=1},-- N
-      {vec = Vector(1,1,0):Normalized(), x=1,y=1}, -- NE
-      {vec = Vector(1,0,0):Normalized(), x=1,y=0}, -- E
-      {vec = Vector(1,-1,0):Normalized(), x=1,y=-1}, -- SE
-      {vec = Vector(0,-1,0):Normalized(), x=0,y=-1}, -- S
-      {vec = Vector(-1,-1,0):Normalized(), x=-1,y=-1}, -- SW
-      {vec = Vector(-1,0,0):Normalized(), x=-1,y=0}, -- W
-      {vec = Vector(-1,1,0):Normalized(), x=-1,y=1} -- NW
-    }
-
-    print('----------------------')
-
-    anggrid[1] = {}
-    for j=boundY1,boundY2 do
-      anggrid[1][j + offsetY] = -1
-    end
-    anggrid[1][boundY2 + offsetY] = -1
-
-    for i=boundX1+1,boundX2-1 do
-      anggrid[i+offsetX] = {}
-      anggrid[i+offsetX][1] = -1
-      for j=(boundY1+1),boundY2-1 do
-        local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
-        local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) --or (pseudoGNV[i] ~= nil and pseudoGNV[i][j])
-        local seg = 0
-        local sum = Vector(0,0,0)
-        local count = 0
-        local inseg = false
-
-        if blocked then
-          for k=1,#vecs do
-            local vec = vecs[k].vec
-            local xoff = vecs[k].x
-            local yoff = vecs[k].y
-            local pos = Vector(GridNav:GridPosToWorldCenterX(i+xoff), GridNav:GridPosToWorldCenterY(j+yoff), 0)
-            local blo = not GridNav:IsTraversable(pos) or GridNav:IsBlocked(pos) --or (pseudoGNV[i+xoff] ~= nil and pseudoGNV[i+xoff][j+yoff])
-
-            if not blo then
-              count = count + 1
-              inseg = true
-              sum = sum + vec
-            else
-              if inseg then
-                inseg = false
-                seg = seg + 1
-              end
-            end
-          end
-
-          if seg > 1 then
-            print ('OVERSEG x=' .. i .. ' y=' .. j)
-            anggrid[i+offsetX][j+offsetY] = -1
-          elseif count > 5 then
-            print ('PROTRUDE x=' .. i .. ' y=' .. j)
-            anggrid[i+offsetX][j+offsetY] = -1
-          elseif count == 0 then
-            anggrid[i+offsetX][j+offsetY] = -1
-          else
-            local sum = sum:Normalized()
-            local angle = math.floor((math.acos(Vector(1,0,0):Dot(sum:Normalized()))/ math.pi * 180))
-            if sum.y < 0 then
-              angle = -1 * angle
-            end
-            anggrid[i+offsetX][j+offsetY] = angle
-          end
-        else
-          anggrid[i+offsetX][j+offsetY] = -1
-        end
-      end
-      anggrid[i+offsetX][boundY2+offsetY] = -1
-    end
-
-    anggrid[boundX2+offsetX] = {}
-    for j=boundY1,boundY2 do
-      anggrid[boundX2+offsetX][j+offsetY] = -1
-    end
-    anggrid[boundX2+offsetX][boundY2+offsetY] = -1
-
-    print('--------------')
-    print(#anggrid)
-    print(#anggrid[1])
-    print(#anggrid[2])
-    print(#anggrid[3])
-
-    if MAP_DATA  then
-      MAP_DATA.anggrid = anggrid
-    end
-    Physics:AngleGrid(anggrid)
+    Physics:GenerateAngleGrid()
   end
   
   local ap = abilPoints
