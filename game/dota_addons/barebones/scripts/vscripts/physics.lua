@@ -864,15 +864,22 @@ function Physics:Unit(unit)
           local diff = unit.vVelocity:Normalized()
           --FindClearSpaceForUnit(unit, newPos, true)
           unit:SetAbsOrigin(newPos)
+
+          local bound = 1
+          if unit.GetPaddedCollisionRadius then
+            bound = unit:GetPaddedCollisionRadius() + 1
+          elseif unit.GetBoundingMaxs then
+            bound = math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)
+          end
           
-          local navConnect = not GridNav:IsTraversable(newPos) or GridNav:IsBlocked(newPos) 
+          local connect = newPos-- + diff * bound
+          local navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
           local tot = unit.nNavGridLookahead + 1
           local div = 1 / tot
           local index = 1
-          local connect = newPos
           while not navConnect and index < tot do
-            connect = newPos + unit.vVelocity * div * index
-            navConnect = not GridNav:IsTraversable(newPos) or GridNav:IsBlocked(newPos) 
+            connect = newPos + unit.vVelocity * (div * index) + diff * bound
+            navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
             index = index + 1
           end
           --or not GridNav:IsTraversable(newPos + unit.vVelocity * .5) -- diff * unit.nNavGridLookahead
@@ -882,42 +889,6 @@ function Physics:Unit(unit)
             FindClearSpaceForUnit(unit, newPos, true)
             unit.nSkipSlide = 1
           elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then        
-            --[[local navPos = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(connect.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(connect.y)), 0)
-            
-            local face = navPos - position
-
-            print (unit:GetAbsOrigin())
-            print(navPos)
-            --print("face: " .. tostring(face))
-            if math.abs(face.x) < math.abs(face.y) then
-              print ("x < y")
-              newVelocity = newVelocity - Vector(newVelocity.x, 0, 0)
-              if face.y < 0 then
-                print ("y < 0")
-                unit:SetAbsOrigin(Vector(unit:GetAbsOrigin().x, navPos.y - 64, unit:GetAbsOrigin().z))
-              else
-                print ("y > 0")
-                unit:SetAbsOrigin(Vector(unit:GetAbsOrigin().x, navPos.y + 64, unit:GetAbsOrigin().z))
-              end
-            else
-              print ("x > y")
-              newVelocity = newVelocity - Vector(0, newVelocity.y, 0)
-              if face.x < 0 then
-                print ("x < 0")
-                unit:SetAbsOrigin(Vector(navPos.x - 64, unit:GetAbsOrigin().y, unit:GetAbsOrigin().z))
-              else
-                print ("x > 0")
-                unit:SetAbsOrigin(Vector(navPos.x + 64, unit:GetAbsOrigin().y, unit:GetAbsOrigin().z))
-              end
-            end
-            print (unit:GetAbsOrigin())
-            print('0-----0')]]
-            --FindClearSpaceForUnit(unit, newPos, true)
-            
-            --newVelocity = Vector(0,0,0)
-            --
-
-
             local navX = GridNav:WorldToGridPosX(connect.x)
             local navY = GridNav:WorldToGridPosY(connect.y)
             local navPos = Vector(GridNav:GridPosToWorldCenterX(navX), GridNav:GridPosToWorldCenterY(navY), 0)
@@ -1055,7 +1026,10 @@ function Physics:Unit(unit)
               end
             end]]
             newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
-            unit:SetAbsOrigin(unit:GetAbsOrigin() + normal * -64)
+            local scalar = -1 * math.min((32+bound) / math.abs(normal.x), (32+bound) / math.abs(normal.y))
+
+            unit.nSkipSlide = 1
+            unit:SetAbsOrigin(navPos + Vector(scalar*normal.x, scalar*normal.y, position.z))
             --[[if unit.PhysicsOnBounce then
               local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
               if not status then
@@ -1090,7 +1064,8 @@ function Physics:Unit(unit)
             
             if normal == nil then
               --local face = navPos - position
-              --print("face: " .. tostring(face)) 
+              --print("face: " .. tostring(face))
+              --local dir = navPos - position
               local dir = navPos - position
               dir.z = 0
               dir = dir:Normalized()
