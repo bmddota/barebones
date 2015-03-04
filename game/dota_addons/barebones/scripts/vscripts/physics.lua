@@ -751,6 +751,14 @@ function Physics:Unit(unit)
   function unit:OnBounce(fun)
     unit.PhysicsOnBounce = fun
   end
+
+  function unit:OnPreSlide(fun)
+    unit.PhysicsOnPreSlide = fun
+  end
+
+  function unit:OnSlide(fun)
+    unit.PhysicsOnSlide = fun
+  end
   
   function unit:SetNavGridLookahead (lookahead)
     unit.nNavGridLookahead = lookahead
@@ -1131,24 +1139,26 @@ function Physics:Unit(unit)
               --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
             end
 
-            --[[if unit.PhysicsOnPreBounce then
-              local status, nextCall = pcall(unit.PhysicsOnPreBounce, unit, normal)
+            if unit.PhysicsOnPreSlide then
+              local status, nextCall = pcall(unit.PhysicsOnPreSlide, unit, normal)
               if not status then
-                print('[PHYSICS] Failed OnPreBounce: ' .. nextCall)
+                print('[PHYSICS] Failed OnPreSlide: ' .. nextCall)
               end
-            end]]
+            end
+
             newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
             local ndir = dir * -1
             local scalar = math.min((32+bound) / math.abs(ndir.x), (32+bound) / math.abs(ndir.y))
 
             unit.nSkipSlide = 1
             unit:SetAbsOrigin(navPos + Vector(scalar*ndir.x, scalar*ndir.y, position.z))
-            --[[if unit.PhysicsOnBounce then
-              local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
+            
+            if unit.PhysicsOnSlide then
+              local status, nextCall = pcall(unit.PhysicsOnSlide, unit, normal)
               if not status then
-                print('[PHYSICS] Failed OnBounce: ' .. nextCall)
+                print('[PHYSICS] Failed OnSlide: ' .. nextCall)
               end
-            end]]
+            end
           elseif unit.nRebounceFrames <= 0 and unit.nNavCollision == PHYSICS_NAV_BOUNCE and navConnect then
             local navX = GridNav:WorldToGridPosX(connect.x)
             local navY = GridNav:WorldToGridPosY(connect.y)

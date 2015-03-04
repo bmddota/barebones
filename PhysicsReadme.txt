@@ -118,13 +118,23 @@ OnBounce (function(unit, normal))
     performed and applied.  The function passed in has two parameters given to it, the unit in question and the normal vector of the surface
     that the unit is bouncing off of.
 -----------------------------
-OnHibernate (function(unit))
-	Set the callback function (with one parameter, the unit in question) to be executed in the event that this unit begins hibernating.
------------------------------
 OnPreBounce (function(unit, normal))
     Set the callback function to be executed when a PHYSICS_NAV_BOUNCE is occuring, but before the velocity rebound calculation has been
     performed and applied.  The function passed in has two parameters given to it, the unit in question and the normal vector of the surface
     that the unit is bouncing off of.
+-----------------------------
+OnHibernate (function(unit))
+	Set the callback function (with one parameter, the unit in question) to be executed in the event that this unit begins hibernating.
+-----------------------------
+OnSlide (function(unit, normal))
+    Set the callback function to be executed when a PHYSICS_NAV_SLIDE is occuring, but after the velocity direction nullification has been
+    performed and applied.  The function passed in has two parameters given to it, the unit in question and the normal vector of the surface
+    that the unit is sliding off of.
+-----------------------------
+OnPreSlide (function(unit, normal))
+    Set the callback function to be executed when a PHYSICS_NAV_SLIDE is occuring, but before the velocity direction nullification has been
+    performed and applied.  The function passed in has two parameters given to it, the unit in question and the normal vector of the surface
+    that the unit is sliding off of.
 -----------------------------
 OnPhysicsFrame (function(unit))
     Set the callback function (with one parameter, the unit in question) to be executed every frame for this unit so long as it is not hibernating.  
