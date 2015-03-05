@@ -70,6 +70,9 @@ GetNavGridLookahead ()
 GetPhysicsAcceleration ()
     Returns the current acceleration vector.  Default is (0,0,0)
 -----------------------------
+GetPhysicsBoundingRadius ()
+    Returns the current bounding radius used for navgrid collision.  Default is the PaddedCollisionRadius of a unit.
+-----------------------------
 GetPhysicsFriction ()
     Returns the current friction multiplier.  Default it .05
 -----------------------------
@@ -176,6 +179,9 @@ SetNavGridLookahead (lookaheadPoints)
 -----------------------------
 SetPhysicsAcceleration (accelerationVector)
     Sets the internal acceleration vector to the given vector, eliminating any existing acceleration
+-----------------------------
+SetPhysicsBoundingRadius (boundingRadius)
+    Sets the internal bounding radius used for navgrid collision.
 -----------------------------
 SetPhysicsFriction (frictionMultiplier)
     Sets the friction multiplier.  The default is .05

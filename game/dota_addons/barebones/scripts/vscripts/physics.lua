@@ -810,6 +810,13 @@ function Physics:Unit(unit)
     return unit.bAutoUnstuck
   end
 
+  function unit:SetPhysicsBoundingRadius(bounding)
+    unit.fBoundingRadius = bounding
+  end
+  function unit:GetPhysicsBoundingRadius()
+    return unit.fBoundingRadius
+  end
+
   function unit:SetBounceMultiplier (bounce)
     unit.fBounceMultiplier = bounce
   end
@@ -991,15 +998,11 @@ function Physics:Unit(unit)
           local diff = unit.vVelocity:Normalized()
           --FindClearSpaceForUnit(unit, newPos, true)
           unit:SetAbsOrigin(newPos)
+          position = newPos
 
-          local bound = 1
-          if unit.GetPaddedCollisionRadius then
-            bound = unit:GetPaddedCollisionRadius() + 1
-          elseif unit.GetBoundingMaxs then
-            bound = math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)
-          end
+          local bound = unit.fBoundingRadius
           
-          local connect = newPos-- + diff * bound
+          local connect = newPos
           local navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
           local lookaheadNum = unit.nNavGridLookahead
           if unit.bAdaptiveNavGridLookahead then
@@ -1009,7 +1012,7 @@ function Physics:Unit(unit)
           local div = 1 / tot
           local index = 1
           while not navConnect and index < tot do
-            connect = newPos + unit.vVelocity * (div * index) + diff * bound
+            connect = newPos + (unit.vVelocity + diff * bound) * (div * index)
             navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
             index = index + 1
           end
@@ -1029,159 +1032,13 @@ function Physics:Unit(unit)
             local anggrid = self.anggrid
             local offX = self.offsetX
             local offY = self.offsetY
-            if anggrid then
-              local angSize = #anggrid
-              local angX = navX + offX
-              local angY = navY + offY
+            local dir = position - navPos
+            local x = position.x
+            local y = position.y
+            local middle = navPos
+            local xblock = true
+            local value = 0
 
-              --print(offX .. ' -- ' .. angX .. ' == ' .. angY .. ' -- ' .. offY)
-              
-              local angle = anggrid[angX][angY]
-              if angle ~= -1 then
-                angle = angle
-                normal = -1 * RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
-                --print(angle)
-                --print(normal)
-                --print('----------')
-              end
-            end
-            
-            local dir = navPos - position
-            if normal == nil then
-              --local face = navPos - position
-              --print("face: " .. tostring(face)) 
-              dir.z = 0
-              dir = dir:Normalized()
-              -- Nav bounce checks
-              --local angx = (math.acos(dir.x)/ math.pi * 180)
-              --local angy = (math.acos(dir.y)/ math.pi * 180)
-              --print(tostring(dir:Length()) .. " -- " .. tostring(dir))
-              --print(dir:Dot(Vector(1,0,0)))
-              --print(dir:Dot(Vector(-1,0,0)))
-              --print(dir:Dot(Vector(0,1,0)))
-              --print(dir:Dot(Vector(0,-1,0)))
-              --print('---------------')
-              local vVelocity = unit.vVelocity
-              if dir:Dot(Vector(1,0,0)) > .707 then
-                normal = Vector(1,0,0)
-                local navPos2 = navPos + Vector(-64,0,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.y > 0 then
-                    normal = Vector(0,1,0)
-                    navPos2 = navPos + Vector(0,-64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  else
-                    normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(0,64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  end
-                end
-              elseif dir:Dot(Vector(-1,0,0)) > .707 then
-                normal = Vector(-1,0,0)
-                local navPos2 = navPos + Vector(64,0,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.y > 0 then
-                    normal = Vector(0,1,0)
-                    navPos2 = navPos + Vector(0,-64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  else
-                    normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(0,64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  end
-                end
-              elseif dir:Dot(Vector(0,1,0)) > .707 then
-                normal = Vector(0,1,0)
-                local navPos2 = navPos + Vector(0,-64,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.x > 0 then
-                    normal = Vector(1,0,0)
-                    navPos2 = navPos + Vector(-64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  else
-                    normal = Vector(-1,0,0)
-                    navPos2 = navPos + Vector(64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  end
-                end
-              elseif dir:Dot(Vector(0,-1,0)) > .707 then
-                normal = Vector(0,-1,0)
-                local navPos2 = navPos + Vector(0,64,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.x > 0 then
-                    normal = Vector(-1,0,0)
-                    navPos2 = navPos + Vector(-64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  else
-                    normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x, diff.y, diff.z)
-                    end
-                  end
-                end
-              end
-              --FindClearSpaceForUnit(unit, newPos, true)
-              --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
-            end
-
-            if unit.PhysicsOnPreSlide then
-              local status, nextCall = pcall(unit.PhysicsOnPreSlide, unit, normal)
-              if not status then
-                print('[PHYSICS] Failed OnPreSlide: ' .. nextCall)
-              end
-            end
-
-            newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
-            unit.vVelocity = newVelocity
-            local ndir = dir * -1
-            local scalar = math.min((32+bound) / math.abs(ndir.x), (32+bound) / math.abs(ndir.y))
-
-            unit.nSkipSlide = 1
-            unit:SetAbsOrigin(navPos + Vector(scalar*ndir.x, scalar*ndir.y, position.z))
-            
-            if unit.PhysicsOnSlide then
-              local status, nextCall = pcall(unit.PhysicsOnSlide, unit, normal)
-              if not status then
-                print('[PHYSICS] Failed OnSlide: ' .. nextCall)
-              end
-            end
-          elseif unit.nRebounceFrames <= 0 and unit.nNavCollision == PHYSICS_NAV_BOUNCE and navConnect then
-            local navX = GridNav:WorldToGridPosX(connect.x)
-            local navY = GridNav:WorldToGridPosY(connect.y)
-            local navPos = Vector(GridNav:GridPosToWorldCenterX(navX), GridNav:GridPosToWorldCenterY(navY), 0)
-            unit.nRebounceFrames = unit.nMaxRebounce
-            
-            local normal = nil
-            local anggrid = self.anggrid
-            local offX = self.offsetX
-            local offY = self.offsetY
             if anggrid then
               local angSize = #anggrid
               local angX = navX + offX
@@ -1193,115 +1050,360 @@ function Physics:Unit(unit)
               if angle ~= -1 then
                 angle = angle
                 normal = RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
+                --print(angle)
                 --print(normal)
                 --print('----------')
+
+                if math.abs(normal.x) > math.abs(normal.y) then
+                  xblock = true
+                  if normal.x > 0 then
+                    value = navPos.x + 33 + bound
+                  else
+                    value = navPos.x - 33 - bound
+                  end
+                else
+                  xblock = false
+                  if normal.y > 0 then
+                    value = navPos.y + 33 + bound
+                  else
+                    value = navPos.y - 33 - bound
+                  end
+                end
               end
             end
             
             if normal == nil then
-              --local face = navPos - position
-              --print("face: " .. tostring(face))
-              --local dir = navPos - position
-              local dir = navPos - position
-              dir.z = 0
-              dir = dir:Normalized()
-              -- Nav bounce checks
-              --local angx = (math.acos(dir.x)/ math.pi * 180)
-              --local angy = (math.acos(dir.y)/ math.pi * 180)
-              --print(tostring(dir:Length()) .. " -- " .. tostring(dir))
-              --print(dir:Dot(Vector(1,0,0)))
-              --print(dir:Dot(Vector(-1,0,0)))
-              --print(dir:Dot(Vector(0,1,0)))
-              --print(dir:Dot(Vector(0,-1,0)))
-              --print('---------------')
-              local vVelocity = unit.vVelocity
-              if dir:Dot(Vector(1,0,0)) > .707 then
-                normal = Vector(1,0,0)
-                local navPos2 = navPos + Vector(-64,0,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.y > 0 then
-                    normal = Vector(0,1,0)
-                    navPos2 = navPos + Vector(0,-64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
-                  else
-                    normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(0,64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
-                  end
-                end
-              elseif dir:Dot(Vector(-1,0,0)) > .707 then
-                normal = Vector(-1,0,0)
-                local navPos2 = navPos + Vector(64,0,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.y > 0 then
-                    normal = Vector(0,1,0)
-                    navPos2 = navPos + Vector(0,-64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
-                  else
-                    normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(0,64,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
-                  end
-                end
-              elseif dir:Dot(Vector(0,1,0)) > .707 then
-                normal = Vector(0,1,0)
-                local navPos2 = navPos + Vector(0,-64,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.x > 0 then
+
+              if x > middle.x then
+                if y > middle.y then
+                  -- up,right
+                  local relx = (position.x - middle.x)
+                  local rely = (position.y - middle.y)
+
+                  if relx > rely then
+                    --right
                     normal = Vector(1,0,0)
-                    navPos2 = navPos + Vector(-64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
+                    value = navPos.x + 33 + bound
+                    xblock = true
                   else
-                    normal = Vector(-1,0,0)
-                    navPos2 = navPos + Vector(64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
+                    --up
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                elseif y <= middle.y then
+                  -- down,right
+                  local relx = (position.x - middle.x)
+                  local rely = (middle.y - position.y)
+
+                  if relx > rely then
+                    --right
+                    normal = Vector(1,0,0)
+                    value = navPos.x + 33 + bound
+                    xblock = true
+                  else
+                    --down
+                    normal = Vector(0,-1,0)
+                    value = navPos.y - 33 - bound
+                    xblock = false
                   end
                 end
-              elseif dir:Dot(Vector(0,-1,0)) > .707 then
-                normal = Vector(0,-1,0)
-                local navPos2 = navPos + Vector(0,64,0)
-                local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                if navConnect2 then
-                  if vVelocity.x > 0 then
+              elseif x <= middle.x then
+                if y > middle.y then
+                  -- up,left
+                  local relx = (middle.x - position.x)
+                  local rely = (position.y - middle.y)
+
+                  if relx > rely then
+                    --left
                     normal = Vector(-1,0,0)
-                    navPos2 = navPos + Vector(-64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
+                    value = navPos.x - 33 - bound
+                    xblock = true
                   else
+                    --up
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                elseif y <= middle.y then
+                  -- down,left
+                  local relx = (middle.x - position.x)
+                  local rely = (middle.y - position.y)
+
+                  if relx > rely then
+                    --left
+                    normal = Vector(-1,0,0)
+                    value = navPos.x - 33 - bound
+                    xblock = true
+                  else
+                    --down
                     normal = Vector(0,-1,0)
-                    navPos2 = navPos + Vector(64,0,0)
-                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
-                    if navConnect2 then
-                      normal = Vector(diff.x * -1, diff.y * -1, diff.z)
-                    end
+                    value = navPos.y - 33 - bound
+                    xblock = false
                   end
                 end
               end
-              --FindClearSpaceForUnit(unit, newPos, true)
-              --print(tostring(unit:GetAbsOrigin()) .. " -- " .. tostring(navPos))
+
+              local navPos2 = navPos + normal * 64
+              local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+              if navConnect2 then
+                -- coming in from an invalid side
+                if xblock then
+                  -- coming in on x, test y velocity
+                  if unit.vVelocity.y > 0 then
+                    navPos2 = navPos + Vector(0,-64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, true, navPos.x + (33 + bound) * normal.x, 0, false)
+                      normal = Vector(0,0,0)
+                    end
+
+                    normal = Vector(0,-1,0)
+                    value = navPos.y - 33 - bound
+                    xblock = false
+                  else
+                    navPos2 = navPos + Vector(0,64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, true, navPos.x + (33 + bound) * normal.x, 0, false)
+                      normal = Vector(0,0,0)
+                    end
+
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                else
+                  -- coming in on y, test x velocity
+                  if unit.vVelocity.x > 0 then
+                    navPos2 = navPos + Vector(-64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, false, navPos.y + (33 + bound) * normal.y, 0, false)
+                      normal = Vector(0,0,0)
+                    end
+
+                    normal = Vector(-1,0,0)
+                    value = navPos.x - 33 - bound
+                    xblock = true
+                  else
+                    navPos2 = navPos + Vector(64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, false, navPos.y + (33 + bound) * normal.y, 0, false)
+                      normal = Vector(0,0,0)
+                    end
+
+                    normal = Vector(1,0,0)
+                    value = navPos.x + 33 + bound
+                    xblock = true
+                  end
+                end
+              end
+            end
+
+            if unit.PhysicsOnPreSlide then
+              local status, nextCall = pcall(unit.PhysicsOnPreSlide, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnPreSlide: ' .. nextCall)
+              end
+            end
+
+            if normal == Vector(0,0,0) then
+              newVelocity = Vector(0,0,0)
+            else
+              newVelocity = (newVelocity:Dot(normal * -1) * normal) + newVelocity
+            end
+            unit.vVelocity = newVelocity
+            unit.nSkipSlide = 1
+
+            Physics:BlockInAABox(unit, xblock, value, 0, false)
+            --print(unit:GetAbsOrigin())
+            
+            if unit.PhysicsOnSlide then
+              local status, nextCall = pcall(unit.PhysicsOnSlide, unit, normal)
+              if not status then
+                print('[PHYSICS] Failed OnSlide: ' .. nextCall)
+              end
+            end
+          elseif unit.nRebounceFrames <= 0 and unit.nNavCollision == PHYSICS_NAV_BOUNCE and navConnect then
+            local navX = GridNav:WorldToGridPosX(connect.x)
+            local navY = GridNav:WorldToGridPosY(connect.y)
+            local navPos = Vector(GridNav:GridPosToWorldCenterX(navX), GridNav:GridPosToWorldCenterY(navY), 0)
+            --unit.nRebounceFrames = unit.nMaxRebounce
+            
+            local normal = nil
+            local anggrid = self.anggrid
+            local offX = self.offsetX
+            local offY = self.offsetY
+            local dir = position - navPos
+            local x = position.x
+            local y = position.y
+            local middle = navPos
+            local xblock = true
+            local value = 0
+
+            if anggrid then
+              local angSize = #anggrid
+              local angX = navX + offX
+              local angY = navY + offY
+
+              --print(offX .. ' -- ' .. angX .. ' == ' .. angY .. ' -- ' .. offY)
+              
+              local angle = anggrid[angX][angY]
+              if angle ~= -1 then
+                angle = angle
+                normal = RotatePosition(Vector(0,0,0), QAngle(0,angle,0), Vector(1,0,0))
+                --print(angle)
+                --print(normal)
+                --print('----------')
+
+                if math.abs(normal.x) > math.abs(normal.y) then
+                  xblock = true
+                  if normal.x > 0 then
+                    value = navPos.x + 33 + bound
+                  else
+                    value = navPos.x - 33 - bound
+                  end
+                else
+                  xblock = false
+                  if normal.y > 0 then
+                    value = navPos.y + 33 + bound
+                  else
+                    value = navPos.y - 33 - bound
+                  end
+                end
+              end
+            end
+            
+            if normal == nil then
+
+              if x > middle.x then
+                if y > middle.y then
+                  -- up,right
+                  local relx = (position.x - middle.x)
+                  local rely = (position.y - middle.y)
+
+                  if relx > rely then
+                    --right
+                    normal = Vector(1,0,0)
+                    value = navPos.x + 33 + bound
+                    xblock = true
+                  else
+                    --up
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                elseif y <= middle.y then
+                  -- down,right
+                  local relx = (position.x - middle.x)
+                  local rely = (middle.y - position.y)
+
+                  if relx > rely then
+                    --right
+                    normal = Vector(1,0,0)
+                    value = navPos.x + 33 + bound
+                    xblock = true
+                  else
+                    --down
+                    normal = Vector(0,-1,0)
+                    value = navPos.y - 33 - bound
+                    xblock = false
+                  end
+                end
+              elseif x <= middle.x then
+                if y > middle.y then
+                  -- up,left
+                  local relx = (middle.x - position.x)
+                  local rely = (position.y - middle.y)
+
+                  if relx > rely then
+                    --left
+                    normal = Vector(-1,0,0)
+                    value = navPos.x - 33 - bound
+                    xblock = true
+                  else
+                    --up
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                elseif y <= middle.y then
+                  -- down,left
+                  local relx = (middle.x - position.x)
+                  local rely = (middle.y - position.y)
+
+                  if relx > rely then
+                    --left
+                    normal = Vector(-1,0,0)
+                    value = navPos.x - 33 - bound
+                    xblock = true
+                  else
+                    --down
+                    normal = Vector(0,-1,0)
+                    value = navPos.y - 33 - bound
+                    xblock = false
+                  end
+                end
+              end
+
+              local navPos2 = navPos + normal * 64
+              local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+              if navConnect2 then
+                -- coming in from an invalid side
+                if xblock then
+                  -- coming in on x, test y velocity
+                  if unit.vVelocity.y > 0 then
+                    navPos2 = navPos + Vector(0,-64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, true, navPos.x + (33 + bound) * normal.x, 0, false)
+                      normal = Vector(-1*diff.x,-1*diff.y,diff.z)
+                    end
+
+                    normal = Vector(0,-1,0)
+                    value = navPos.y - 33 - bound
+                    xblock = false
+                  else
+                    navPos2 = navPos + Vector(0,64,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, true, navPos.x + (33 + bound) * normal.x, 0, false)
+                      normal = Vector(-1*diff.x,-1*diff.y,diff.z)
+                    end
+
+                    normal = Vector(0,1,0)
+                    value = navPos.y + 33 + bound
+                    xblock = false
+                  end
+                else
+                  -- coming in on y, test x velocity
+                  if unit.vVelocity.x > 0 then
+                    navPos2 = navPos + Vector(-64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, false, navPos.y + (33 + bound) * normal.y, 0, false)
+                      normal = Vector(-1*diff.x,-1*diff.y,diff.z)
+                    end
+
+                    normal = Vector(-1,0,0)
+                    value = navPos.x - 33 - bound
+                    xblock = true
+                  else
+                    navPos2 = navPos + Vector(64,0,0)
+                    navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
+                    if navConnect2 then
+                      Physics:BlockInAABox(unit, false, navPos.y + (33 + bound) * normal.y, 0, false)
+                      normal = Vector(-1*diff.x,-1*diff.y,diff.z)
+                    end
+
+                    normal = Vector(1,0,0)
+                    value = navPos.x + 33 + bound
+                    xblock = true
+                  end
+                end
+              end
             end
 
             if unit.PhysicsOnPreBounce then
@@ -1310,8 +1412,12 @@ function Physics:Unit(unit)
                 print('[PHYSICS] Failed OnPreBounce: ' .. nextCall)
               end
             end
+
             newVelocity = ((-2 * newVelocity:Dot(normal) * normal) + newVelocity) * unit.fBounceMultiplier
             unit.vVelocity = newVelocity
+            unit.nSkipSlide = 1
+
+            Physics:BlockInAABox(unit, xblock, value, 0, false)
             if unit.PhysicsOnBounce then
               local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
               if not status then
@@ -1403,6 +1509,12 @@ function Physics:Unit(unit)
   unit.fBounceMultiplier = 1.0
   unit.oColliders = {}
   unit.fMass = 100
+  unit.fBoundingRadius = 0
+  if unit.GetPaddedCollisionRadius then
+    unit.fBoundingRadius = unit:GetPaddedCollisionRadius() + 1
+  elseif unit.GetBoundingMaxs then
+    unit.fBoundingRadius = math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)
+  end
 end
 
 
