@@ -3,7 +3,6 @@
 require('util')
 require('timers')
 require('physics')
-require('multiteam')
 require('barebones')
 
 function Precache( context )

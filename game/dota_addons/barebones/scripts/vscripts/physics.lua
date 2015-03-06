@@ -962,7 +962,7 @@ function Physics:Unit(unit)
             ent = Entities:FindInSphere(ent, position, 35)
           end
           if blocked or blockedPos or GridNav:IsNearbyTree(position, 30, true) then
-            FindClearSpaceForUnit(unit, position, true)
+            FindClearSpaceForUnit(unit, position, false)
             unit.nSkipSlide = 1
             --print('FCS hib')
           end
@@ -985,7 +985,7 @@ function Physics:Unit(unit)
           ent = Entities:FindInSphere(ent, position, 35)
         end
         if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or GridNav:IsNearbyTree(position, 30, true) then
-          FindClearSpaceForUnit(unit, position, true)
+          FindClearSpaceForUnit(unit, position, false)
           unit.nSkipSlide = 1
           --print('FCS nothib lowv + blocked')
         end 
@@ -996,7 +996,7 @@ function Physics:Unit(unit)
       if unit.vVelocity ~= Vector(0,0,0) or slideVelocity ~= Vector(0,0,0) then
         if unit.bFollowNavMesh then
           local diff = unit.vVelocity:Normalized()
-          --FindClearSpaceForUnit(unit, newPos, true)
+          --FindClearSpaceForUnit(unit, newPos, false)
           unit:SetAbsOrigin(newPos)
           position = newPos
 
@@ -1020,7 +1020,7 @@ function Physics:Unit(unit)
             --or  or GridNav:IsBlocked(newPos + unit.vVelocity * .5)
           if unit.nNavCollision == PHYSICS_NAV_HALT and navConnect then
             newVelocity = Vector(0,0,0)
-            FindClearSpaceForUnit(unit, newPos, true)
+            FindClearSpaceForUnit(unit, newPos, false)
             unit.nSkipSlide = 1
           elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then        
             local navX = GridNav:WorldToGridPosX(connect.x)
@@ -1923,7 +1923,7 @@ function Physics:BlockInSphere(unit, unitToRepel, radius, findClearSpace)
   end
 
   if findClearSpace then
-    FindClearSpaceForUnit(unitToRepel, pos + (dir:Normalized() * move), true)
+    FindClearSpaceForUnit(unitToRepel, pos + (dir:Normalized() * move), false)
   else
     unitToRepel:SetAbsOrigin(pos + (dir:Normalized() * move))
   end
@@ -1937,7 +1937,7 @@ function Physics:BlockInBox(unit, dist, normal, buffer, findClearSpace)
   end
 
   if findClearSpace then
-    FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + toside, true)
+    FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + toside, false)
   else
     unit:SetAbsOrigin(unit:GetAbsOrigin() + toside)
   end
@@ -1957,7 +1957,7 @@ function Physics:BlockInAABox(unit, xblock, value, buffer, findClearSpace)
   end
 
   if findClearSpace then
-    FindClearSpaceForUnit(unit, pos, true)
+    FindClearSpaceForUnit(unit, pos, false)
   else
     unit:SetAbsOrigin(pos)
   end
