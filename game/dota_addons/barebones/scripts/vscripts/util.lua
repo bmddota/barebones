@@ -1,5 +1,13 @@
 -- GREAT UTILITY FUNCTIONS
 
+function string_split( str )
+	local split = {}
+	for i in string.gmatch(str, "%S+") do
+		table.insert(split, i)
+	end
+	return split
+end
+
 -- Returns a shallow copy of the passed table.
 function shallowcopy(orig)
     local orig_type = type(orig)
