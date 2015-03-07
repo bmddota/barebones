@@ -220,6 +220,7 @@ pip-log.txt
 
 *.vpk
 *.vpcf_c
+*.vsnd_c
 *.vsndevts_c
 *.vmat_c
 *.vtex_c
