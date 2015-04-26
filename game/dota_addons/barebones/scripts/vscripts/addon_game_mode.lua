@@ -1,4 +1,4 @@
-BASE_MODULES = {
+requires = {
 	'util',
 	'timers',
 	'physics',
@@ -43,6 +43,6 @@ function Activate()
 	GameRules.GameMode:InitGameMode()
 end
 
-for i,v in ipairs(BASE_MODULES) do
+for i,v in ipairs(requires) do
 	require(v)	
 end
