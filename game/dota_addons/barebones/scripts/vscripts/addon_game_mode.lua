@@ -37,55 +37,12 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
 end
 
---MODULE LOADER STUFF by Adynathos
-BASE_LOG_PREFIX = '[B]'
-
-LOG_FILE = "log/Barebones.txt"
-
-InitLogFile(LOG_FILE, "[[ Barebones ]]")
-
-function log(msg)
-	print(BASE_LOG_PREFIX .. msg)
-	AppendToLogFile(LOG_FILE, msg .. '\n')
-end
-
-function err(msg)
-	display('[X] '..msg, COLOR_RED)
-end
-
-function warning(msg)
-	display('[W] '..msg, COLOR_DYELLOW)
-end
-
-function display(text, color)
-	color = color or COLOR_LGREEN
-
-	log('> '..text)
-
-	Say(nil, color..text, false)
-end
-
-local function load_module(mod_name)
-	-- load the module in a monitored environment
-	local status, err_msg = pcall(function()
-		require(mod_name)
-	end)
-
-	if status then
-		log(' module ' .. mod_name .. ' OK')
-	else
-		err(' module ' .. mod_name .. ' FAILED: '..err_msg)
-	end
-end
-
--- Load all modules
-for i, mod_name in pairs(BASE_MODULES) do
-	load_module(mod_name)
-end
---END OF MODULE LOADER STUFF
-
 -- Create the game mode when we activate
 function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
+end
+
+for i,v in ipairs(BASE_MODULES) do
+	require(v)	
 end
