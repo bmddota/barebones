@@ -6,6 +6,9 @@ Barebones sets up the necessary files to create a basic mod (from a scripting pe
 Barebones currently provides limited examples for performing different tasks, and limited examples for unit/ability/item creation.
 Barebones divides scripts up into several sections: Core Files, Libraries, Examples and Internals.
 
+## Installation
+Barebones can be installed by downloading this git repository and ensuring that you merge the "content" and "game" folder from this repo with your own "content" and "game" folders.  These should be located in your "<SteamLibraryDirectory>\SteamApps\common\dota 2 beta\" folder.  *Be sure you don't use the "dota_ugc" folder!*
+
 ##Core Files
 Core Files are the primary files which you should modify in order to get your basic game mode up and running.  There are 4 major files:
 
@@ -46,8 +49,8 @@ You can change the 'barebones_spew' cvar at any time by typing 'barebones_spew 0
 
 
 ##Additional Information
-Barebones also comes with a sample loading screen implementation in panorama which you can view and edit via the content panorama directory.
-You can change the name of the multiteams used at the Game Setup screen by editing the game/barebones/panorama/localization/addon_english.txt file.
-You can adjust the number of players allowed on each of your maps by editing addoninfo.txt.
+- Barebones also comes with a sample loading screen implementation in panorama which you can view and edit via the content panorama directory.
+- You can change the name of the multiteams used at the Game Setup screen by editing the game/barebones/panorama/localization/addon_english.txt file.
+- You can adjust the number of players allowed on each of your maps by editing addoninfo.txt.
 
 If you have any questions or concerns, leave an issue or mail me (bmddota@gmail.com).

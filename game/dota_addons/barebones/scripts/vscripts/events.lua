@@ -39,13 +39,15 @@ end
 function GameMode:OnEntityHurt(keys)
   --DebugPrint("[BAREBONES] Entity Hurt")
   --DebugPrintTable(keys)
+
+  local damagebits = keys.damagebits -- This might always be 0 and therefore useless
   local entCause = EntIndexToHScript(keys.entindex_attacker)
   local entVictim = EntIndexToHScript(keys.entindex_killed)
 end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
-  DebugPrint( '[BAREBONES] OnItemPurchased' )
+  DebugPrint( '[BAREBONES] OnItemPickedUp' )
   DebugPrintTable(keys)
 
   local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
@@ -140,6 +142,7 @@ function GameMode:OnLastHit(keys)
   local isHeroKill = keys.HeroKill == 1
   local isTowerKill = keys.TowerKill == 1
   local player = PlayerResource:GetPlayer(keys.PlayerID)
+  local killedEnt = EntIndexToHScript(keys.EntKilled)
 end
 
 -- A tree was cut down by tango, quelling blade, etc
@@ -211,6 +214,7 @@ function GameMode:OnEntityKilled( keys )
 
   GameMode:_OnEntityKilled( keys )
   
+
   -- The Unit that was Killed
   local killedUnit = EntIndexToHScript( keys.entindex_killed )
   -- The Killing entity
@@ -219,6 +223,8 @@ function GameMode:OnEntityKilled( keys )
   if keys.entindex_attacker ~= nil then
     killerEntity = EntIndexToHScript( keys.entindex_attacker )
   end
+
+  local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
   -- Put code here to handle when an entity gets killed
 end
@@ -245,4 +251,68 @@ function GameMode:OnConnectFull(keys)
   
   -- The Player ID of the joining player
   local playerID = ply:GetPlayerID()
+end
+
+-- This function is called whenever illusions are created and tells you which was/is the original entity
+function GameMode:OnIllusionsCreated(keys)
+  DebugPrint('[BAREBONES] OnIllusionsCreated')
+  DebugPrintTable(keys)
+
+  local originalEntity = EntIndexToHScript(keys.original_entindex)
+end
+
+-- This function is called whenever an item is combined to create a new item
+function GameMode:OnItemCombined(keys)
+  DebugPrint('[BAREBONES] OnItemCombined')
+  DebugPrintTable(keys)
+
+  -- The playerID of the hero who is buying something
+  local plyID = keys.PlayerID
+  if not plyID then return end
+  local player = PlayerResource:GetPlayer(plyID)
+
+  -- The name of the item purchased
+  local itemName = keys.itemname 
+  
+  -- The cost of the item purchased
+  local itemcost = keys.itemcost
+end
+
+-- This function is called whenever an ability begins its PhaseStart phase (but before it is actually cast)
+function GameMode:OnAbilityCastBegins(keys)
+  DebugPrint('[BAREBONES] OnAbilityCastBegins')
+  DebugPrintTable(keys)
+
+  local player = PlayerResource:GetPlayer(keys.PlayerID)
+  local abilityName = keys.abilityname
+end
+
+-- This function is called whenever a tower is killed
+function GameMode:OnTowerKill(keys)
+  DebugPrint('[BAREBONES] OnTowerKill')
+  DebugPrintTable(keys)
+
+  local gold = keys.gold
+  local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
+  local team = keys.teamnumber
+end
+
+-- This function is called whenever a player changes there custom team selection during Game Setup 
+function GameMode:OnPlayerSelectedCustomTeam(keys)
+  DebugPrint('[BAREBONES] OnPlayerSelectedCustomTeam')
+  DebugPrintTable(keys)
+
+  local player = PlayerResource:GetPlayer(keys.player_id)
+  local success = (keys.success == 1)
+  local team = keys.team_id
+end
+
+-- This function is called whenever an NPC reaches its goal position/target
+function GameMode:OnNPCGoalReached(keys)
+  DebugPrint('[BAREBONES] OnNPCGoalReached')
+  DebugPrintTable(keys)
+
+  local goalEntity = EntIndexToHScript(keys.goal_entindex)
+  local nextGoalEntity = EntIndexToHScript(keys.next_goal_entindex)
+  local npc = EntIndexToHScript(keys.npc_entindex)
 end
