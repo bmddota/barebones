@@ -1,13 +1,18 @@
 "AddonInfo"
 {
-	"addonSteamAppID"	"816"
-	"addontitle"	"Barebones"
-	"addonversion"	"0.1"
-	"addontagline"	"Barebones"
-	"addonauthor"	"BMD"
-	"addonSteamGroupName"	""
-	"addonauthorSteamID"	""
-	"addonContent_Campaign"	"0"
-	"addonURL0"	"https://github.com/bmddota/barebones/"
-	"addonDescription"	"Barebones"
+  "TeamCount" "10"
+  "maps"      "template_map"
+  "IsPlayable"  "1"
+  "template_map"
+  {
+          "MaxPlayers"                    "10"
+  }
+//  "desert_duo"
+//  {
+//          "MaxPlayers"                    "10"
+//  }
+//  "forest_solo"
+//  {
+//          "MaxPlayers"                    "10"
+//  }
 }

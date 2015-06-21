@@ -1,0 +1,3 @@
+# Barebones Starter Mod Kit
+
+More documentation to come soon...

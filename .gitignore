@@ -213,3 +213,18 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#############
+#  DOTA 2
+#############
+
+*.vpk
+*.vpcf_c
+*.vsnd_c
+*.vsndevts_c
+*.vmat_c
+*.vtex_c
+*.bin
+*.vxml_c
+*.vcss_c
+*.vjs_c

@@ -1,0 +1,7 @@
+"Layer0"
+{
+	"Shader"	"ui.vfx"
+	"F_STENCIL_MASKING"	"1"
+	"F_TRANSLUCENT"	"0"
+	"Texture"	"materials/overviews/template_map.tga"
+}
