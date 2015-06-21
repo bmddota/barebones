@@ -298,7 +298,7 @@ function Projectiles:CreateProjectile(projectile)
     projectile.radiusStep = (projectile.fEndRadius - projectile.fStartRadius) / (projectile.fDistance / projectile.vel:Length())
   end
 
-  projectile.id = ParticleManager:CreateParticle(projectile.EffectName, PATTACH_POINT, projectile.Source)
+  projectile.id = ParticleManager:CreateParticle(projectile.EffectName, PATTACH_CUSTOMORIGIN, nil)
   ParticleManager:SetParticleAlwaysSimulate(projectile.id)
   for k,v in pairs(projectile.ControlPoints) do
     ParticleManager:SetParticleControl(projectile.id, k, v)
@@ -343,7 +343,7 @@ function Projectiles:CreateProjectile(projectile)
 
       if projectile.bRecreateOnChange then
         ParticleManager:DestroyParticle(projectile.id, true)
-        projectile.id = ParticleManager:CreateParticle(projectile.EffectName, PATTACH_POINT, projectile.Source)
+        projectile.id = ParticleManager:CreateParticle(projectile.EffectName, PATTACH_CUSTOMORIGIN, nil)
         ParticleManager:SetParticleAlwaysSimulate(projectile.id)
         for k,v in pairs(projectile.ControlPoints) do
           ParticleManager:SetParticleControl(projectile.id, k, v)
