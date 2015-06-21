@@ -7,7 +7,7 @@ Barebones currently provides limited examples for performing different tasks, an
 Barebones divides scripts up into several sections: Core Files, Libraries, Examples and Internals.
 
 ## Installation
-Barebones can be installed by downloading this git repository and ensuring that you merge the "content" and "game" folder from this repo with your own "content" and "game" folders.  These should be located in your "<SteamLibraryDirectory>\SteamApps\common\dota 2 beta\" folder.  *Be sure you don't use the "dota_ugc" folder!*
+Barebones can be installed by downloading this git repository and ensuring that you merge the "content" and "game" folder from this repo with your own "content" and "game" folders.  These should be located in your "<SteamLibraryDirectory>\SteamApps\common\dota 2 beta\" folder.  **Be sure you don't use the "dota_ugc" folder!**
 
 ##Core Files
 Core Files are the primary files which you should modify in order to get your basic game mode up and running.  There are 4 major files:
