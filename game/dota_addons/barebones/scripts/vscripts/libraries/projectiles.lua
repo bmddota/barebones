@@ -282,6 +282,7 @@ function Projectiles:CreateProjectile(projectile)
       --print(tostring(framehalf) .. ' -- ' .. tostring(pos) .. ' -- ' .. (framehalf-pos):Length() .. ' -- ' .. radius)
       --DebugDrawSphere(framehalf, Vector(0,0,200), 0, framerad, true, .01)
       --local ents = Entities:FindAllInSphere(framehalf, framerad)
+
       --local ents = FindUnitsInRadius(0, framehalf, nil, framerad, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
       local ents = nil
       if projectile.filter then
@@ -295,7 +296,19 @@ function Projectiles:CreateProjectile(projectile)
           end
         end
       else
-        ents = Entities:FindAllInSphere(framehalf, framerad)
+        if projectile.bUseFindUnitsInRadius ~= nil then
+          if projectile.bUseFindUnitsInRadius then
+            ents = FindUnitsInRadius(0, framehalf, nil, framerad, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+          else
+            ents = Entities:FindAllInSphere(framehalf, framerad)
+          end
+        else
+          if projectile.bZCheck then
+            ents = Entities:FindAllInSphere(framehalf, framerad)
+          else
+            ents = FindUnitsInRadius(0, framehalf, nil, framerad, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+          end
+        end
       end
 
       --DebugDrawSphere(pos, Vector(100,100,0), 1, framerad, true, .01)
