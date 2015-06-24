@@ -1,0 +1,91 @@
+/**
+ * popup.css
+ *
+ * Contains styling for the PopUp module.
+ */
+
+@keyframes 'TransitionZoomIn'
+{
+    0%
+    {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    10%
+    {
+        opacity: 1;
+    }
+}
+
+.SettingsPopUp
+{
+    height: fit-children;
+    horizontal-align: center;
+    margin-bottom: 200px;
+    min-height: 150px;
+    opacity: 0.0;
+    vertical-align: center;
+    width: 400px;
+}
+
+.SettingsPopUp.SettingsPopUpVisible
+{
+    opacity: 1.0;
+}
+
+#SettingsPopUpContainer
+{
+    background-color: gradient(linear, 0% 0%, 0% 25%, from(#232326), to(#1c1d20));
+    border: 2px solid #32383677;
+    box-shadow: #00000099 -4px -4px 8px 8px;
+    pre-transform-scale2d: 1;
+    height: 100%;
+    margin: 20px;
+    padding: 8px 6px 8px 6px;
+    transition-duration: 0.35s;
+    transition-property: background-color, transform, pre-transform-scale2d, opacity, wash-color;
+    width: 100%;
+}
+
+#SettingsPopUpContainer > Label
+{
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 20px;
+    horizontal-align: center;
+    text-align: center;
+    vertical-align: center;
+}
+
+#SettingsPopUpCloseButton
+{
+    background-color: #333333;
+    background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    border: 1px solid #333333;
+    border-radius: 50%;
+    box-shadow: #000000 -3px -3px 6px 6px;
+    height: 38px;
+    horizontal-align: right;
+    margin-top: 4px;
+    margin-right: 4px;
+    transition-duration: 0.1s;
+    transition-property: wash-color, pre-transform-scale2d, background-color;
+    transition-timing-function: ease-in;
+    wash-color: white;
+    width: 38px;
+    z-index: 1;
+}
+
+#SettingsPopUpCloseButton:hover
+{
+    background-color: #666666;
+}
+
+#SettingsPopUpCloseButton:active
+{
+    background-size: 20px 20px;
+}

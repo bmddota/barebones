@@ -1,0 +1,18 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/modules/tooltip.css" />
+    </styles>
+    <scripts>
+    </scripts>
+    <Panel class="SettingsToolTip" hittest="false">
+        <Panel class="SettingsToolTipTopArrow" hittest="false" />
+        <Panel class="SettingsToolTipRow" hittest="false">
+            <Panel class="SettingsToolTipLeftArrow" hittest="false" />
+            <Panel class="SettingsToolTipContent" hittest="false">
+                <Label />
+            </Panel>
+            <Panel class="SettingsToolTipRightArrow" hittest="false" />
+        </Panel>
+        <Panel class="SettingsToolTipBottomArrow" hittest="false" />
+    </Panel>
+</root>

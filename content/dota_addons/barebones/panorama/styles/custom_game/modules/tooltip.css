@@ -1,0 +1,142 @@
+/**
+ * tooltip.css
+ *
+ * Contains styling for the ToolTip module.
+ */
+
+.SettingsToolTip
+{
+    flow-children: down;
+    opacity: 0.0;
+    transition-duration: 0.175s;
+    transition-property: opacity;
+}
+
+.SettingsToolTip.SettingsToolTipVisible
+{
+    opacity: 1.0;
+    transition-delay: 0.0s;
+}
+
+.SettingsToolTipRow
+{
+    flow-children: right;
+}
+
+.SettingsToolTip.SettingsToolTipBottomArrowVisible .SettingsToolTipBottomArrow
+{
+    visibility: visible;
+}
+
+.SettingsToolTip.SettingsToolTipLeftArrowVisible .SettingsToolTipLeftArrow
+{
+    visibility: visible;
+}
+
+.SettingsToolTip.SettingsToolTipRightArrowVisible .SettingsToolTipRightArrow
+{
+    visibility: visible;
+}
+
+.SettingsToolTip.SettingsToolTipTopArrowVisible .SettingsToolTipTopArrow
+{
+    visibility: visible;
+}
+
+.SettingsToolTipBottomArrow, .SettingsToolTipLeftArrow, .SettingsToolTipRightArrow, .SettingsToolTipTopArrow
+{
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    visibility: collapse;
+    z-index: 1;
+}
+
+.SettingsToolTipBottomArrow, .SettingsToolTipTopArrow
+{
+    height: 24px;
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 24px;
+}
+
+.SettingsToolTipLeftArrow, .SettingsToolTipRightArrow
+{
+    height: 24px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    width: 24px;
+}
+
+.SettingsToolTipBottomArrow
+{
+    background-image: url("s2r://panorama/images/tooltips/tooltip_arrow_bottom_png.vtex");
+    margin-top: -2px;
+    wash-color: #2d2d2d;
+}
+
+.SettingsToolTipLeftArrow
+{
+    background-image: url("s2r://panorama/images/tooltips/tooltip_arrow_left_png.vtex");
+    margin-right: -5px;
+    wash-color: #2d2d2d;
+}
+
+.SettingsToolTipRightArrow
+{
+    background-image: url("s2r://panorama/images/tooltips/tooltip_arrow_right_png.vtex");
+    margin-left: -2px;
+    wash-color: #2d2d2d;
+}
+
+.SettingsToolTipTopArrow
+{
+    background-image: url("s2r://panorama/images/tooltips/tooltip_arrow_top_png.vtex");
+    margin-bottom: -2px;
+    wash-color: #2d2d2d;
+}
+
+.SettingsToolTip.SettingsToolTipBottomArrowVisible .SettingsToolTipContent
+{
+    margin-bottom: 0px;
+    min-height: 40px;
+}
+
+.SettingsToolTip.SettingsToolTipLeftArrowVisible .SettingsToolTipContent
+{
+    margin-left: 0px;
+    min-height: 40px;
+}
+
+.SettingsToolTip.SettingsToolTipRightArrowVisible .SettingsToolTipContent
+{
+    margin-right: 0px;
+    min-height: 40px;
+}
+
+.SettingsToolTip.SettingsToolTipTopArrowVisible .SettingsToolTipContent
+{
+    margin-top: -3px;
+    min-height: 40px;
+}
+
+.SettingsToolTipContent
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#2d2d2d), to(#2d2d2d));
+    border: 2px solid black;
+    box-shadow: #00000066 -4px -4px 8px 8px;
+    flow-children: down;
+    margin: 0px;
+    max-width: 350px;
+    min-width: 80px;
+    padding: 12px;
+}
+
+.SettingsToolTipContent Label
+{
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 14px;
+    vertical-align: middle;
+}
