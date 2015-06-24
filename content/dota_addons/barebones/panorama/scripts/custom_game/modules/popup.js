@@ -12,7 +12,7 @@ var modules = modules || { };
 
         function PopUp(options)
         {
-            if (!modules.Utility.IsObject(options))
+            if (!modules.modules.IsObject(options))
             {
                 options = { };
             }
@@ -23,6 +23,8 @@ var modules = modules || { };
 
             this.closeable = options.closeable || true;
             this.closePanel = null;
+            this.dimBackground = options.dimBackground || false;
+            this.dimPanel = null;
             this.layout = options.layout || null;
             this.popUpPanel = null;
             this.text = options.text || 'PopUp Text';
@@ -48,6 +50,11 @@ var modules = modules || { };
                         self.closePanel.ClearPanelEvent('onactivate');
                     }
 
+                    if (self.dimPanel)
+                    {
+                        self.dimPanel.DeleteAsync(0);
+                    }
+
                     self.visible = false;
                 };
 
@@ -55,7 +62,7 @@ var modules = modules || { };
                 function()
                 {
                     Hide();
-                };
+                }; 
 
             var SetCloseable =
                 function()
@@ -72,6 +79,24 @@ var modules = modules || { };
                     else if (self.closePanel)
                     {
                         self.closePanel.DeleteAsync(0);
+                    }
+                };
+
+            var SetDimBackground =
+                function()
+                {
+                    var id = 'SettingsPopUpDimBackground';
+
+                    if (self.dimBackground)
+                    {
+                        if (!self.dimPanel && !$('#' + id))
+                        {
+                            self.dimPanel = $.CreatePanel('Panel', $.GetContextPanel(), id);
+                        }
+                    }
+                    else if (self.dimPanel || $('#' + id))
+                    {
+                        self.dimPanel.DeleteAsync(0);
                     }
                 };
 
@@ -94,6 +119,7 @@ var modules = modules || { };
                     }
 
                     SetCloseable();
+                    SetDimBackground();
                 };
 
             var Show =
@@ -124,6 +150,12 @@ var modules = modules || { };
                     return !!this.popUpPanel;
                 };
 
+            this.GetDimBackground =
+                function()
+                {
+                    return this.dimBackground;
+                };
+
             this.GetLayout =
                 function()
                 {
@@ -144,6 +176,17 @@ var modules = modules || { };
                     if (this.GetVisible())
                     {
                         SetCloseable();
+                    }
+                };
+
+            this.SetDimBackground =
+                function(dimBackground)
+                {
+                    this.dimBackground = dimBackground;
+
+                    if (this.GetVisible())
+                    {
+                        SetDimBackground();
                     }
                 };
 
