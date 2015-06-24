@@ -12,7 +12,7 @@ var modules = modules || { };
 
         function PopUp(options)
         {
-            if (!modules.modules.IsObject(options))
+            if (!modules.Utility.IsObject(options))
             {
                 options = { };
             }
