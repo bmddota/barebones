@@ -32,5 +32,11 @@ var modules = modules || { };
                 return position;
             };
 
+        Utility.IsObject =
+            function(variable)
+            {
+                return Object.prototype.toString.call(variable) === '[object Object]';
+            };
+
         modules.Utility = Utility;
     })();
