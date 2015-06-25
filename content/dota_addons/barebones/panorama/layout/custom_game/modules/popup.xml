@@ -1,5 +1,6 @@
 <root>
     <styles>
+        <include src="file://{resources}/styles/custom_game/modules/animations.css" />
         <include src="file://{resources}/styles/custom_game/modules/popup.css" />
     </styles>
     <scripts>

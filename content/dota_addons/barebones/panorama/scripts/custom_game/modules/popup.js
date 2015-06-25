@@ -1,7 +1,7 @@
 'use strict';
 
 // Apply at least some form of namespace. 
-// Note that this PopUp module requires the Utility module.
+// Note that this PopUp module requires the modules.Utility module.
 
 var modules = modules || { };
 
@@ -209,7 +209,7 @@ var modules = modules || { };
 
                     if (this.GetVisible() && !this.layout)
                     {
-                        SetText();
+                        SetContent();
                     }
                 };
 

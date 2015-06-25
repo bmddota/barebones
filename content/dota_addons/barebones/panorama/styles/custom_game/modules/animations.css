@@ -1,0 +1,75 @@
+/**
+ * animations.css
+ *
+ * Contains reusable animations (via keyframes) for convenience.
+ */
+
+// Slide.
+
+@keyframes 'TransitionSlideDownToUp'
+{
+    0%
+    {
+        transform: translatey(100%);
+    }
+
+    100%
+    {
+        transform: translatey(0px);
+    }
+}
+
+@keyframes 'TransitionSlideLeftToRight'
+{
+    0%
+    {
+        transform: translatex(-100%);
+    }
+
+    100%
+    {
+        transform: translatex(0px);
+    }
+}
+
+@keyframes 'TransitionSlideRightToLeft'
+{
+    0%
+    {
+        transform: translatex(100%);
+    }
+
+    100%
+    {
+        transform: translatex(0px);
+    }
+}
+
+@keyframes 'TransitionSlideUpToDown'
+{
+    0%
+    {
+        transform: translatey(-100%);
+    }
+
+    100%
+    {
+        transform: translatey(0px);
+    }
+}
+
+// Zoom.
+
+@keyframes 'TransitionZoomIn'
+{
+    0%
+    {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+    }
+
+    50%
+    {
+        opacity: 1;
+    }
+}

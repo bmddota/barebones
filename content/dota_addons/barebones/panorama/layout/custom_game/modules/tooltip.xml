@@ -9,7 +9,7 @@
         <Panel class="SettingsToolTipRow" hittest="false">
             <Panel class="SettingsToolTipLeftArrow" hittest="false" />
             <Panel class="SettingsToolTipContent" hittest="false">
-                <Label />
+                <Label class="SettingsToolTipText" />
             </Panel>
             <Panel class="SettingsToolTipRightArrow" hittest="false" />
         </Panel>

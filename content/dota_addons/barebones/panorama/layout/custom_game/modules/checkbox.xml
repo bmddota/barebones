@@ -1,0 +1,10 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/modules/checkbox.css" />
+    </styles>
+    <scripts>
+    </scripts>
+    <Panel class="SettingsContentItem">
+        <ToggleButton />
+    </Panel>
+</root>

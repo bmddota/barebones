@@ -133,10 +133,18 @@
     padding: 12px;
 }
 
-.SettingsToolTipContent Label
+.SettingsToolTipContent Label.SettingsToolTipText
 {
     color: white;
     font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
-    font-size: 14px;
+    font-size: 16px;
     vertical-align: middle;
+}
+
+.SettingsToolTipContent Label.SettingsToolTipTitle
+{
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 20px;
+    font-weight: bold;
 }

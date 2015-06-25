@@ -1,7 +1,7 @@
 'use strict';
 
 // Apply at least some form of namespace. 
-// Note that this ToolTip module requires the Utility module.
+// Note that this ToolTip module requires the modules.Utility module.
 
 var modules = modules || { };
 
@@ -22,10 +22,12 @@ var modules = modules || { };
             var self = this;
 
             this.enabled = false;
+            this.localize = options.localize || false;
             this.placement = options.placement || 'right';
             this.targetElement = options.targetElement || null;
             this.text = options.text || 'ToolTip Text';
-            this.textLocalized = options.localize || false;
+            this.title = options.title || 'Title';
+            this.titlePanel = null;
             this.toolTipPanel = null;
             this.visible = false;
 
@@ -63,7 +65,7 @@ var modules = modules || { };
 
                         case 'left':
                             var newX = position.x - self.toolTipPanel.actuallayoutwidth;
-                            var newY = position.y - Math.round(self.targetElement.actuallayoutheight / 2);
+                            var newY = position.y - 15 + Math.floor(self.targetElement.actuallayoutheight / 2);
 
                             if (IsValidPosition(newX, newY))
                             {
@@ -80,7 +82,7 @@ var modules = modules || { };
 
                         case 'right':
                             var newX = position.x + self.targetElement.actuallayoutwidth;
-                            var newY = position.y - Math.round(self.targetElement.actuallayoutheight / 2);
+                            var newY = position.y - 15 + Math.floor(self.targetElement.actuallayoutheight / 2);
 
                             if (IsValidPosition(newX, newY))
                             {
@@ -98,9 +100,6 @@ var modules = modules || { };
                         case 'top':
                             position.y -= self.toolTipPanel.actuallayoutheight;
                             self.toolTipPanel.AddClass('SettingsToolTipBottomArrowVisible');
-
-                            // This was the last option, don't fallback on anything and just let it get clipped
-                            // if the position is invalid.
 
                             break;
 
@@ -136,7 +135,7 @@ var modules = modules || { };
             var OnMouseOver =
                 function()
                 {
-                    var position = Utility.GetAbsoluteOffsets(self.targetElement);
+                    var position = modules.Utility.GetAbsoluteOffsets(self.targetElement);
 
                     HandlePlacement(position);
 
@@ -162,7 +161,23 @@ var modules = modules || { };
             var SetText =
                 function()
                 {
-                    self.toolTipPanel.Children()[1].Children()[1].Children()[0].text = self.textLocalized ? $.Localize(self.text) : self.text;
+                    self.toolTipPanel.Children()[1].Children()[1].Children()[0].text = self.localize ? $.Localize(self.text) : self.text;
+
+                    if (self.title)
+                    {
+                        if (!self.titlePanel)
+                        {
+                            self.titlePanel = $.CreatePanel('Label', self.toolTipPanel.Children()[1].Children()[1], '');
+                            self.titlePanel.AddClass('SettingsToolTipTitle');
+                            self.toolTipPanel.Children()[1].Children()[1].MoveChildBefore(self.titlePanel, self.toolTipPanel.Children()[1].Children()[1].Children()[0]);
+                        }
+
+                        self.titlePanel.text = self.localize ? $.Localize(self.title) : self.title;
+                    }
+                    else if (self.titlePanel)
+                    {
+                        self.titlePanel.DeleteAsync(0);
+                    }
                 };
 
             var Disable =
@@ -194,6 +209,12 @@ var modules = modules || { };
                 function()
                 {
                     return this.text;
+                };
+
+            this.GetTitle =
+                function()
+                {
+                    return this.title;
                 };
 
             this.GetVisible =
@@ -258,7 +279,19 @@ var modules = modules || { };
                 function(text, localize)
                 {
                     this.text = text;
-                    this.textLocalized = !!localize;
+                    this.localize = !!localize;
+
+                    if (this.GetCreated())
+                    {
+                        SetText();
+                    }
+                };
+
+            this.SetTitle =
+                function(title, localize)
+                {
+                    this.title = title;
+                    this.localize = !!localize;
 
                     if (this.GetCreated())
                     {

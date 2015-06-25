@@ -1,0 +1,132 @@
+/**
+ * settings.css
+ *
+ * Contains all IDs and classes specific to the settings.xml layout file.
+ */
+
+VerticalScrollBar
+{
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    height: 100%;
+    horizontal-align: right;
+    transition-duration: 0.2s;
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
+    vertical-align: center;
+    width: 6px;
+}
+
+VerticalScrollBar .ScrollThumb
+{
+    background-color: #566767;
+    border-right: 1px solid #000000aa;
+    border-top: 1px solid #aaaaaa22;
+    min-height: 32px;
+    transition-duration: 0.2s;
+    transition-property: background-color, transform;
+    transition-timing-function: ease-in-out;
+}
+
+VerticalScrollBar:active .ScrollThumb
+{
+    background-color: #566767;
+}
+
+.SettingsContainer
+{
+    background-color: #00000088;
+    box-shadow: black -4px -4px 8px 8px;
+    flow-children: down;
+    height: 100%;
+    visibility: collapse;
+    width: 100%;
+}
+
+.SettingsContainer.SettingsVisible
+{
+    visibility: visible;
+}
+
+#SettingsContent
+{
+    flow-children: down;
+    height: 100%;
+    overflow: clip scroll;
+    padding: 6px 4px 6px 0px;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentHeader
+{
+    border-bottom: 2px solid #3b3f40;
+    padding-bottom: 4px;
+    width: 100%;
+}
+
+.SettingsContentHeader Label
+{
+    color: #939da0;
+    font-size: 20px;
+    font-weight: thin;
+    text-transform: uppercase;
+}
+
+.SettingsContentRow
+{
+    flow-children: right;
+    height: fit-children;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.SettingsContentRow.SettingsContentRowDivider
+{
+    background-color: #3b3f40;
+    height: 2px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#SettingsMain
+{
+    flow-children: right;
+    height: 100%;
+    margin-right: 10px;
+    width: 100%;
+}
+
+#SettingsNav
+{
+    flow-children: down;
+    height: 100%;
+    max-width: 250px;
+    min-width: 150px;
+    overflow: clip scroll;
+    padding: 8px 16px 8px 16px;
+    width: 30%;
+}
+
+#SettingsSectionHeader
+{
+    border-bottom: 1px solid #393c3e;
+    flow-children: right;
+    height: 38px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+#SettingsSectionHeader Label
+{
+    color: #667273;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
