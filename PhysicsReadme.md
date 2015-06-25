@@ -4,7 +4,7 @@ See CollidersReadme.md for documentation and examples on using Colliders.
 
 ####**How to install:**
 - Drop physics.lua in with your vscripts
-- Add require( 'physics' ) somewhere in your lua instatiation path
+- Add require( 'physics' ) somewhere in your lua instantiation path
 
 ####**How to use:**
 - To turn any dota unit into a Physics unit, run
