@@ -6,10 +6,8 @@
 
 .SettingsPopUp
 {
-    height: fit-children;
     horizontal-align: center;
-    min-height: 200px;
-    min-width: 450px;
+    max-width: 550px;
     opacity: 0.0;
     vertical-align: center;
     z-index: 1;
@@ -27,14 +25,12 @@
     box-shadow: black -4px -4px 8px 8px;
     flow-children: down;
     pre-transform-scale2d: 1;
-    height: 100%;
     margin: 20px;
     padding: 32px 64px 32px 64px;
     transition-delay: 0.0s;
     transition-duration: 0.2s;
     transition-property: transform, pre-transform-scale2d, opacity;
     transition-timing-function: ease-in;
-    width: 100%;
 }
 
 #SettingsPopUpContainer > Label
@@ -43,9 +39,9 @@
     font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
     font-size: 24px;
     horizontal-align: center;
-    max-width: 400px;
     text-align: center;
     vertical-align: center;
+    width: fit-children;
 }
 
 #SettingsPopUpCloseButton
