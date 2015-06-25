@@ -85,7 +85,7 @@ function GameMode:OnAbilityUsed(keys)
   DebugPrint('[BAREBONES] AbilityUsed')
   DebugPrintTable(keys)
 
-  local player = EntIndexToHScript(keys.PlayerID)
+  local player = PlayerResource:GetPlayer(keys.PlayerID)
   local abilityname = keys.abilityname
 end
 

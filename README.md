@@ -37,7 +37,7 @@ This library allow for easily delayed/timed actions without the messiness of thi
 This library can be used for advancted physics/motion/collision of units.  See [PhysicsReadme.md](https://github.com/bmddota/barebones/blob/source2/PhysicsReadme.md) for more information.
 
 ####projectiles.lua
-This library can be used for advanced 3D projectile systems.  Documentation is currently limited.
+This library can be used for advanced 3D projectile systems.  See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/CollidersReadme.md) for more information.
 
 ####notifications.lua
 This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See internals/notificationsExample.lua for examples.
