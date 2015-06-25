@@ -1,6 +1,6 @@
 #**BMD's Lua Unit Physics Library**
 --------------------------------
-See CollidersReadme.md for documentation and examples on using Colliders.
+See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/CollidersReadme.md) for documentation and examples on using Colliders.
 
 ####**How to install:**
 - Drop physics.lua in with your vscripts

@@ -112,10 +112,6 @@ if testCount == 0 then
     Physics:Unit(testUnit2)
   end
 
-  --ring = {unit = hero, radius = 500, alpha = 0, rgb = Vector(50,50,200)}
-  --ring2 = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(50,200,50)}
-  --ring3 = {unit = hero, radius = 1500, alpha = 0, rgb = Vector(200,50,50)}
-
   collider = hero:AddColliderFromProfile("blocker")
   collider.radius = 400
   collider.draw = {color = Vector(200,200,200), alpha = 5}
@@ -137,9 +133,9 @@ if testCount == 0 then
   boxcollider = Physics:AddCollider("testbox", Physics:ColliderFromProfile("boxblocker"))
   boxcollider.box = {Vector(-200,0,0), Vector(0,0,0), Vector(-200,1000,500)}
   boxcollider.test = function(self, unit)
+  boxcollider.draw = {color = Vector(50,200,50), alpha = 5}
     return IsPhysicsUnit(unit)
   end
-  box1 = {origin = Vector(0,0,0), min = Vector(-200,0,128), max = Vector(0,1000,180), direction = Vector(1,0,0), alpha = 5, rgb = Vector(50,200,50)}
   units = {}
   --[[for i=1,4 do
     units[i] = CreateUnitByName('npc_dummy_unit', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
@@ -153,38 +149,24 @@ if testCount == 0 then
   boxcollider2 = Physics:AddCollider("testbox2", Physics:ColliderFromProfile("boxreflect"))
   boxcollider2.box = {Vector(-100,700,0), Vector(1000,700,0), Vector(-100,900,500)}
   boxcollider2.test = function(self, unit)
+  boxcollider2.draw = {color = Vector(200,50,200), alpha = 5}
     return IsPhysicsUnit(unit)
   end
-  box2 = {origin = Vector(0,0,0), min = Vector(-100,700,128), max = Vector(1000,900,180),  direction = Vector(1,0,0), alpha = 5, rgb = Vector(200,50,200)}
 end
 
 -- Self-blocker
 if testCount == 1 then
   collider.moveSelf = true
-  ring2 = {unit = testUnit, radius = 400, alpha = 0, rgb = Vector(200,50,200)}
-  ring3 = {unit = testUnit2, radius = 400, alpha = 0, rgb = Vector(200,50,200)}
-
-  boxcollider2.draw = true
-  boxcollider.draw = {color = Vector(200,200,200), alpha = 5}
 end
 
 -- Half radius
 if testCount == 2 then
   collider.radius = 200
-  collider.draw = true
-  ring.radius = 200
-  ring2.radius = 200
-  ring3.radius = 200
 end
 
 --testCount = 3
 -- Remove collider, new collider
 if testCount == 3 then
-  ring = nil
-  ring2.radius = 100
-  ring2.rgb = Vector(50,50,200)
-  ring3 = nil
-  ring6 = {unit = testUnit2, radius = 100, alpha = 0, rgb = Vector(50,50,200)}
   hero:RemoveCollider()
   Timers:CreateTimer("timer", {
     callback = function()
@@ -198,6 +180,7 @@ if testCount == 3 then
       Physics:Unit(unit)
       unit:SetMass(mass)
       local projCollider = unit:AddColliderFromProfile("delete")
+      projCollider.draw = {color=Vector(50,50,200), alpha=0}
       projCollider.radius = 100
       projCollider.test = function(self, collider, collided)
         return IsPhysicsUnit(collided) and collided.GetUnitName ~= nil and collided:GetUnitName() == "npc_dummy_blank"
@@ -228,27 +211,13 @@ if testCount == 4 then
     return IsPhysicsUnit(unit)
   end
   boxcollider.draw = {color = Vector(200,200,200), alpha = 5}
-  --[[
-
-  Timers:CreateTimer(1, function() 
-    units[1]:SetAbsOrigin(boxcollider.box.a + Vector(0,0,200))
-    units[1]:SetRenderColor(250,0,0)
-    units[2]:SetAbsOrigin(boxcollider.box.b + Vector(0,0,200))
-    units[2]:SetRenderColor(250,250,0)
-    units[3]:SetAbsOrigin(boxcollider.box.c + Vector(0,0,200))
-    units[3]:SetRenderColor(0,0,250)
-    units[4]:SetAbsOrigin(boxcollider.box.d + Vector(0,0,200))
-    units[4]:SetRenderColor(0,250,0)
-
-    end)]]
-  box1 = {origin = Vector(-135,0,0), min = Vector(-100,350,128), max = Vector(1000,550,180),  direction = RotatePosition(Vector(0,0,0), QAngle(0,-15,0), Vector(1,0,0)), alpha = 5, rgb = Vector(200,50,200)}
 end
 
 if testCount == 5 then
   collider = hero:AddColliderFromProfile("blocker")
-  ring = {unit = hero, radius = 400, alpha = 0, rgb = Vector(200,50,50)}
 
   collider.radius = 400
+  collider.draw = {color = Vector(200,50,50), alpha = 0}
   collider.test = function(self, collider, collided)
     return IsPhysicsUnit(collided) or (collided.IsRealHero and collided:IsRealHero())
   end
@@ -256,8 +225,8 @@ end
 
 if testCount == 6 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(200,50,200)}
   collider = hero:AddColliderFromProfile("gravity")
+  collider.draw = {color = Vector(200,50,200), alpha = 0}
   collider.radius = 1000
   collider.force = 1000
   collider.linear = false
@@ -267,9 +236,8 @@ if testCount == 6 then
 end
 if testCount == 7 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(200,50,200)}
-  ring3 = {unit = hero, radius = 500, alpha = 0, rgb = Vector(100,50,200)}
   collider = hero:AddColliderFromProfile("gravity")
+  collider.draw = {color = Vector(100,50,200), alpha = 0}
   collider.radius = 1000
   collider.fullRadius = 500
   collider.force = 1000
@@ -281,10 +249,8 @@ end
 
 if testCount == 8 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 1500, alpha = 0, rgb = Vector(200,50,200)}
-  ring3 = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(100,50,200)}
-  ring4 = {unit = hero, radius = 750, alpha = 0, rgb = Vector(50,200,50)}
   collider = hero:AddColliderFromProfile("gravity")
+  collider.draw = {color = Vector(50,200,50), alpha = 0}
   collider.radius = 1500
   collider.fullRadius = 1000
   collider.minRadius = 750
@@ -297,10 +263,8 @@ end
 
 if testCount == 9 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(200,200,50)}
-  ring3 = nil
-  ring4 = nil
   collider = hero:AddColliderFromProfile("repel")
+  collider.draw = {color = Vector(200,200,50), alpha = 0}
   collider.radius = 1000
   collider.force = 1000
   collider.linear = false
@@ -311,8 +275,8 @@ end
 
 if testCount == 10 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 200, alpha = 0, rgb = Vector(200,200,200)}
   collider = hero:AddColliderFromProfile("reflect")
+  collider.draw = {color = Vector(200,200,200), alpha = 0}
   collider.radius = 200
   collider.multiplier = 1
   collider.test = function(self, collider, collided)
@@ -322,9 +286,8 @@ end
 
 if testCount == 11 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 200, alpha = 0, rgb = Vector(50,200,50)}
-  ring3 = {unit = hero, radius = 100, alpha = 20, rgb = Vector(0,0,0)}
   collider = hero:AddColliderFromProfile("momentum")
+  collider.draw = {color = Vector(0,0,0), alpha = 0}
   collider.radius = 200
   collider.blockRadius = 100
   collider.test = function(self, collider, collided)
@@ -334,9 +297,8 @@ end
 
 if testCount == 12 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 200, alpha = 0, rgb = Vector(50,200,50)}
-  ring3 = {unit = hero, radius = 200, alpha = 20, rgb = Vector(0,0,0)}
   collider = hero:AddColliderFromProfile("momentum")
+  collider.draw = {color = Vector(0,0,0), alpha = 0}
   collider.radius = 200
   collider.blockRadius = 200
   collider.test = function(self, collider, collided)
@@ -348,6 +310,7 @@ end
 if testCount == 13 then
   hero:RemoveCollider()
   collider = hero:AddColliderFromProfile("momentum")
+  collider.draw = {color = Vector(0,0,0), alpha = 0}
   collider.radius = 200
   collider.blockRadius = 200
   collider.elasticity = 0
@@ -358,9 +321,8 @@ end
 
 if testCount == 14 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 200, alpha = 0, rgb = Vector(50,200,50)}
-  ring3 = nil
   collider = hero:AddColliderFromProfile("momentum")
+  collider.draw = {color = Vector(50,200,50), alpha = 0}
   collider.radius = 200
   collider.blockRadius = 0
   collider.elasticity = 0
@@ -371,11 +333,8 @@ end
 
 if testCount == 15 then
   hero:RemoveCollider()
-  ring = {unit = hero, radius = 1500, alpha = 0, rgb = Vector(200,50,200)}
-  ring3 = {unit = hero, radius = 1000, alpha = 0, rgb = Vector(100,50,200)}
-  ring4 = {unit = hero, radius = 750, alpha = 0, rgb = Vector(50,200,50)}
-  ring5 = {unit = hero, radius = 400, alpha = 20, rgb = Vector(0,0,0)}
   collider = hero:AddColliderFromProfile("gravity")
+  collider.draw = {color = Vector(50,200,50), alpha = 0}
   collider.radius = 1500
   collider.fullRadius = 1000
   collider.minRadius = 750
@@ -386,6 +345,7 @@ if testCount == 15 then
   end
 
   collider2 = hero:AddColliderFromProfile("blocker")
+  collider.draw = {color = Vector(200,200,50), alpha = 0}
   collider2.radius = 400
   collider2.test = function(self, collider, collided)
     return IsPhysicsUnit(collided) or (collided.IsRealHero and collided:IsRealHero())
@@ -407,42 +367,3 @@ PrintTable(Physics.Colliders)
 print('0----0')
 
 hero:Hibernate(false)
-
-Timers:RemoveTimer("asdf")
-Timers:CreateTimer("asdf", {callback = function()
-  if ring ~= nil then
-    --DebugDrawSphere(ring.unit:GetAbsOrigin(), Vector(50,200,50), 10, 500, true, .05)
-    DebugDrawCircle(ring.unit:GetAbsOrigin(), ring.rgb, ring.alpha, ring.radius, true, .01)
-    --Circle(Vector a, Quaternion b, float c, int d, int e, int f, int g, bool h, float i)
-  end
-  if ring2 ~= nil then
-    DebugDrawCircle(ring2.unit:GetAbsOrigin(), ring2.rgb, ring2.alpha, ring2.radius, true, .01)
-  end
-  if ring3 ~= nil then
-    DebugDrawCircle(ring3.unit:GetAbsOrigin(), ring3.rgb, ring3.alpha, ring3.radius, true, .01)
-  end
-  if ring4 ~= nil then
-    DebugDrawCircle(ring4.unit:GetAbsOrigin(), ring4.rgb, ring4.alpha, ring4.radius, true, .01)
-  end
-  if ring5 ~= nil then
-    DebugDrawCircle(ring5.unit:GetAbsOrigin(), ring5.rgb, ring5.alpha, ring5.radius, true, .01)
-  end
-  if ring6 ~= nil then
-    DebugDrawCircle(ring6.unit:GetAbsOrigin(), ring6.rgb, ring6.alpha, ring6.radius, true, .01)
-  end
-
-  if box1 ~= nil then
-    --DebugDrawBox(box1.origin, box1.min, box1.max, box1.rgb.x, box1.rgb.y, box1.rgb.z, box1.alpha, .01)
-    DebugDrawBoxDirection(box1.origin, box1.min, box1.max, box1.direction, box1.rgb, box1.alpha, .01)
-  end
-  if box2 ~= nil then
-    DebugDrawBoxDirection(box2.origin, box2.min, box2.max, box2.direction, box2.rgb, box2.alpha, .01)
-  end
-  if box3 ~= nil then
-    DebugDrawBox(box3.origin, box3.min, box3.max, box3.rgb.x, box3.rgb.y, box3.rgb.z, box3.alpha, .01)
-  end
-  return .01
-end})
-
---print(VectorDistance(hero:GetAbsOrigin(), testUnit:GetAbsOrigin()))
---print(VectorDistance(hero:GetAbsOrigin(), testUnit:GetAbsOrigin()))
