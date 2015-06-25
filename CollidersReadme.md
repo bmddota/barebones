@@ -110,21 +110,26 @@ Colliders are effectively a formatted lua table which is registered with the Phy
 
 ###**blocker**
 A blocker collider blocks out either the colliding unit or the collider-attached unit whenever a successful collision is found.  Can affect non-Physics units.
+
 | Property  | Description |
 | :------------ | :-----|
 | buffer      | Additional distance beyond the collider radius to block units out that collide with this collider.  Defaults to 0.|
 | findClearSpace      | Whether to use FindClearSpaceForUnit to block the colliding unit out.  Defaults to false. | 
 | moveSelf      | If set to true, this collider will move the attached unit instead of the colliding unit. Defaults to false.| 
 
+
 ###**delete**
 A delete collider deletes the colliding unit or the collider-attached unit whenever a successful collision is found.  Can affect non-Physics units.
+
 | Property  | Description |
 | :------------ | :-----|
 | deleteSelf      | If set to true, this collider will delete the attached unit instead of the colliding unit.  Defaults to true.|
 | removeCollider      | When this collider successfully collides with a unit, immediately remove it so as to prevent further collisions.  Defaults to true. | 
 
+
 ###**gravity**
 A gravity collider applies a force to any colliding unit attracting it towards the collider-attached unit with a given force and function.
+
 | Property  | Description |
 | :------------ | :-----|
 | force      | The amount of force/velocity in hammer units per second to apply to a colliding unit within the full-effect radius of this collider. Default is 1000.|
@@ -132,8 +137,10 @@ A gravity collider applies a force to any colliding unit attracting it towards t
 | linear      | Whether this collider should use a linear gravity force falloff between the fullRadius and radius.  If set to false, uses standard quadratic falloff. Default is false.|
 | minRadius      | The radius to use for when a colliding unit is too close to the attached unit and should receive 0 gravitational force. An "eye-of-the-storm" radius. Default is 0.|
 
+
 ###**repel**
 A repel collider applies a force to any colliding unit repelling it away from the collider-attached unit with a given force and function.
+
 | Property  | Description |
 | :------------ | :-----|
 | force      | The amount of force/velocity in hammer units per second to apply to a colliding unit within the full-effect radius of this collider. Default is 1000.|
@@ -141,8 +148,10 @@ A repel collider applies a force to any colliding unit repelling it away from th
 | linear      | Whether this collider should use a linear repulsion force falloff between the fullRadius and radius.  If set to false, uses standard quadratic falloff. Default is false. |
 | minRadius      | The radius to use for when a colliding unit is too close to the attached unit and should receive 0 repulsion force. An "eye-of-the-storm" radius. Default is 0.|
 
+
 ###**reflect**
 A reflect collider applies a reflection force using the incident vector of collision with the collider sphere to redirect the velocity of the colliding unit.  Additionally can act as a blocker.
+
 | Property  | Description |
 | :------------ | :-----|
 | block | Whether this collider should also act as a blocker for units.  Defaults to true.|
@@ -152,8 +161,10 @@ A reflect collider applies a reflection force using the incident vector of colli
 | moveSelf      | If blocking and set to true, this collider will move the attached unit instead of the colliding unit. Defaults to false.| 
 | multiplier | The scalar multiplier to apply to the incident vector velocity to create the reflecting force.  Defaults to 1.0|
 
+
 ###**momentum**
 A momentum collider applies a force to the colliding unit and collider-attached unit in accordance with their mass as set on their Physics Unit settings.  The elasticity coefficient of the collision can be set.  Additionally can act as a blocker.
+
 | Property  | Description |
 | :------------ | :-----|
 | block | Whether this collider should also act as a blocker for units.  Defaults to true.|
@@ -169,14 +180,17 @@ A momentum collider applies a force to the colliding unit and collider-attached 
 
 ###**aaboxblocker** / **boxblocker**
 A boxblocker collider blocks out the colliding unit whenever a successful collision is found.  Can affect non-Physics units if 'slide' property is set to false.
+
 | Property  | Description |
 | :------------ | :-----|
 | buffer      | The additional distance beyond the collider box definition to block units out that collide with this collider.  Defaults to 0.|
 | findClearSpace      | Whether to use FindClearSpaceForUnit to block the colliding unit out.  Defaults to false. | 
 | slide      | Whether the colliding Physics Unit should slide along the edge of the box with which it collides. Defaults to true.| 
 
+
 ###**aaboxreflect** / **boxreflect**
 A boxreflect collider blocks out the colliding unit whenever a successful collision is found.  
+
 | Property  | Description |
 | :------------ | :-----|
 | block | Whether this collider should also act as a blocker for units.  Defaults to true.|
