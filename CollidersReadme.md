@@ -190,4 +190,4 @@ A boxreflect collider blocks out the colliding unit whenever a successful collis
 
 **Examples:** 
 =============================
-See [examples/colliders.lua]https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/examples/colliders.lua) for collider examples as demonstrated in [my youtube video](https://www.youtube.com/watch?v=AxBxQIcEMI8).
+See [examples/colliders.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/examples/colliders.lua) for collider examples as demonstrated in [my youtube video](https://www.youtube.com/watch?v=AxBxQIcEMI8).
