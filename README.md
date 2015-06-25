@@ -12,32 +12,35 @@ Barebones can be installed by downloading this git repository and ensuring that 
 ##Core Files
 Core Files are the primary files which you should modify in order to get your basic game mode up and running.  There are 4 major files:
 
-###settings.lua
+####settings.lua
 This file contains many special settings/properties created for barebones that allows you to define the high-level behavior of your game mode.
 You can define things like respawn times, number of teams on the map, rune spawn times, etc.  Each property is commented to help you understand it.
 
-###gamemode.lua
+####gamemode.lua
 This is the primary barebones gamemode script and should be used to assist in initializing your game mode.
 This file contains helpful pseudo-event functions prepared for you for frequently needed initialization actions.
 
-###events.lua
+####events.lua
 This file contains a hooked version of almost every event that is currently known to fire in the DotA 2 Lua vscript code.
 You can drop your event handler functions in there to have your game mode react to events.
 
-###addon_game_mode.lua
+####addon_game_mode.lua
 This is the entry-point to your game mode and should be used primarily to precache models/particles/sounds/etc.
 
 ##Libraries
 I've included some helpful libraries with barebones that may prove useful in your game mode.
 
-###timers.lua
+####timers.lua
 This library allow for easily delayed/timed actions without the messiness of thinkers and dealing with pauses.
 
-###physics.lua
-This library can be used for advancted physics/motion/collision of units.  See PhysicsReadme.txt for more information.
+####physics.lua
+This library can be used for advancted physics/motion/collision of units.  See [PhysicsReadme.md](https://github.com/bmddota/barebones/blob/source2/PhysicsReadme.md) for more information.
 
-###projectiles.lua
+####projectiles.lua
 This library can be used for advanced 3D projectile systems.  Documentation is currently limited.
+
+####notifications.lua
+This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See internals/notificationsExample.lua for examples.
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.
@@ -50,6 +53,7 @@ You can change the 'barebones_spew' cvar at any time by typing 'barebones_spew 0
 
 ##Additional Information
 - Barebones also comes with a sample loading screen implementation in panorama which you can view and edit via the content panorama directory.
+- Barebones also comes with a simple notifications system built into panorama to server as a jumping off point (and potentially be useful)
 - You can change the name of the multiteams used at the Game Setup screen by editing the game/barebones/panorama/localization/addon_english.txt file.
 - You can adjust the number of players allowed on each of your maps by editing addoninfo.txt.
 

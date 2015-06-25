@@ -16,6 +16,8 @@ require('libraries/timers')
 require('libraries/physics')
 -- This library can be used for advanced 3D projectile systems.
 require('libraries/projectiles')
+-- This library can be used for sending panorama notifications to the UIs of players/teams/everyone
+require('libraries/notifications')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')

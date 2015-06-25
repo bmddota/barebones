@@ -1,0 +1,22 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/custom_game/barebones_hud_base.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/custom_game/modules/utility.js" />
+    <include src="file://{resources}/scripts/custom_game/modules/tooltip.js" />
+    <include src="file://{resources}/scripts/custom_game/modules/popup.js" />
+    <include src="file://{resources}/scripts/custom_game/barebones_hud_base.js" /> 
+  </scripts>
+  <Panel hittest="false" class="BarebonesBaseHud">
+    <Panel hittest="false" class="BarebonesTopNotifications">
+      <Panel hittest="false" id="TopNotifications">
+      </Panel>
+    </Panel>
+    <Panel hittest="false" class="BarebonesBottomNotifications">
+      <Panel hittest="false" id="BottomNotifications">
+      </Panel>
+    </Panel>
+  </Panel>
+</root>
