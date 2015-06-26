@@ -40,7 +40,7 @@ This library can be used for advancted physics/motion/collision of units.  See [
 This library can be used for advanced 3D projectile systems.  See [ProjectilesReadme.md](https://github.com/bmddota/barebones/blob/source2/ProjectilesReadme.md) for more information.
 
 ####notifications.lua
-This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See internals/notificationsExample.lua for examples.
+This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See [libraries/notifications.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/notifications.lua) for usage details and examples.
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.
