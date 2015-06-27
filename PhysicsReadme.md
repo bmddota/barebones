@@ -75,7 +75,7 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**GetRebounceFrames ()**
   Returns the number of rebounce frames to wait between PHYSICS_NAV_BOUNCE collisions.  Default is 2.
 
-####**SetStuckTimeout ()**
+####**GetStuckTimeout ()**
   Returns the number of frames necessary to determine if a unit is stuck in unpathable terrain and to activate AutoUnstuck
 
 ####**GetSlideMultiplier ()**

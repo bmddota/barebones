@@ -1398,7 +1398,7 @@ function Physics:Unit(unit)
   unit.nRebounceFrames = 2
   unit.vLastGoodPosition = unit:GetAbsOrigin()
   unit.bAutoUnstuck = true
-  unit.nStuckTimeout = 3
+  unit.nStuckTimeout = 300
   unit.nStuckFrames = 0
   unit.fBounceMultiplier = 1.0
   unit.oColliders = {}
