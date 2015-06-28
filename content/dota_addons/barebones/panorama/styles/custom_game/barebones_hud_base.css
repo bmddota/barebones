@@ -18,11 +18,22 @@
     flow-children: down;
 }
 
+.NotificationLine
+{
+    margin-top: 15px;
+    flow-children: right;
+    horizontal-align: center;
+    vertical-align: middle;
+    animation-name: scalein;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+}
+
 #TopNotifications
 {
     flow-children: down;
     horizontal-align: center;
-    width: 100%;
+    width:100%;
     opacity: 1;
     margin-top: 64px;
     visibility: visible;
@@ -43,15 +54,19 @@
 
 .NotificationMessage
 {
-    margin-top: 15px;
     color: white;
+    vertical-align: center;
     horizontal-align: center;
     text-shadow: 4px 4px 4px #121212;
     font-size: 36px;
     font-weight: bold;
-    animation-name: scalein;
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    text-align: center;
+}
+
+.HeroImage
+{
+    vertical-align: center;
+    horizontal-align: center;
 }
 
 @keyframes 'scalein' {
