@@ -28,6 +28,7 @@ function AddNotification(msg, panel) {
   if (newNotification){
     lastNotification = $.CreatePanel('Panel', panel, '');
     lastNotification.AddClass('NotificationLine')
+    lastNotification.hittest = false;
   }
 
   var notification = $.CreatePanel('Label', lastNotification, '');
@@ -47,7 +48,7 @@ function AddNotification(msg, panel) {
   notification.html = true;
   var text = msg.text || "No Text provided";
   notification.text = $.Localize(text)
-  //notification.hittest = false;
+  notification.hittest = false;
   notification.AddClass('TitleText');
   if (msg.class)
     notification.AddClass(msg.class);
@@ -75,6 +76,7 @@ function AddNotificationHeroImage(msg, panel) {
   if (newNotification){
     lastNotification = $.CreatePanel('Panel', panel, '');
     lastNotification.AddClass('NotificationLine')
+    lastNotification.hittest = false;
   }
 
   var notification = $.CreatePanel('DOTAHeroImage', lastNotification, '');
@@ -93,6 +95,7 @@ function AddNotificationHeroImage(msg, panel) {
 
   notification.heroimagestyle = msg.imagestyle || "icon";
   notification.heroname = msg.hero
+  notification.hittest = false;
   
   if (msg.class)
     notification.AddClass(msg.class);
