@@ -1,4 +1,6 @@
 # Barebones Starter Mod Kit
+### Version 0.90
+### [Changelog](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.

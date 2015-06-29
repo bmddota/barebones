@@ -5,7 +5,9 @@ local hero = player:GetAssignedHero()
 
 local projectile = {
   --EffectName = "particles/test_particle/ranged_tower_good.vpcf",
-  EffectName = "",
+  --EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+  EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
+  --EeffectName = "",
   --vSpawnOrigin = hero:GetAbsOrigin(),
   vSpawnOrigin = hero:GetAbsOrigin() + Vector(0,0,80),--{unit=hero, attach="attach_attack1", offset=Vector(0,0,0)},
   fDistance = 3000,
@@ -19,6 +21,7 @@ local projectile = {
   bIgnoreSource = true,
   TreeBehavior = PROJECTILES_NOTHING,
   bCutTrees = true,
+  bTreeFullCollision = false,
   WallBehavior = PROJECTILES_NOTHING,
   GroundBehavior = PROJECTILES_NOTHING,
   fGroundOffset = 80,
@@ -26,10 +29,23 @@ local projectile = {
   bRecreateOnChange = true,
   bZCheck = false,
   bGroundLock = true,
+  bProvidesVision = true,
+  iVisionRadius = 350,
+  iVisionTeamNumber = hero:GetTeam(),
+  bFlyingVision = false,
+  fVisionLingerDuration = 1,
   draw = true,--             draw = {alpha=1, color=Vector(200,0,0)},
   --iPositionCP = 0,
   --iVelocityCP = 1,
   --ControlPoints = {[5]=Vector(100,0,0), [10]=Vector(0,0,1)},
+  --ControlPointForwards = {[4]=hero:GetForwardVector() * -1},
+  --ControlPointOrientations = {[1]={hero:GetForwardVector() * -1, hero:GetForwardVector() * -1, hero:GetForwardVector() * -1}},
+  --[[ControlPointEntityAttaches = {[0]={
+    unit = hero,
+    pattach = PATTACH_ABSORIGIN_FOLLOW,
+    attachPoint = "attach_attack1", -- nil
+    origin = Vector(0,0,0)
+  }},]]
   --fRehitDelay = .3,
   --fChangeDelay = 1,
   --fRadiusStep = 10,

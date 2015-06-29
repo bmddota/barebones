@@ -133,6 +133,20 @@ function Projectiles:CreateProjectile(projectile)
   projectile.OnGroundHit = projectile.OnGroundHit or function() return end
   projectile.OnFinish = projectile.OnFinish or nil
 
+  projectile.ControlPointForwards = projectile.ControlPointForwards or {}
+  projectile.ControlPointOrientations = projectile.ControlPointOrientations or {}
+  projectile.ControlPointEntityAttaches = projectile.ControlPointEntityAttaches or {}
+
+  if projectile.bTreeFullCollision == nil then projectile.bTreeFullCollision = false end
+  projectile.bProvidesVision = projectile.bProvidesVision or false
+  if projectile.bFlyingVision == nil then projectile.bFlyingVision = true end
+  projectile.iVisionRadius = projectile.iVisionRadius or 200
+  projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam()
+  projectile.fVisionLingerDuration = projectile.fVisionLingerDuration or 1/30
+  if projectile.fVisionLingerDuration < 1/30 then
+    projectile.fVisionLingerDuration = 1/30
+  end
+
 
   --[[if projectile.TreeBehavior == PROJECTILES_BOUNCE or projectile.WallBehavior == PROJECTILES_BOUNCE 
     or projectile.GroundBehavior == PROJECTILES_BOUNCE or projectile.GroundBehavior == PROJECTILES_FOLLOW then
@@ -172,8 +186,26 @@ function Projectiles:CreateProjectile(projectile)
   for k,v in pairs(projectile.ControlPoints) do
     ParticleManager:SetParticleControl(projectile.id, k, v)
   end
+  for k,v in pairs(projectile.ControlPointForwards) do
+    ParticleManager:SetParticleControlForward(projectile.id, k, v)
+  end
+  for k,v in pairs(projectile.ControlPointOrientations) do
+    ParticleManager:SetParticleControlOrientation(projectile.id, k, v[1], v[2], v[3])
+  end
+  for k,v in pairs(projectile.ControlPointEntityAttaches) do
+    local unit = v.unit or projectile.Source
+    local pattach = v.pattach or PATTACH_CUSTOMORIGIN
+    local attachPoint = v.attachPoint
+    local origin = v.origin or projectile.vSpawnOrigin
+    ParticleManager:SetParticleControlEnt(projectile.id, k, unit, pattach, attachPoint, origin, true)
+  end
+
   ParticleManager:SetParticleControl(projectile.id, projectile.iPositionCP, projectile.vSpawnOrigin)
-  --ParticleManager:SetParticleControlEnt(projectile.id, projectile.iPositionCP, projectile.Source, PATTACH_POINT_FOLLOW, "attach_attack1", Vector(0,0,0), true)
+  if projectile.ControlPointForwards[1] == nil and projectile.ControlPointOrientations[1] == nil then
+    ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.Source:GetForwardVector())
+  end
+  --ParticleManager:SetParticleControlEnt(projectile.id, projectile.iPositionCP, projectile.Source, PATTACH_CUSTOMORIGIN, nil, projectile.vSpawnOrigin, true)
+  --ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.Source:GetForwardVector())
 
   if projectile.GroundBehavior == PROJECTILES_FOLLOW then
     local future = projectile.pos + projectile.vel
@@ -217,9 +249,25 @@ function Projectiles:CreateProjectile(projectile)
         for k,v in pairs(projectile.ControlPoints) do
           ParticleManager:SetParticleControl(projectile.id, k, v)
         end
+        for k,v in pairs(projectile.ControlPointForwards) do
+          ParticleManager:SetParticleControlForward(projectile.id, k, v)
+        end
+        for k,v in pairs(projectile.ControlPointOrientations) do
+          ParticleManager:SetParticleControlOrientation(projectile.id, k, v[1], v[2], v[3])
+        end
+        for k,v in pairs(projectile.ControlPointEntityAttaches) do
+          local unit = v.unit or projectile.Source
+          local pattach = v.pattach or PATTACH_CUSTOMORIGIN
+          local attachPoint = v.attachPoint
+          local origin = v.origin or newPos or projectile.pos + projectile.vel
+          ParticleManager:SetParticleControlEnt(projectile.id, k, unit, pattach, attachPoint, origin, true)
+        end
+
         ParticleManager:SetParticleControl(projectile.id, projectile.iPositionCP, newPos or projectile.pos + projectile.vel)
-        ParticleManager:SetParticleControl(projectile.id, projectile.iVelocityCP, newVel)
-      else
+        if projectile.ControlPointForwards[1] == nil and projectile.ControlPointOrientations[1] == nil then
+          ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.vel:Normalized())
+        end
+
         ParticleManager:SetParticleControl(projectile.id, projectile.iVelocityCP, newVel)
       end
     end
@@ -338,11 +386,11 @@ function Projectiles:CreateProjectile(projectile)
               local status, test = pcall(projectile.UnitTest, projectile, v)
 
               if not status then
-                print('[PROJECTILES] Collision UnitTest Failure!: ' .. test)
+                print('[PROJECTILES] Projectile UnitTest Failure!: ' .. test)
               elseif test then
                 local status, action = pcall(projectile.OnUnitHit, projectile, v)
                 if not status then
-                  print('[PROJECTILES] Collision OnUnitHit Failure!: ' .. action)
+                  print('[PROJECTILES] Projectile OnUnitHit Failure!: ' .. action)
                 end
 
                 if projectile.UnitBehavior == PROJECTILES_DESTROY then
@@ -350,7 +398,7 @@ function Projectiles:CreateProjectile(projectile)
                   if projectile.OnFinish then
                     local status, out = pcall(projectile.OnFinish, projectile, subpos)
                     if not status then
-                      print('[PROJECTILES] Collision OnFinish Failure!: ' .. out)
+                      print('[PROJECTILES] Projectile OnFinish Failure!: ' .. out)
                     end
                   end
                   return
@@ -373,36 +421,40 @@ function Projectiles:CreateProjectile(projectile)
         --print(tostring(ground.z) .. ' -- ' .. tostring(pos.z))
         local groundConnect = ground.z > pos.z -- ground
         if navConnect then
-          if GridNav:IsNearbyTree(subpos, 30, true) and pos.z < ground.z + 280 + radius - projectile.fGroundOffset and pos.z + radius + projectile.fGroundOffset > ground.z then
+          if projectile.bCutTrees or projbecilt.TreeBehavior ~= PROJECTILES_NOTHING then
+            local ents = GridNav:GetAllTreesAroundPoint(subpos, projectile.radius, projectile.bTreeFullCollision)
             --print('tree hit')
-            local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(subpos.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(subpos.y)), ground.z - projectile.fGroundOffset)
+            --local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(subpos.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(subpos.y)), ground.z - projectile.fGroundOffset)
             --DebugDrawCircle(vec, Vector(200,200,200), 100, 10, true, .5)
-            local ents = Entities:FindAllByClassnameWithin("ent_dota_tree", vec, 70)
-            if #ents > 0 then
-              local tree = ents[1]
-              if projectile.bCutTrees then
-                tree:CutDown(projectile.Source:GetTeamNumber())
-                navConnect = not GridNav:IsTraversable(subpos) or GridNav:IsBlocked(subpos)
-              end
-
-              if projectile.bCutTrees or projectile.TreeBehavior ~= PROJECTILES_NOTHING then
-                local status, action = pcall(projectile.OnTreeHit, projectile, tree)
-                if not status then
-                  print('[PROJECTILES] Collision OnTreeHit Failure!: ' .. action)
+            --local ents = Entities:FindAllByClassnameWithin("ent_dota_tree", vec, 70)
+            
+            for i=1,#ents do
+              local tree = ents[i]
+              if not projectile.bZCheck or (pos.z < ground.z + 280 + radius - projectile.fGroundOffset and pos.z + radius + projectile.fGroundOffset > ground.z) then
+                if projectile.bCutTrees then
+                  tree:CutDown(projectile.Source:GetTeamNumber())
+                  navConnect = not GridNav:IsTraversable(subpos) or GridNav:IsBlocked(subpos)
                 end
-              end
 
-              if projectile.TreeBehavior == PROJECTILES_DESTROY then
-                ParticleManager:DestroyParticle(projectile.id, false)
-                if projectile.OnFinish then
-                  local status, out = pcall(projectile.OnFinish, projectile, subpos)
+                if projectile.bCutTrees or projectile.TreeBehavior ~= PROJECTILES_NOTHING then
+                  local status, action = pcall(projectile.OnTreeHit, projectile, tree)
                   if not status then
-                    print('[PROJECTILES] Collision OnFinish Failure!: ' .. out)
+                    print('[PROJECTILES] Projectile OnTreeHit Failure!: ' .. action)
                   end
                 end
-                return
-              elseif projectile.TreeBehavior == PROJECTILES_BOUNCE and projectile.changes > 0 and curTime >= projectile.changeTime then
-                -- bounce calculation
+
+                if projectile.TreeBehavior == PROJECTILES_DESTROY then
+                  ParticleManager:DestroyParticle(projectile.id, false)
+                  if projectile.OnFinish then
+                    local status, out = pcall(projectile.OnFinish, projectile, subpos)
+                    if not status then
+                      print('[PROJECTILES] Projectile OnFinish Failure!: ' .. out)
+                    end
+                  end
+                  return
+                elseif projectile.TreeBehavior == PROJECTILES_BOUNCE and projectile.changes > 0 and curTime >= projectile.changeTime then
+                  -- bounce calculation
+                end
               end
             end
           end
@@ -414,7 +466,7 @@ function Projectiles:CreateProjectile(projectile)
             local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(subpos.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(subpos.y)), ground.z)
             local status, action = pcall(projectile.OnWallHit, projectile, vec)
             if not status then
-              print('[PROJECTILES] Collision OnWallHit Failure!: ' .. action)
+              print('[PROJECTILES] Projectile OnWallHit Failure!: ' .. action)
             end
 
             if projectile.WallBehavior == PROJECTILES_DESTROY then
@@ -422,7 +474,7 @@ function Projectiles:CreateProjectile(projectile)
               if projectile.OnFinish then
                 local status, out = pcall(projectile.OnFinish, projectile, subpos)
                 if not status then
-                  print('[PROJECTILES] Collision OnFinish Failure!: ' .. out)
+                  print('[PROJECTILES] Projectile OnFinish Failure!: ' .. out)
                 end
               end
               return
@@ -445,19 +497,19 @@ function Projectiles:CreateProjectile(projectile)
               ParticleManager:DestroyParticle(projectile.id, false)
               local status, action = pcall(projectile.OnGroundHit, projectile, ground)
               if not status then
-                print('[PROJECTILES] Collision OnGroundHit Failure!: ' .. action)
+                print('[PROJECTILES] Projectile OnGroundHit Failure!: ' .. action)
               end
 
               local status, out = pcall(projectile.OnFinish, projectile, subpos)
               if not status then
-                print('[PROJECTILES] Collision OnFinish Failure!: ' .. out)
+                print('[PROJECTILES] Projectile OnFinish Failure!: ' .. out)
               end
               return
             elseif projectile.GroundBehavior == PROJECTILES_BOUNCE and projectile.changes > 0 and curTime >= projectile.changeTime then
               -- bounce calculation
               local status, action = pcall(projectile.OnGroundHit, projectile, ground)
               if not status then
-                print('[PROJECTILES] Collision OnGroundHit Failure!: ' .. action)
+                print('[PROJECTILES] Projectile OnGroundHit Failure!: ' .. action)
               end
 
               local normal = Projectiles:CalcNormal(ground, projectile.Source)
@@ -475,7 +527,7 @@ function Projectiles:CreateProjectile(projectile)
               if dir.z < slope.z and slope:Dot(dir) < 1 then
                 local status, action = pcall(projectile.OnGroundHit, projectile, ground)
                 if not status then
-                  print('[PROJECTILES] Collision OnGroundHit Failure!: ' .. action)
+                  print('[PROJECTILES] Projectile OnGroundHit Failure!: ' .. action)
                 end
                 --projectile.fGroundOffset = projectile.fGroundOffset - 10
                 --print('follow under')
@@ -492,7 +544,7 @@ function Projectiles:CreateProjectile(projectile)
           if projectile.OnFinish then
             local status, out = pcall(projectile.OnFinish, projectile, subpos)
             if not status then
-              print('[PROJECTILES] Collision UnitTest Failure!: ' .. out)
+              print('[PROJECTILES] Projectile OnFinish Failure!: ' .. out)
             end
           end
           return
@@ -503,10 +555,15 @@ function Projectiles:CreateProjectile(projectile)
         end
       end
 
+      if projectile.bProvidesVision then
+        AddFOWViewer(projectile.iVisionTeamNumber, projectile.pos, projectile.iVisionRadius, projectile.fVisionLingerDuration, not projectile.bFlyingVision)
+      end
+
       projectile.radius = radius + projectile.radiusStep
       projectile.prevPos = projectile.pos
       projectile.distanceTraveled = projectile.distanceTraveled + velLength
       projectile.pos = pos + vel
+
 
       return curTime
     end

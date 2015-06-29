@@ -45,13 +45,19 @@ Projectiles are effectively a formatted lua table which is registered with the P
 
 | Property  | Default | Description |
 | :------------ | :--------| :-----|
+| bProvidesVision | false | If set to true, this projectile will provide vision around it as it travels. |
 | bCutTrees | false | If set to true, this projectile will cut any trees that it comes in contact with. |
+| bFlyingVision | true | If set to true and, this projectile will provide flying vision as it travels (if bProvidesVision is enabled) |
 | bGroundLock | false | If set to true, the simulation will lock its height to the ground position + fGroundOffset.  This setting is useful for simulating Dota-like LinearProjectiles that effectively operate in 2D. |
 | bIgnoreSource | true | If set to true, this projectile will not affect source. |
 | bMultipleHits | false | If set to true, this projectile can hit units multiple times after a timeout specified by fRehitDelay. |
 | bRecreateOnChange | true | If set to true, the particle representing the projectile will be Destroyed and recreated whenever a velocity/position change is forced.  If false, only the control points for the existing particle will be changed. |
+| bTreeFullCollision | false | If set to true, this projectile will use the full collision radius of trees in determining tree collision, effectively hitting trees further out from the natural radius. |
 | bZCheck | true | If set to true, this particle will check the height/z-coordinate in order to determine if there is a collision in 3D.  If set to false, it will not care about z-coordinate and will use dota-like 2D collision.  |
 | ControlPoints | {} | A table of additional control points to set when creating/recreating the particle for this projectile.  Use this to set additional particle properties. Ex: {[5]=Vector(2,0,0)} |
+| ControlPointForwards | {} | A table of control points for which to set Forward orientations when creating/recreating the particle for this projectile.  Ex: {[5]=unit:GetForwardVector()} |
+| ControlPointOrientations | {} | A table of control points for which to set Orientations triplets when creating/recreating the particle for this projectile. Ex: {[5]={unit:GetForwardVector(), unit:GetForwardVector(), unit:GetForwardVector()}} |
+| ControlPointEntityAttaches | {} | A table of Entity/ControlPoint attachments to set when creating/recreating the particle for this projectile. Ex: {[0]={unit = hero, pattach = PATTACH_ABSORIGIN_FOLLOW, attachPoint = "attach_attack1", -- nil origin = Vector(0,0,0)}} |
 | draw | false | If set to true, will draw a DebugDrawSphere showing the simulation in space as it travels/changes for debugging.  Can be also specified by a table like {color=Vector(200,0,0), alpha=5} for differntiation. |
 | EffectName | &lt;none&gt; | The particle path+file to use for the projectile particle, or "" for no particle. |
 | fChangeDelay | .1 | A minimum delay in GameTime to wait between velocity/position changes. |
@@ -62,9 +68,12 @@ Projectiles are effectively a formatted lua table which is registered with the P
 | fRadiusStep | &lt;computed&gt; | If specified, the radius step is the amount of increase/decrease to happen to the radius every second  |
 | fRehitDelay | 1 | The multiple hit delay in seconds to use for each unit hit by this projectile (i.e. 1.0 means don't rehit the same unit unless struck again after 1.0 seconds from the previous strike) |
 | fStartRadius | 100 | The projectile collision radius to start the projectile at |
+| fVisionLingerDuration | 1/30 | The time in seconds that the vision should linger as the projectile moves. |
 | GroundBehavior | PROJECTILES_DESTROY | The behavior that the particle should exhibit when colliding with the ground.  PROJECTILES_NOTHING means to do nothing to the projectile.  PROJECTILES_DESTROY means to destroy this projectile.  PROJECTILES_BOUNCE means to bounce off the ground.  PROJECTILES_FOLLOW means to follow the slope of the ground when colliding. |
 | iPositionCP | 0 | The control point to use for the position of the particle. |
 | iVelocityCP | 1 | The control point to use for the velocity of the particle. |
+| iVisionRadius | 200 | The vision radius for this projectile if enabled. |
+| iVisionTeamNumber | &lt;Source unit's team&gt; | The team for which to display this projectile's vision if enabled.|
 | nChangeMax | 1 | The maximum number of velocity/position changes this particle can undergo before it stops allowing changing position/velocity. |
 | Source | &lt;none&gt; | The source unit of this projectile |
 | TreeBehavior | PROJECTILES_DESTROY | The behavior that the particle should exhibit when colliding with a tree.  PROJECTILES_NOTHING means to do nothing to the projectile.  PROJECTILES_DESTROY means to destroy this projectile.|
