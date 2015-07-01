@@ -41,8 +41,10 @@ function GameMode:OnEntityHurt(keys)
   --DebugPrintTable(keys)
 
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
-  local entCause = EntIndexToHScript(keys.entindex_attacker)
-  local entVictim = EntIndexToHScript(keys.entindex_killed)
+  if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
+    local entCause = EntIndexToHScript(keys.entindex_attacker)
+    local entVictim = EntIndexToHScript(keys.entindex_killed)
+  end
 end
 
 -- An item was picked up off the ground

@@ -52,8 +52,10 @@ function AddNotification(msg, panel) {
     notification.hittest = false;
   } else if (msg.image != null){
     notification.SetImage(msg.image);
+    notification.hittest = false;
   } else if (msg.ability != null){
     notification.abilityname = msg.ability
+    notification.hittest = false;
   } else{
     notification.html = true;
     var text = msg.text || "No Text provided";

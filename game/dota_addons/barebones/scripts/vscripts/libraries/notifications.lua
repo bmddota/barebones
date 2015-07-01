@@ -1,4 +1,4 @@
-NOTIFICATIONS_VERSION = "0.85"
+NOTIFICATIONS_VERSION = "0.86"
 
 --[[
   Sample Panorama Notifications Library by BMD
