@@ -1,4 +1,4 @@
-PROJECTILES_VERSION = "0.80"
+PROJECTILES_VERSION = "0.82"
 
 PROJECTILES_THINK = 0.01
 
@@ -144,9 +144,13 @@ function Projectiles:CreateProjectile(projectile)
   if projectile.bFlyingVision == nil then projectile.bFlyingVision = true end
   projectile.iVisionRadius = projectile.iVisionRadius or 200
   projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam()
-  projectile.fVisionLingerDuration = projectile.fVisionLingerDuration or 1/30
-  if projectile.fVisionLingerDuration < 1/30 then
-    projectile.fVisionLingerDuration = 1/30
+  projectile.fVisionTickTime = projectile.fVisionTickTime or .1
+  if projectile.fVisionTickTime <= 0 then
+    projectile.fVisionTickTime = .1
+  end
+  projectile.fVisionLingerDuration = projectile.fVisionLingerDuration or projectile.fVisionTickTime
+  if projectile.fVisionLingerDuration < projectile.fVisionTickTime then
+    projectile.fVisionLingerDuration = projectile.fVisionTickTime
   end
 
 
@@ -176,6 +180,9 @@ function Projectiles:CreateProjectile(projectile)
   projectile.spawnTime = GameRules:GetGameTime()
   projectile.changeTime = projectile.spawnTime
   projectile.distanceTraveled = 0
+
+  projectile.visionTick = math.ceil(projectile.fVisionTickTime * 30)
+  projectile.currentFrame = projectile.visionTick
 
   if projectile.fRadiusStep then
     projectile.radiusStep = projectile.fRadiusStep / 30
@@ -423,7 +430,7 @@ function Projectiles:CreateProjectile(projectile)
         --print(tostring(ground.z) .. ' -- ' .. tostring(pos.z))
         local groundConnect = ground.z > pos.z -- ground
         if navConnect then
-          if projectile.bCutTrees or projbecilt.TreeBehavior ~= PROJECTILES_NOTHING then
+          if projectile.bCutTrees or projectile.TreeBehavior ~= PROJECTILES_NOTHING then
             local ents = GridNav:GetAllTreesAroundPoint(subpos, projectile.radius, projectile.bTreeFullCollision)
             --print('tree hit')
             --local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(subpos.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(subpos.y)), ground.z - projectile.fGroundOffset)
@@ -558,7 +565,12 @@ function Projectiles:CreateProjectile(projectile)
       end
 
       if projectile.bProvidesVision then
-        AddFOWViewer(projectile.iVisionTeamNumber, projectile.pos, projectile.iVisionRadius, projectile.fVisionLingerDuration, not projectile.bFlyingVision)
+        if projectile.currentFrame == projectile.visionTick then
+          AddFOWViewer(projectile.iVisionTeamNumber, projectile.pos, projectile.iVisionRadius, projectile.fVisionLingerDuration, not projectile.bFlyingVision)
+          projectile.currentFrame = 0
+        else
+          projectile.currentFrame = projectile.currentFrame + 1
+        end
       end
 
       projectile.radius = radius + projectile.radiusStep

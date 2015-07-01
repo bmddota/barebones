@@ -1,6 +1,6 @@
 # Barebones Starter Mod Kit
-### Version 0.90
-### [Changelog](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
+### Version 0.92
+### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.
@@ -32,16 +32,16 @@ This is the entry-point to your game mode and should be used primarily to precac
 ##Libraries
 I've included some helpful libraries with barebones that may prove useful in your game mode.
 
-####timers.lua
+####timers.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/TimersChangeLog.md)
 This library allow for easily delayed/timed actions without the messiness of thinkers and dealing with pauses.
 
-####physics.lua
+####physics.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/PhysicsChangeLog.md)
 This library can be used for advancted physics/motion/collision of units.  See [PhysicsReadme.md](https://github.com/bmddota/barebones/blob/source2/PhysicsReadme.md) and [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/CollidersReadme.md) for more information.
 
-####projectiles.lua
+####projectiles.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ProjectilesChangeLog.md)
 This library can be used for advanced 3D projectile systems.  See [ProjectilesReadme.md](https://github.com/bmddota/barebones/blob/source2/ProjectilesReadme.md) for more information.
 
-####notifications.lua
+####notifications.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/NotificationsChangeLog.md)
 This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See [libraries/notifications.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/notifications.lua) for usage details and examples.
 
 ##Internals

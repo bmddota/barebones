@@ -1,5 +1,15 @@
 # Barebones ChangeLog
 
+### Version 0.92
+- Updated notifications.lua to support DOTAAbilityImage and Image panel types.
+- Updated notifications.lua to use a table-based function call **NOTE: Older multi-parameter calls to notifications.lua WILL FAIL.**
+- Updated examples/notificationsExample.lua to reflect the new calls and table argument system.
+- Fixed a simulation-failure issue with tree-handling in projectiles.lua when bCutTrees is false.
+- Added changelog links for each library to Readme.md
+
+### Version 0.91b
+- Added new property to projectiles.lua projectile tables, "fVisionTickTime" which controls how quickly the projectile vision updates while the projectile is in motion.
+
 ### Version 0.91
 - Began version tracking of all libraries.
 - Fixed an issue where default projectiles.lua projectiles would not take on the correct velocity-oriented orientation automatically.

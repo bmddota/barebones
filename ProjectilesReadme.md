@@ -68,7 +68,8 @@ Projectiles are effectively a formatted lua table which is registered with the P
 | fRadiusStep | &lt;computed&gt; | If specified, the radius step is the amount of increase/decrease to happen to the radius every second  |
 | fRehitDelay | 1 | The multiple hit delay in seconds to use for each unit hit by this projectile (i.e. 1.0 means don't rehit the same unit unless struck again after 1.0 seconds from the previous strike) |
 | fStartRadius | 100 | The projectile collision radius to start the projectile at |
-| fVisionLingerDuration | 1/30 | The time in seconds that the vision should linger as the projectile moves. |
+| fVisionTickTime | .1 | The time in seconds between projectile vision updates while in flight.  Rounds up to the nearest frame-boundary (.0333,.06666,.1, etc) |
+| fVisionLingerDuration | .1 | The time in seconds that the vision should linger as the projectile moves.  Defaults to the same value as fVisionTickTime. |
 | GroundBehavior | PROJECTILES_DESTROY | The behavior that the particle should exhibit when colliding with the ground.  PROJECTILES_NOTHING means to do nothing to the projectile.  PROJECTILES_DESTROY means to destroy this projectile.  PROJECTILES_BOUNCE means to bounce off the ground.  PROJECTILES_FOLLOW means to follow the slope of the ground when colliding. |
 | iPositionCP | 0 | The control point to use for the position of the particle. |
 | iVelocityCP | 1 | The control point to use for the velocity of the particle. |
