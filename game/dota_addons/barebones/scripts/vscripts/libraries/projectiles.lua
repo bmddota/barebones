@@ -1,3 +1,5 @@
+PROJECTILES_VERSION = "0.80"
+
 PROJECTILES_THINK = 0.01
 
 if Projectiles == nil then
@@ -202,7 +204,7 @@ function Projectiles:CreateProjectile(projectile)
 
   ParticleManager:SetParticleControl(projectile.id, projectile.iPositionCP, projectile.vSpawnOrigin)
   if projectile.ControlPointForwards[1] == nil and projectile.ControlPointOrientations[1] == nil then
-    ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.Source:GetForwardVector())
+    ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.vel:Normalized())
   end
   --ParticleManager:SetParticleControlEnt(projectile.id, projectile.iPositionCP, projectile.Source, PATTACH_CUSTOMORIGIN, nil, projectile.vSpawnOrigin, true)
   --ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.Source:GetForwardVector())

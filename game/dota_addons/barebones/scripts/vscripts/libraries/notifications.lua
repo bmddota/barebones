@@ -1,3 +1,5 @@
+NOTIFICATIONS_VERSION = "0.80"
+
 --[[
   Sample Panorama Notifications Library by BMD
 
@@ -72,7 +74,7 @@ function Notifications:Top(player, text, duration, class, style, continue)
   end
 end
 
-function Notifications:TopToAll(text, duration, class, style)
+function Notifications:TopToAll(text, duration, class, style, continue)
   if type(text) == "table" then
     CustomGameEventManager:Send_ServerToAllClients( "top_notification", {text=text.text, duration=text.duration, class=text.class, style=text.style, continue=text.continue} )
   else
@@ -80,7 +82,7 @@ function Notifications:TopToAll(text, duration, class, style)
   end
 end
 
-function Notifications:TopToTeam(team, text, duration, class, style)
+function Notifications:TopToTeam(team, text, duration, class, style, continue)
   if type(text) == "table" then
     CustomGameEventManager:Send_ServerToTeam(team, "top_notification", {text=text.text, duration=text.duration, class=text.class, style=text.style, continue=text.continue} )
   else
@@ -101,7 +103,7 @@ function Notifications:TopHeroImage(player, hero, imagestyle, duration, class, s
   end
 end
 
-function Notifications:TopHeroImageToAll(hero, imagestyle, duration, class, style)
+function Notifications:TopHeroImageToAll(hero, imagestyle, duration, class, style, continue)
   if type(hero) == "table" then
     CustomGameEventManager:Send_ServerToAllClients( "top_notification_heroimage", {hero=hero.hero, imagestyle=hero.imagestyle, duration=hero.duration, class=hero.class, style=hero.style, continue=hero.continue} )
   else
@@ -109,7 +111,7 @@ function Notifications:TopHeroImageToAll(hero, imagestyle, duration, class, styl
   end
 end
 
-function Notifications:TopHeroImageToTeam(team, hero, imagestyle,  duration, class, style)
+function Notifications:TopHeroImageToTeam(team, hero, imagestyle,  duration, class, style, continue)
   if type(hero) == "table" then
     CustomGameEventManager:Send_ServerToTeam(team, "top_notification_heroimage", {hero=hero.hero, imagestyle=hero.imagestyle, duration=hero.duration, class=hero.class, style=hero.style, continue=hero.continue} )
   else

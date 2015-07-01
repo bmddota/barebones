@@ -1,4 +1,10 @@
 # Barebones ChangeLog
+
+### Version 0.91
+- Began version tracking of all libraries.
+- Fixed an issue where default projectiles.lua projectiles would not take on the correct velocity-oriented orientation automatically.
+- Fixed an issue with the parameters for certain notifications.lua functions not accepting the "continue" parameter
+
 ### Version 0.90
 - Started tracking version updates
 - Updated projectiles.lua to allow for better orientation handling

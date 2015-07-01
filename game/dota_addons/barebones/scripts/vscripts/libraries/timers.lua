@@ -1,3 +1,5 @@
+TIMERS_VERSION = "1.0"
+
 --[[
 
   -- A timer running every second that starts immediately on the next frame, respects pauses
