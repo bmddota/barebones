@@ -31,6 +31,8 @@ function AddNotification(msg, panel) {
     notification = $.CreatePanel('Image', lastNotification, '');
   else if (msg.ability != null)
     notification = $.CreatePanel('DOTAAbilityImage', lastNotification, '');
+  else if (msg.item != null)
+    notification = $.CreatePanel('DOTAItemImage', lastNotification, '');
   else
     notification = $.CreatePanel('Label', lastNotification, '');
 
@@ -55,6 +57,9 @@ function AddNotification(msg, panel) {
     notification.hittest = false;
   } else if (msg.ability != null){
     notification.abilityname = msg.ability
+    notification.hittest = false;
+  } else if (msg.item != null){
+    notification.itemname = msg.item
     notification.hittest = false;
   } else{
     notification.html = true;

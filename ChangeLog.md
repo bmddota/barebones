@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 0.92c
+- Updated notifications subsystem to support DOTAItemImage panel type.
+
 ### Version 0.92b
 - Updated notifications subsystem to apply hittest="false" to all generated panels
 

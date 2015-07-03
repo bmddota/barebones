@@ -8,10 +8,11 @@ Notifications:TopToAll({hero="npc_dota_hero_axe", duration=5.0})
 Notifications:TopToAll({hero="npc_dota_hero_axe", imagestyle="landscape", continue=true})
 Notifications:TopToAll({hero="npc_dota_hero_axe", imagestyle="portrait", continue=true})
 
--- Display a generic image and then 2 ability icons on the same line for 5 seconds
+-- Display a generic image and then 2 ability icons and an item on the same line for 5 seconds
 Notifications:TopToAll({image="file://{images}/status_icons/dota_generic.psd", duration=5.0})
 Notifications:TopToAll({ability="nyx_assassin_mana_burn", continue=true})
 Notifications:TopToAll({ability="lina_fiery_soul", continue=true})
+Notifications:TopToAll({item="item_force_staff", continue=true})
 
 
 -- Send a notification to all players on radiant (GOODGUYS) that displays near the bottom of the screen for 10 seconds to be displayed with the NotificationMessage class added

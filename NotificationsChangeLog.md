@@ -1,5 +1,8 @@
 # notifications.lua ChangeLog
 
+### Version 0.87
+- Updated notifications subsystem to support DOTAItemImage panel type.
+
 ### Version 0.86
 - Updated notifications subsystem to apply hittest="false" to all generated panels
 
