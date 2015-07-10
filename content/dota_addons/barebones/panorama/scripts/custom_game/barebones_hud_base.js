@@ -6,6 +6,31 @@ function BottomNotification(msg) {
   AddNotification(msg, $('#BottomNotifications'));
 }
 
+function TopRemoveNotification(msg){
+  RemoveNotification(msg, $('#TopNotifications'));
+}
+
+function BottomRemoveNotification(msg){
+  RemoveNotification(msg, $('#BottomNotifications'));
+}
+
+
+function RemoveNotification(msg, panel){
+  var count = msg.count;
+  if (count > 0 && panel.GetChildCount() > 0){
+    var start = panel.GetChildCount() - count;
+    if (start < 0)
+      start = 0;
+
+    for (i=start;i<panel.GetChildCount(); i++){
+      var lastPanel = panel.GetChild(i);
+      //lastPanel.SetAttributeInt("deleted", 1);
+      lastPanel.deleted = true;
+      lastPanel.DeleteAsync(0);
+    }
+  }
+}
+
 function AddNotification(msg, panel) {
   var newNotification = true;
   var lastNotification = panel.GetChild(panel.GetChildCount() - 1)
@@ -44,6 +69,9 @@ function AddNotification(msg, panel) {
   if (newNotification){
     $.Schedule(msg.duration, function(){
       //$.Msg('callback')
+      if (lastNotification.deleted)
+        return;
+      
       lastNotification.DeleteAsync(0);
     });
   }
@@ -85,6 +113,8 @@ function AddNotification(msg, panel) {
 (function () {
   GameEvents.Subscribe( "top_notification", TopNotification );
   GameEvents.Subscribe( "bottom_notification", BottomNotification );
+  GameEvents.Subscribe( "top_remove_notification", TopRemoveNotification );
+  GameEvents.Subscribe( "bottom_remove_notification", BottomRemoveNotification );
 })();
 
 

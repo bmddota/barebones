@@ -1,4 +1,4 @@
-TIMERS_VERSION = "1.0"
+TIMERS_VERSION = "1.01"
 
 --[[
 
@@ -213,4 +213,5 @@ function Timers:RemoveTimers(killAll)
   Timers.timers = timers
 end
 
-Timers:start()
+
+if not Timers.timers then Timers:start() end

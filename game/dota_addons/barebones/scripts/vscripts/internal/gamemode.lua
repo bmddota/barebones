@@ -164,6 +164,8 @@ function GameMode:_CaptureGameMode()
       mode:SetRuneEnabled(rune, spawn)
     end
 
+    mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
+
     self:OnFirstPlayerLoaded()
   end 
 end

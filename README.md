@@ -1,5 +1,5 @@
 # Barebones Starter Mod Kit
-### Version 0.92
+### Version 0.93
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
@@ -43,6 +43,9 @@ This library can be used for advanced 3D projectile systems.  See [ProjectilesRe
 
 ####notifications.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/NotificationsChangeLog.md)
 This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See [libraries/notifications.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/notifications.lua) for usage details and examples.
+
+####animations.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/AnimationsChangeLog.md)
+This library can be used to start animations with customized animation rates, activities, and translations.  See [libraries/animations.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/animations.lua) for usage details and examples.
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.

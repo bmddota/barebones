@@ -1,5 +1,8 @@
 # notifications.lua ChangeLog
 
+### Version 0.88
+- Updated notifications subsystem to support deleting notifications on-demand
+
 ### Version 0.87
 - Updated notifications subsystem to support DOTAItemImage panel type.
 

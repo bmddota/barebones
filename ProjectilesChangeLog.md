@@ -1,5 +1,8 @@
 # projectiles.lua ChangeLog
 
+### Version 0.83
+- Added additional guards to better handle 'script_reload' 
+
 ### Version 0.82
 - Fixed a simulation-failure issue with tree-handling in when bCutTrees is false.
 

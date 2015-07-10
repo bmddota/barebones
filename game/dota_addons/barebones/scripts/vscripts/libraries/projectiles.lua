@@ -1,4 +1,4 @@
-PROJECTILES_VERSION = "0.82"
+PROJECTILES_VERSION = "0.83"
 
 PROJECTILES_THINK = 0.01
 
@@ -586,4 +586,4 @@ function Projectiles:CreateProjectile(projectile)
   return projectile
 end
 
-Projectiles:start()
+if not Projectiles.timers then Projectiles:start() end

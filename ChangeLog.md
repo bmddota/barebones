@@ -1,5 +1,13 @@
 # Barebones ChangeLog
 
+### Version 0.93
+- Added animations.lua library
+- Added USE_UNSEEN_FOG_OF_WAR to settings.lua to allow for turning on unseen fog of war behavior
+- Updated notifications subsystem to support deleting notifications on-demand
+- Added additional guards to better handle 'script_reload' for timers.lua
+- Added additional guards to better handle 'script_reload' for projectiles.lua
+- Added additional guards to better handle 'script_reload' for physics.lua
+
 ### Version 0.92c
 - Updated notifications subsystem to support DOTAItemImage panel type.
 

@@ -20,3 +20,17 @@ Notifications:BottomToTeam(DOTA_TEAM_GOODGUYS, {text="AAAAAAAAAAAAAA", duration=
 -- Send a notification to player 0 which will display near the bottom a large red notification with a solid blue border for 5 seconds
 Notifications:Bottom(PlayerResource:GetPlayer(0), {text="Super Size Red", duration=5, style={color="red", ["font-size"]="110px", border="10px solid blue"}})
 
+
+-- Remove 1 bottom and 2 top notifications 2 seconds later
+Timers:CreateTimer(2,function()
+  Notifications:RemoveTop(0, 2)
+  Notifications:RemoveBottomFromTeam(DOTA_TEAM_GOODGUYS, 1)
+
+  -- Add 1 more notification to the bottom
+  Notifications:BottomToAll({text="GREEEENNNN again", duration=9, style={color="green"}})
+end)
+
+-- Clear all notifications from the bottom
+Timers:CreateTimer(7, function()
+  Notifications:ClearBottomFromAll()
+end)
