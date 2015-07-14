@@ -1,11 +1,11 @@
-ANIMATIONS_VERSION = "0.80"
+ANIMATIONS_VERSION = "0.83"
 
 --[[
   Lua-controlled Animations Library by BMD
 
   Installation
   -"require" this file inside your code in order to gain access to the StartAnmiation and EndAnimation global.
-  -Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/modifiers/modifier_animation.lua and modifier_animiation_translate.lua files exist and are in the correct path
+  -Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/modifiers/modifier_animation.lua, modifier_animation_translate.lua, and modifier_animation_translate_permanent.lua files exist and are in the correct path
 
   Usage
   -Animations can be started for any unit and are provided as a table of information to the StartAnimation call
@@ -18,7 +18,9 @@ ANIMATIONS_VERSION = "0.80"
     -translate: An optional translate activity modifier string which can be used to modify the animation sequence.
       Example: For ACT_DOTA_RUN+haste, this should be "haste"
     -translate2: A second optional translate activity modifier string which can be used to modify the animation sequence further.
-      Example: For ACT_DOTA_ATTACK+sven_warcy+sven_shield, this should be "sven_warcry" or "sven_shield" while the translate property is the other translate modifier
+      Example: For ACT_DOTA_ATTACK+sven_warcry+sven_shield, this should be "sven_warcry" or "sven_shield" while the translate property is the other translate modifier
+  -A permanent activity translate can be applied to a unit by calling AddAnimationTranslate for that unit.  This allows for a permanent "injured" or "aggressive" animation stance.
+  -Permanent activity translate modifiers can be removed with RemoveAnimationTranslate.
 
   Notes
   -Animations can only play for valid activities/sequences possessed by the model the unit is using.
@@ -42,10 +44,17 @@ ANIMATIONS_VERSION = "0.80"
   --Start a shield-bash animation for sven with variable rate
     StartAnimation(unit, {duration=1.5, activity=ACT_DOTA_ATTACK, rate=RandomFloat(.5, 1.5), translate="sven_warcry", translate2="sven_shield"})
 
+  --Start a permanent injured translate modifier
+    AddAnimationTranslate(unit, "injured")
+
+  --Remove a permanent activity translate modifier
+    RemoveAnimationTranslate(unit)
+
 ]]
 
 LinkLuaModifier( "modifier_animation", "libraries/modifiers/modifier_animation.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_animation_translate", "libraries/modifiers/modifier_animation_translate.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_animation_translate_permanent", "libraries/modifiers/modifier_animation_translate_permanent.lua", LUA_MODIFIER_MOTION_NONE )
 
 require('libraries/timers')
 
@@ -398,11 +407,34 @@ local _ANIMATION_TRANSLATE_TO_CODE = {
   wolfhound= 266,
   wraith_spin= 33,
   wrath= 212,
+
+  rampant= 348,
+  overload= 349,
+
+  surge=350,
+  es_prosperity=351,
+  Espada_pistola=352,
+  overload_injured=353,
+  ss_fortune=354,
+  liquid_fire=355,
+  jakiro_icemelt=356,
+  jakiro_roar=357,
+
+  chakram=358,
+  doppelwalk=359,
+  enrage=360,
+  fast_run=361,
+  overpower=362,
+  overwhelmingodds=363,
+  pregame=364,
+  shadow_dance=365,
+  shukuchi=366,
+  strength=367,
+  twinblade_run=368,
+  twinblade_run_injured=369,
+  windwalk=370,  
+
 }
-
-local DoAnimation = function()
-
-end
 
 function StartAnimation(unit, table)
   local duration = table.duration
@@ -416,10 +448,19 @@ function StartAnimation(unit, table)
   local stacks = activity + bit.lshift(rate,11)
 
   if translate ~= nil then
+    if _ANIMATION_TRANSLATE_TO_CODE[translate] == nil then
+      print("[ANIMATIONS.lua] ERROR, no translate-code found for '" .. translate .. "'.  This translate may be misspelled or need to be added to the enum manually.")
+      return
+    end
     stacks = stacks + bit.lshift(_ANIMATION_TRANSLATE_TO_CODE[translate],19)
   end
 
-  if unit:HasModifier("modifier_animation") then
+  if translate2 ~= nil and _ANIMATION_TRANSLATE_TO_CODE[translate2] == nil then
+    print("[ANIMATIONS.lua] ERROR, no translate-code found for '" .. translate2 .. "'.  This translate may be misspelled or need to be added to the enum manually.")
+    return
+  end
+
+  if unit:HasModifier("modifier_animation") or (unit._animationEnd ~= nil and unit._animationEnd + .067 > GameRules:GetGameTime()) then
     EndAnimation(unit)
     Timers:CreateTimer(.066, function() 
       if translate2 ~= nil then
@@ -427,6 +468,7 @@ function StartAnimation(unit, table)
         unit:SetModifierStackCount("modifier_animation_translate", unit, _ANIMATION_TRANSLATE_TO_CODE[translate2])
       end
 
+      unit._animationEnd = GameRules:GetGameTime() + duration
       unit:AddNewModifier(unit, nil, "modifier_animation", {duration=duration, translate=translate})
       unit:SetModifierStackCount("modifier_animation", unit, stacks)
     end)
@@ -436,15 +478,33 @@ function StartAnimation(unit, table)
       unit:SetModifierStackCount("modifier_animation_translate", unit, _ANIMATION_TRANSLATE_TO_CODE[translate2])
     end
 
+    unit._animationEnd = GameRules:GetGameTime() + duration
     unit:AddNewModifier(unit, nil, "modifier_animation", {duration=duration, translate=translate})
     unit:SetModifierStackCount("modifier_animation", unit, stacks)
   end
 end
 
 function EndAnimation(unit)
+  unit._animationEnd = GameRules:GetGameTime()
   unit:RemoveModifierByName("modifier_animation")
   unit:RemoveModifierByName("modifier_animation_translate")
 end
 
+function AddAnimationTranslate(unit, translate)
+  if translate == nil or _ANIMATION_TRANSLATE_TO_CODE[translate] == nil then
+    print("[ANIMATIONS.lua] ERROR, no translate-code found for '" .. translate .. "'.  This translate may be misspelled or need to be added to the enum manually.")
+    return
+  end
+
+  unit:AddNewModifier(unit, nil, "modifier_animation_translate_permanent", {duration=duration, translate=translate})
+  unit:SetModifierStackCount("modifier_animation_translate_permanent", unit, _ANIMATION_TRANSLATE_TO_CODE[translate])
+end
+
+function RemoveAnimationTranslate(unit)
+  unit:RemoveModifierByName("modifier_animation_translate_permanent")
+end
+
 GameRules.StartAnimation = StartAnimation
 GameRules.EndAnimation = EndAnimation
+GameRules.AddAnimationTranslate = AddAnimationTranslate
+GameRules.RemoveAnimationTranslate = RemoveAnimationTranslate

@@ -1,5 +1,10 @@
 # Barebones ChangeLog
 
+### Version 0.93b
+- [animations.lua] Fixed an issue where perfectly sequential animations would not play
+- [animations.lua] Added several missing translate activity modifiers
+- [animations.lua] Added AddAnimationTranslate and RemoveAnimationTranslate commands to allow for easily adding/removing permanent translates like "injured"/"haste", etc
+
 ### Version 0.93
 - Added animations.lua library
 - Added USE_UNSEEN_FOG_OF_WAR to settings.lua to allow for turning on unseen fog of war behavior

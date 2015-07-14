@@ -1,5 +1,5 @@
 # Barebones Starter Mod Kit
-### Version 0.93
+### Version 0.93b
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
