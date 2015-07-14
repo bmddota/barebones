@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 0.93c
+- Added ability/item inflictor entity retrieval to OnEntityHurt and OnEntityKilled in events.lua
+
 ### Version 0.93b
 - [animations.lua] Fixed an issue where perfectly sequential animations would not play
 - [animations.lua] Added several missing translate activity modifiers
