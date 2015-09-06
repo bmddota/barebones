@@ -80,6 +80,7 @@ Projectiles are effectively a formatted lua table which is registered with the P
 | iVisionTeamNumber | &lt;Source unit's team&gt; | The team for which to display this projectile's vision if enabled.|
 | nChangeMax | 1 | The maximum number of velocity/position changes this particle can undergo before it stops allowing changing position/velocity. |
 | Source | &lt;none&gt; | The source unit of this projectile |
+| ability | &lt;none&gt; | The ability associated with this projectile |
 | TreeBehavior | PROJECTILES_DESTROY | The behavior that the particle should exhibit when colliding with a tree.  PROJECTILES_NOTHING means to do nothing to the projectile.  PROJECTILES_DESTROY means to destroy this projectile.|
 | UnitBehavior | PROJECTILES_DESTROY | The behavior that the particle should exhibit when colliding with a unit which passes the UnitTest function.  PROJECTILES_NOTHING means to do nothing to the projectile.  PROJECTILES_DESTROY means to destroy this projectile.|
 | vSpawnOrigin | Vector(0,0,0) | The initial spawn world position of this projectile. Can be specified in a table form to fire from the attachment point of a unit. Ex: {unit=unitHandle, attach="attach_attack1"[, offset=Vector(0,0,80)]}|
