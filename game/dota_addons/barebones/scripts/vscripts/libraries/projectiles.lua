@@ -104,8 +104,8 @@ function Projectiles:DefaultUnitTest(unit)
     if source then
         if self.iUnitTargetTeam or self.iUnitTargetFlags or self.iUnitTargetType then
             return 0 == UnitFilter(unit, self.iUnitTargetTeam or 0, self.iUnitTargetType or 0, self.iUnitTargetFlags or 0, source:GetTeam())
-        elseif self.ability then
-            return 0 == UnitFilter(unit, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), source:GetTeam())
+        elseif self.Ability then
+            return 0 == UnitFilter(unit, self.Ability:GetAbilityTargetTeam(), self.Ability:GetAbilityTargetType(), self.Ability:GetAbilityTargetFlags(), source:GetTeam())
         end
     end
     return false
@@ -181,8 +181,8 @@ function Projectiles:CreateProjectile(projectile)
     projectile.vSpawnOrigin = projectile.vSpawnOrigin or Vector(0,0,0)
   end
 
-  if projectile.ability then
-    projectile.caster = projectile.ability:GetCaster()
+  if projectile.Ability then
+    projectile.caster = projectile.Ability:GetCaster()
   end
   projectile.rehit = {}
   projectile.pos = projectile.vSpawnOrigin

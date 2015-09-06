@@ -48,7 +48,7 @@ Projectiles are effectively a formatted lua table which is registered with the P
 
 | Property  | Default | Description |
 | :------------ | :--------| :-----|
-| ability | &lt;none&gt; | The ability associated with this projectile |
+| Ability | &lt;none&gt; | The ability associated with this projectile |
 | bProvidesVision | false | If set to true, this projectile will provide vision around it as it travels. |
 | bCutTrees | false | If set to true, this projectile will cut any trees that it comes in contact with. |
 | bFlyingVision | true | If set to true and, this projectile will provide flying vision as it travels (if bProvidesVision is enabled) |
