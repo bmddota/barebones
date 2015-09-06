@@ -1,4 +1,4 @@
-PROJECTILES_VERSION = "0.83"
+PROJECTILES_VERSION = "0.84"
 
 PROJECTILES_THINK = 0.01
 
@@ -99,6 +99,18 @@ function Projectiles:CalcNormal(pos, unit, scale)
   return Vector(zl - zr, zd - zu, 2*scale):Normalized()
 end
 
+function Projectiles:DefaultUnitTest(unit)
+    local source = self.Source or self.caster
+    if source then
+        if self.iUnitTargetTeam or self.iUnitTargetFlags or self.iUnitTargetType then
+            return 0 == UnitFilter(unit, self.iUnitTargetTeam or 0, self.iUnitTargetType or 0, self.iUnitTargetFlags or 0, source:GetTeam())
+        elseif self.ability then
+            return 0 == UnitFilter(unit, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), source:GetTeam())
+        end
+    end
+    return false
+end
+
 PROJECTILES_NOTHING = 0
 PROJECTILES_DESTROY = 1
 PROJECTILES_BOUNCE = 2
@@ -128,7 +140,7 @@ function Projectiles:CreateProjectile(projectile)
   projectile.fGroundOffset = projectile.fGroundOffset or 40
   projectile.nChangeMax = projectile.nChangeMax or 1
   projectile.fChangeDelay = projectile.fChangeDelay or .1
-  projectile.UnitTest = projectile.UnitTest or function() return false end
+  projectile.UnitTest = projectile.UnitTest or Projectiles.DefaultUnitTest
   projectile.OnUnitHit = projectile.OnUnitHit or function() return end
   projectile.OnTreeHit = projectile.OnTreeHit or function() return end
   projectile.OnWallHit = projectile.OnWallHit or function() return end
@@ -143,7 +155,7 @@ function Projectiles:CreateProjectile(projectile)
   projectile.bProvidesVision = projectile.bProvidesVision or false
   if projectile.bFlyingVision == nil then projectile.bFlyingVision = true end
   projectile.iVisionRadius = projectile.iVisionRadius or 200
-  projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam()
+  projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam() or projectile.caster:GetTeam()
   projectile.fVisionTickTime = projectile.fVisionTickTime or .1
   if projectile.fVisionTickTime <= 0 then
     projectile.fVisionTickTime = .1
@@ -169,6 +181,9 @@ function Projectiles:CreateProjectile(projectile)
     projectile.vSpawnOrigin = projectile.vSpawnOrigin or Vector(0,0,0)
   end
 
+  if projectile.ability then
+    projectile.caster = projectile.ability:GetCaster()
+  end
   projectile.rehit = {}
   projectile.pos = projectile.vSpawnOrigin
   projectile.vel = projectile.vVelocity / 30
