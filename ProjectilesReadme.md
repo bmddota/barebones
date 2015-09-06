@@ -15,7 +15,7 @@
 **Projectiles Library Functions**
 =============================
 ####**Projectiles:CreateProjectile(projectile)**
-  This function is used to create ane release the projectile defined by the projectile table passed to the function.  The function returns an updated reference to the projectile table on which the Proejctile Table Functions can be called.  See the Projectiles Table Format section for more detail on what properties can be used with the projectile table.
+  This function is used to create ane release the projectile defined by the projectile table passed to the function.  The function returns an updated reference to the projectile table on which the Projectile Table Functions can be called.  See the Projectiles Table Format section for more detail on what properties can be used with the projectile table.
 
 
 ####**Projectiles:CalcSlope(pos, unit, dir)**
