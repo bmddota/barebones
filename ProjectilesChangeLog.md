@@ -1,5 +1,8 @@
 # projectiles.lua ChangeLog
 
+### Version 0.84
+- Added smart default behavior for UnitTest
+
 ### Version 0.83
 - Added additional guards to better handle 'script_reload' 
 
