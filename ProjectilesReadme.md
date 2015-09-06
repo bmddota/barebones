@@ -25,7 +25,7 @@
   This function can be used to get the estimated normal Vector of the ground at the world point Vector 'pos'.  The 'unit' parameter is used to specify what unit should be used with GetGroundPosition() in order to handle the ground collision sizing.  This function can return odd values when used around sheer vertical edges.
 
 ####**Projectiles:DefaultUnitTest(unit)**
-  This is the default UnitTest function used if none is provided. This test will use the iUnitTargetTeam, iUnitTargetType, and iUnitTargetFlags keys on the projectile, if they're specified. Otherwise, it inherits targeting rules from the ability referenced by the ability key on the projectile. If none of these keys are available, the test will simply always fail.
+  This is the default UnitTest function used if none is provided. This test will use the iUnitTargetTeam, iUnitTargetType, and iUnitTargetFlags keys on the projectile, if they're specified. Otherwise, it inherits targeting rules from the ability referenced by the Ability key on the projectile. If none of these keys are available, the test will simply always fail.
   
 
 **Projectile Table Functions**
