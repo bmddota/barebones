@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.80"
+ATTACHMENTS_VERSION = "0.81"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
@@ -17,6 +17,7 @@ ATTACHMENTS_VERSION = "0.80"
   -To attach a prop to a unit, use the Attachments:AttachProp(unit, attachPoint, model[, scale[, properties] ]) function
     -Ex: Attachments:AttachProp(unit, "attach_hitloc", "models/items/axe/weapon_heavy_cutter.vmdl", 1.0)
     -This will create the prop and retrieve the properties from the database to attach it to the provided unit
+    -If you pass in an already created prop or unit as the 'model' parameter, the attachment system will scale, position, and attach that prop/unit without creating a new one
     -Scale is the prop scale to be used, and defaults to 1.0.  The scale of the prop will also be scaled based on the unit model scale.
     -It is possible not to use the attachment database, but to instead provide the properties directly in the 'properties' parameter.
     -This properties table will look like:
@@ -31,6 +32,7 @@ ATTACHMENTS_VERSION = "0.80"
   -To retrieve the currently attached prop entity, you can call Attachments:GetCurrentAttachment(unit, attachPoint)
     -Ex: local prop = Attachments:AttachProp(unit, "attach_hitloc")
     -Calling prop:RemoveSelf() will automatically detach the prop from the unit
+  -To access the loaded Attachment database directly (for reading properties directly), you can call Attachments:GetAttachmentDatabase()
 
   Attachment Configuration Usage
   -In tools-mode, execute "attachment_configure <ADDON_NAME>" to activate the attachment configuration GUI for setting up the attachment database.
@@ -42,7 +44,8 @@ ATTACHMENTS_VERSION = "0.80"
   -More detail to come...
 
   Notes
-  -Attached props will not automatically scale when the parent unit/models are scaled, but can be reattached to get the scale update.
+  -"attach_origin" can be used as the attachment string for attaching a prop do the origin of the unit, even if that unit has no attachment point named "attach_origin"
+  -Attached props will automatically scale when the parent unit/models are scaled, so rescaling individual props after attachment is not necessary.
   -This library requires that the "libraries/timers.lua" be present in your vscripts directory.
 
   Examples:
@@ -98,10 +101,10 @@ function Attachments:start()
   
   self.activated = false
   self.dbFilePath = nil
-  self.attachDB = LoadKeyValues("scripts/attachments.txt")
   self.currentAttach = {}
   self.hiddenCosmetics = {}
   self.doAttach = true
+  self.attachDB = LoadKeyValues("scripts/attachments.txt")
 end
 
 function Attachments:ActivateAttachmentSetup(addon)
@@ -191,6 +194,8 @@ function Attachments:Attachment_UpdateAttach(args)
   local unitModel = unit:GetModelName()
   local attach = properties.attach
   local model = properties.model
+  properties.attach = nil
+  properties.model = nil
 
   if not string.find(model, "%.vmdl$") then
     Notify(args.PlayerID, "Prop model must end in '.vmdl'.")
@@ -198,7 +203,7 @@ function Attachments:Attachment_UpdateAttach(args)
   end
 
   local point = unit:ScriptLookupAttachment(attach)
-  if point == 0 then
+  if attach ~= "attach_origin" and point == 0 then
     Notify(args.PlayerID, "Attach point '" .. attach .. "' not found.")
     return
   end
@@ -279,6 +284,9 @@ function Attachments:Attachment_LoadAttach(args)
   end
 
   local ply = PlayerResource:GetPlayer(args.PlayerID)
+  local properties = db[unitModel][attach][model]
+  properties.attach = attach
+  properties.model = model
   CustomGameEventManager:Send_ServerToPlayer(ply, "attachment_update_fields", db[unitModel][attach][model])
 end
 
@@ -363,6 +371,9 @@ end
 
 
 
+function Attachments:GetAttachmentDatabase()
+  return Attachments.attachDB
+end
 
 function Attachments:GetCurrentAttachment(unit, attachPoint)
   if not Attachments.currentAttach[unit:entindex()] then return nil end
@@ -429,7 +440,11 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
 
     -- Attach and store it
     if Attachments.doAttach then
-      prop:SetParent(unit, attachPoint)
+      if attachPoint == "attach_origin" then
+        prop:SetParent(unit, "")
+      else        
+        prop:SetParent(unit, attachPoint)
+      end
     end
 
     if Attachments.timer then

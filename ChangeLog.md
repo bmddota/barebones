@@ -1,5 +1,12 @@
 # Barebones ChangeLog
 
+### Version 0.94a
+- [attachments.lua] Added the ability to set a prop to attach to "attach_origin" point, even if this attach string does not directly exist
+- [attachments.lua] Removed extra "model" and "attach" properties from being saved to the attachment database
+- [attachments.lua] Fixed up the model scale settings so that changing the scale of a model after attaching a prop will maintain prop proportions
+- [attachments.lua] Added Attachments:GetAttachmentDatabase() function
+- [attachments.lua] Adjusted the default scripts/attachments.txt database to contain correct values for a couple demonstration prop attaches
+
 ### Version 0.94
 - Fixed the issue introduced due to Valve removing PlayerResource:HaveAllPlayersJoined()
 - Added attachments.lua library and associated panorama GUI for creating attachment profiles
