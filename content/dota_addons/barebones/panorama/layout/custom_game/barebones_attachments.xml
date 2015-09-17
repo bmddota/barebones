@@ -1,0 +1,179 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="s2r://panorama/styles/hero_splash.vcss_c" />
+    <include src="file://{resources}/styles/custom_game/barebones_attachments.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/custom_game/barebones_attachments.js" /> 
+  </scripts>
+  <Panel hittest="false" class="AttachmentsBase">
+    <Panel id="CosmeticsPanel" style="visibility:collapse;">
+      <Panel id="CosmeticsHeader" draggable="true">
+        <Button class="CloseButton" id="CloseButton" onactivate="CloseCosmetics()"/>
+        <Label text="Hide Cosmetics"/>
+      </Panel>
+      <Panel id="CosmeticsBody">
+
+      </Panel>
+    </Panel>
+    <Panel hittest="true" id="AttachmentsPanel" style="visibility:collapse;">
+      <Panel hittest="false" id="AttachmentsHeader" draggable="true" >
+        <Label text="Attachments Configuration"/> 
+      </Panel>
+      <Panel hittest="false" id="AttachmentsBody">
+        <Panel class="ButtonRow">
+          <ToggleButton class="CheckBox" checked="checked" style="align: center center; margin-left:10px;" id="AttachCheckbox" text="Attach?"  onactivate="AttachCheckbox();" />
+          <Button id="Freeze" class="SplashButton SButton" onactivate="Freeze()">
+            <Label text="Freeze"/> 
+          </Button>
+          <Button id="HideCosmetics" class="SplashButton SButton" style="width:150px;" onactivate="HideCosmetics()">
+            <Label text="Hide Cosmetics"/>
+          </Button>
+        </Panel>
+        <Label class="LineLabel" text="Attach Point"/>
+        <TextEntry id="Attach" class="LineEntry" tabindex="auto"  ontabbackward="SetInputFocus(Roll)" placeholder="attach_something" onblur="UpdateAttachment();"/>
+        <Label class="LineLabel" text="Model"/>
+        <TextEntry id="Model" class="LineEntry" tabindex="auto" ontabforward="SetInputFocus(Scale)" placeholder="path/to/model.vmdl" onblur="UpdateAttachment();"/>
+        <Panel class="ThreeEntry" style="margin-top:-10px;">
+          <Panel class="LabelEntry">
+            <Label text="Scale"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="Scale" class="NumEntry" ontabbackward="SetInputFocus(Model)" ontabforward="SetInputFocus(XPos)" maxchars="6" placeholder="1.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#Scale', 0.1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#Scale', -0.1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Button id="Top" class="SplashButton CameraButton" style="width:50px;" onactivate="TopCamera()">
+            <Label text="Top"/>
+          </Button>
+          <Button id="SideX" class="SplashButton CameraButton" style="width:50px;" onactivate="SideXCamera()">
+            <Label text="SideX"/>
+          </Button>
+          <Button id="SideY" class="SplashButton CameraButton" style="width:50px;" onactivate="SideYCamera()">
+            <Label text="SideY"/>
+          </Button>
+          <Button id="Normal" class="SplashButton CameraButton" style="width:80px;" onactivate="NormalCamera()">
+            <Label text="Normal "/>
+          </Button>
+        </Panel>
+        <Panel class="ThreeEntry">
+          <Panel class="LabelEntry">
+            <Label text="X"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="XPos" class="NumEntry" ontabbackward="SetInputFocus(Scale)" ontabforward="SetInputFocus(YPos)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#XPos', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#XPos', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Panel class="LabelEntry">
+            <Label text="Y"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="YPos" class="NumEntry" ontabbackward="SetInputFocus(XPos)" ontabforward="SetInputFocus(ZPos)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#YPos', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#YPos', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Panel class="LabelEntry">
+            <Label text="Z"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="ZPos" class="NumEntry" ontabbackward="SetInputFocus(YPos)" ontabforward="SetInputFocus(Pitch)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#ZPos', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#ZPos', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="ThreeEntry">
+          <Panel class="LabelEntry">
+            <Label text="Pitch"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="Pitch" class="NumEntry" ontabbackward="SetInputFocus(ZPos)" ontabforward="SetInputFocus(Yaw)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#Pitch', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#Pitch', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Panel class="LabelEntry">
+            <Label text="Yaw"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="Yaw" class="NumEntry" ontabbackward="SetInputFocus(Pitch)" ontabforward="SetInputFocus(Roll)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#Yaw', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#Yaw', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Panel class="LabelEntry">
+            <Label text="Roll"/> 
+            <Panel style="flow-children:right;">
+              <TextEntry id="Roll" class="NumEntry" ontabbackward="SetInputFocus(Yaw)" ontabforward="SetInputFocus(Attach)" maxchars="6" placeholder="0.0" onblur="UpdateAttachment();"/>
+              <Panel class="PlusMinus">
+                <Button class="SplashButton Plus" onactivate="ValueChange('#Roll', 1);">
+                  <Label text="+"/>
+                </Button>
+                <Button class="SplashButton Minus" onactivate="ValueChange('#Roll', -1);">
+                  <Label text="-"/>
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="ButtonRow">
+          <Button id="Load" class="SplashButton SButton" onactivate="Load()">
+            <Label text="Load"/>
+          </Button>
+          <Button id="Hide" class="SplashButton SButton" onactivate="Hide()">
+            <Label text="Hide"/>
+          </Button>
+          <Button id="Save" class="SplashButton SButton" onactivate="Save()">
+            <Label text="Save"/>
+          </Button>
+        </Panel>
+      </Panel>
+      <Panel hittest="true" id="AttachmentsFooter">
+        <Label text=""/>
+      </Panel>
+    </Panel>
+
+    <Panel hittest="true" class="PopupPanel" style="visibility:collapse;">
+      <Label id="PopupLabel" class="PopupTitle" text="text here"/>
+      <Button id="Button0" class="PlayButton"> 
+        <Label text="BUTTON2"/>
+        <!-- class="PopupButton" -->
+      </Button>
+    </Panel>
+  </Panel>
+</root>

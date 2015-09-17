@@ -112,4 +112,8 @@
   "npc_dota_hero_legion_commander" "1"
   "npc_dota_hero_phoenix" "1"
   "npc_dota_hero_terrorblade" "1"
+  "npc_dota_hero_techies" "1"
+  "npc_dota_hero_oracle" "1"
+  "npc_dota_hero_winter_wyvern" "1"
+  "npc_dota_hero_abyssal_underlord" "0"
 }

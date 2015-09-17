@@ -1,0 +1,55 @@
+"Attachments"
+{
+	"models/heroes/antimage/antimage.vmdl"
+	{
+		"attach_hitloc"
+		{
+			"models/items/axe/weapon_heavy_cutter.vmdl"
+			{
+				"scale"		"1.6000000238419"
+				"pitch"		"-3"
+				"model"		"models/items/axe/weapon_heavy_cutter.vmdl"
+				"yaw"		"3"
+				"XPos"		"10"
+				"YPos"		"-2"
+				"attach"		"attach_hitloc"
+				"ZPos"		"-7"
+				"roll"		"8"
+			}
+		}
+	}
+	"models/heroes/axe/axe.vmdl"
+	{
+		"attach_weapon"
+		{
+			"models/items/axe/weapon_heavy_cutter.vmdl"
+			{
+				"scale"		"1.1000000238419"
+				"pitch"		"-3"
+				"model"		"models/items/axe/weapon_heavy_cutter.vmdl"
+				"yaw"		"3"
+				"XPos"		"4"
+				"YPos"		"-2"
+				"attach"		"attach_weapon"
+				"ZPos"		"-7"
+				"roll"		"8"
+			}
+		}
+		"attach_hitloc"
+		{
+			"models/items/axe/weapon_heavy_cutter.vmdl"
+			{
+				"scale"		"1.7999999523163"
+				"pitch"		"-3"
+				"model"		"models/items/axe/weapon_heavy_cutter.vmdl"
+				"yaw"		"3"
+				"XPos"		"10"
+				"YPos"		"-2"
+				"attach"		"attach_hitloc"
+				"ZPos"		"70"
+				"roll"		"12.800000190735"
+			}
+		}
+	}
+	"asdf"		"fewfwe"
+}

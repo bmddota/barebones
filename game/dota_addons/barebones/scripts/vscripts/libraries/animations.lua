@@ -1,11 +1,11 @@
-ANIMATIONS_VERSION = "0.83"
+ANIMATIONS_VERSION = "0.84"
 
 --[[
   Lua-controlled Animations Library by BMD
 
   Installation
   -"require" this file inside your code in order to gain access to the StartAnmiation and EndAnimation global.
-  -Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/modifiers/modifier_animation.lua, modifier_animation_translate.lua, and modifier_animation_translate_permanent.lua files exist and are in the correct path
+  -Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/modifiers/modifier_animation.lua, modifier_animation_translate.lua, modifier_animation_translate_permanent.lua, and modifier_animation_freeze.lua files exist and are in the correct path
 
   Usage
   -Animations can be started for any unit and are provided as a table of information to the StartAnimation call
@@ -21,6 +21,8 @@ ANIMATIONS_VERSION = "0.83"
       Example: For ACT_DOTA_ATTACK+sven_warcry+sven_shield, this should be "sven_warcry" or "sven_shield" while the translate property is the other translate modifier
   -A permanent activity translate can be applied to a unit by calling AddAnimationTranslate for that unit.  This allows for a permanent "injured" or "aggressive" animation stance.
   -Permanent activity translate modifiers can be removed with RemoveAnimationTranslate.
+  -Animations can be frozen in place at any time by calling FreezeAnimation(unit[, duration]).  Leaving the duration off will cause the animation to be frozen until UnfreezeAnimation is called.
+  -Animations can be unfrozen at any time by calling UnfreezeAnimation(unit)
 
   Notes
   -Animations can only play for valid activities/sequences possessed by the model the unit is using.
@@ -50,11 +52,18 @@ ANIMATIONS_VERSION = "0.83"
   --Remove a permanent activity translate modifier
     RemoveAnimationTranslate(unit)
 
+  --Freeze an animation for 4 seconds
+    FreezeAnimation(unit, 4)
+
+  --Unfreeze an animation
+    UnfreezeAnimation(unit)
+
 ]]
 
 LinkLuaModifier( "modifier_animation", "libraries/modifiers/modifier_animation.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_animation_translate", "libraries/modifiers/modifier_animation_translate.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_animation_translate_permanent", "libraries/modifiers/modifier_animation_translate_permanent.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_animation_freeze", "libraries/modifiers/modifier_animation_freeze.lua", LUA_MODIFIER_MOTION_NONE )
 
 require('libraries/timers')
 
@@ -482,6 +491,18 @@ function StartAnimation(unit, table)
     unit:AddNewModifier(unit, nil, "modifier_animation", {duration=duration, translate=translate})
     unit:SetModifierStackCount("modifier_animation", unit, stacks)
   end
+end
+
+function FreezeAnimation(unit, duration)
+  if duration then
+    unit:AddNewModifier(unit, nil, "modifier_animation_freeze", {duration=duration})
+  else
+    unit:AddNewModifier(unit, nil, "modifier_animation_freeze", {})
+  end
+end
+
+function UnfreezeAnimation(unit)
+  unit:RemoveModifierByName("modifier_animation_freeze")
 end
 
 function EndAnimation(unit)

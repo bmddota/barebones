@@ -4,33 +4,19 @@ function GameMode:_OnGameRulesStateChange(keys)
   if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
     self.bSeenWaitForPlayers = true
   elseif newState == DOTA_GAMERULES_STATE_INIT then
-    Timers:RemoveTimer("alljointimer")
+    --Timers:RemoveTimer("alljointimer")
   elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-    local et = 6
-    if self.bSeenWaitForPlayers then
-      et = .01
-    end
-    Timers:CreateTimer("alljointimer", {
-      useGameTime = true,
-      endTime = et,
-      callback = function()
-        if PlayerResource:HaveAllPlayersJoined() then
-          GameMode:PostLoadPrecache()
-          GameMode:OnAllPlayersLoaded()
+    GameMode:PostLoadPrecache()
+    GameMode:OnAllPlayersLoaded()
 
-           if USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS then
-            for i=0,9 do
-              if PlayerResource:IsValidPlayer(i) then
-                local color = TEAM_COLORS[PlayerResource:GetTeam(i)]
-                PlayerResource:SetCustomPlayerColor(i, color[1], color[2], color[3])
-              end
-            end
-          end
-          return 
+    if USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS then
+      for i=0,9 do
+        if PlayerResource:IsValidPlayer(i) then
+          local color = TEAM_COLORS[PlayerResource:GetTeam(i)]
+          PlayerResource:SetCustomPlayerColor(i, color[1], color[2], color[3])
         end
-        return 1
       end
-      })
+    end
   elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
     GameMode:OnGameInProgress()
   end
@@ -75,4 +61,13 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:_OnConnectFull(keys)
   GameMode:_CaptureGameMode()
+
+  local entIndex = keys.index+1
+  -- The Player entity of the joining user
+  local ply = EntIndexToHScript(entIndex)
+  
+  local userID = keys.userid
+
+  self.vUserIds = self.vUserIds or {}
+  self.vUserIds[userID] = ply
 end

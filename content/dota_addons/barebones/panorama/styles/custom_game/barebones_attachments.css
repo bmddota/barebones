@@ -1,0 +1,251 @@
+.ButtonRow
+{
+  flow-children:right;
+  align:center bottom;
+  margin-top:10px;
+}
+
+.LineEntry
+{
+  align:center center;
+  vertical-align: center;
+  width:95%;
+  height:30px;
+  margin-bottom: 10px;
+  font-size: 14;
+  font-weight: normal;
+}
+
+.LineLabel
+{
+  align:center top;
+  font-weight: bold;
+  width:95%;
+}
+
+.ThreeEntry
+{
+  flow-children:right;
+  align:center top;
+  margin-bottom: 0px;
+}
+
+.LabelEntry
+{
+  width: 100px;
+  flow-children:down;
+  margin:5px 20px 5px 20px;  
+}
+
+.LabelEntry Label
+{
+  align: center top;
+  font-weight: bold;
+}
+
+.LabelEntry TextEntry Label
+{
+  align: left center;
+}
+
+.NumEntry
+{
+  width:80px;
+}
+
+.PlusMinus
+{
+  flow-children:down;
+}
+
+.PlusMinus Button
+{
+  width:18px;
+  height:18px;
+  margin-bottom: 0px;
+  padding: 0px;
+  border: 1px solid #555555;
+}
+
+.PlusMinus Button Label
+{
+  margin-top: -3px;
+  margin-left: 3px;
+}
+
+.SButton
+{
+  width: 100px;
+  align: center top;
+  margin-bottom: 0px;
+  padding: 2px;
+  margin:5px 20px 5px 20px;
+  border: 1px solid #555555;
+}
+
+.CosmeticRow
+{
+  flow-children:right;
+  width:98%;
+  height:20px;
+  margin-bottom: 1px;
+  border: 1px solid #555555;
+  align: center top;
+}
+
+.CosmeticLabel
+{
+  font-size: 12;
+  font-weight: normal;
+  align: left center;
+  overflow: squish squish;
+  color:white;
+}
+ 
+.CosmeticButton
+{
+  width: 50px;
+  align: right center;
+  margin-bottom: 0px;
+  border: 1px solid #555555;
+  height: 20px;
+  padding: 1px;
+}
+
+.CosmeticButton Label
+{
+  margin-top: 0px;
+  font-size: 12;
+  font-weight: bold;
+  align: center center;
+  color: #ff3333;
+}
+
+.CameraButton
+{
+  width: 50px;
+  align: center bottom;
+  padding: 2px;
+  margin:5px 10px 15px 10px;
+  border: 1px solid #555555;
+}
+
+.CameraButton Label
+{
+  margin-top: 0px;
+  font-size: 14;
+  font-weight: bold;
+  align: center center;
+  color: #aaffaa;
+}
+
+#CosmeticsPanel
+{
+  position: 1200px 50px 0px;
+  flow-children: down;
+  width: 700px;
+  border: 2px solid #555555;
+}
+
+#CosmeticsHeader
+{
+  background-color: #000000;
+  width: 100%;
+  height: 40px;
+  align: center top;
+}
+
+#CosmeticsHeader Label
+{
+  align: center center;
+  font-weight: bold;
+  font-size: 25;
+}
+
+#CloseButton
+{
+  align: right top;
+}
+
+#CosmeticsBody
+{
+  background-color: #333333;
+  width: 100%;
+  min-height: 100px;
+  padding:5px;
+  
+  flow-children: down;
+}
+
+#AttachmentsPanel
+{
+  position: 20px 50px 0px;
+  flow-children: down;
+  width: 500px;
+  border: 2px solid #555555;
+}
+
+#AttachmentsHeader
+{
+  background-color: #000000;
+  width: 100%;
+  height: 40px;
+  flow-children:none;
+}
+
+#AttachmentsHeader Label
+{
+  align: center center;
+  font-weight: bold;
+  font-size: 25;
+}
+
+#AttachmentsBody
+{
+  background-color: #333333;
+  width: 100%;
+  
+  flow-children: down;
+}
+
+#AttachmentsFooter
+{
+  background-color: #000000;
+  width: 100%;
+  height: 20px;
+}
+
+#HideCosmetics Label
+{
+  align: center top;
+  font-weight: bold;
+  color: #ffaaff;
+}
+
+#Freeze Label
+{
+  align: center top;
+  font-weight: bold;
+  color: #aaaaff;
+}
+
+#Load Label
+{
+  align: center top;
+  font-weight: bold;
+  color: #ffaaaa;
+}
+
+#Hide Label
+{
+  align: center top;
+  font-weight: bold;
+  color: #111111;
+}
+
+#Save Label
+{
+  align: center top;
+  font-weight: bold;
+  color: #aaffaa;
+}

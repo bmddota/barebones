@@ -20,6 +20,8 @@ require('libraries/projectiles')
 require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
+-- This library can be used for performing "Frankenstein" attachments on units
+require('libraries/attachments')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')

@@ -1,5 +1,15 @@
 # Barebones ChangeLog
 
+### Version 0.94
+- Fixed the issue introduced due to Valve removing PlayerResource:HaveAllPlayersJoined()
+- Added attachments.lua library and associated panorama GUI for creating attachment profiles
+- Added missing hero references to herolist.txt
+- Added handling for 'player_chat' event and userID->Player Entity tracking to the events.lua and internal/events.lua files
+- [timers.lua] Added the ability to call a function with a table context
+- [timers.lua] Added the use of the lua 'xpcall' function to give full stack traces if a timer errors out during execution.
+- [animations.lua] Added FreezeAnimation function to allow for animations to be paused at any time
+- [animations.lua] Added UnfreezeAnimation function to allow animations to be unpaused at any time
+
 ### Version 0.93c
 - Added ability/item inflictor entity retrieval to OnEntityHurt and OnEntityKilled in events.lua
 

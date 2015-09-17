@@ -2,6 +2,8 @@
 ### Version 0.93c
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
+#WARNING: The 09/16/15 patch removed the PlayerResource:HaveAllPlayersJoined() function which was used in internal/events.lua.  If your gamemode is broken or partially broken, update this file to the newest version of [internal/events.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/internal/events.lua).
+
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.
 Barebones sets up the necessary files to create a basic mod (from a scripting persective), allowing you to simply find the places to put your Lua logic in order for you mod to operate.
@@ -46,6 +48,9 @@ This library can be used to send panorama notifications to individuals/teams/eve
 
 ####animations.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/AnimationsChangeLog.md)
 This library can be used to start animations with customized animation rates, activities, and translations.  See [libraries/animations.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/animations.lua) for usage details and examples.
+
+####attachments.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/AttachmentsChangeLog.md)
+This library can be used to set up and put in place 'Frankenstein' attachments for attaching props to units.  See [libraries/attachments.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/attachments.lua) for usage details and examples.
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.

@@ -1,4 +1,4 @@
-TIMERS_VERSION = "1.01"
+TIMERS_VERSION = "1.03"
 
 --[[
 
@@ -8,6 +8,9 @@ TIMERS_VERSION = "1.01"
       return 1.0
     end
   )
+
+  -- A timer which calls a function with a table context
+  Timers:CreateTimer(GameMode.someFunction, GameMode)
 
   -- A timer running every second that starts 5 seconds in the future, respects pauses
   Timers:CreateTimer(5, function()
@@ -73,6 +76,26 @@ function Timers:new( o )
   return o
 end
 
+function Timers:_xpcall (f, ...)
+  print(f)
+  print({...})
+  PrintTable({...})
+  local result = xpcall (function () return f(unpack(arg)) end,
+    function (msg)
+      -- build the error message
+      return msg..'\n'..debug.traceback()..'\n'
+    end)
+
+  print(result)
+  PrintTable(result)
+  if not result[1] then
+    -- throw an error
+  end
+  -- remove status code
+  table.remove (result, 1)
+  return unpack (result)
+end
+
 function Timers:start()
   Timers = self
   self.timers = {}
@@ -114,7 +137,16 @@ function Timers:Think()
       Timers.timers[k] = nil
       
       -- Run the callback
-      local status, nextCall = pcall(v.callback, GameRules:GetGameModeEntity(), v)
+      local status, nextCall
+      if v.context then
+        status, nextCall = xpcall(function() return v.callback(v.context, v) end, function (msg)
+                                    return msg..'\n'..debug.traceback()..'\n'
+                                  end)
+      else
+        status, nextCall = xpcall(function() return v.callback(v) end, function (msg)
+                                    return msg..'\n'..debug.traceback()..'\n'
+                                  end)
+      end
 
       -- Make sure it worked
       if status then
@@ -162,8 +194,11 @@ function Timers:HandleEventError(name, event, err)
   end
 end
 
-function Timers:CreateTimer(name, args)
+function Timers:CreateTimer(name, args, context)
   if type(name) == "function" then
+    if args ~= nil then
+      context = args
+    end
     args = {callback = name}
     name = DoUniqueString("timer")
   elseif type(name) == "table" then
@@ -190,6 +225,8 @@ function Timers:CreateTimer(name, args)
     args.endTime = now + args.endTime
   end
 
+  args.context = context
+
   Timers.timers[name] = args 
 
   return name
@@ -212,6 +249,5 @@ function Timers:RemoveTimers(killAll)
 
   Timers.timers = timers
 end
-
 
 if not Timers.timers then Timers:start() end

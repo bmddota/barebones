@@ -1,5 +1,9 @@
 # animations.lua ChangeLog
 
+### Version 0.84
+- Added FreezeAnimation function to allow for animations to be paused at any time
+- Added UnfreezeAnimation function to allow animations to be unpaused at any time
+
 ### Version 0.83
 - Fixed an issue where perfectly sequential animations would not play
 - Added several missing translate activity modifiers
