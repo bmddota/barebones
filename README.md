@@ -1,9 +1,6 @@
 # Barebones Starter Mod Kit
-### Version 0.93c
+### Version 0.94a
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
-
-#WARNING
-###The 09/16/15 patch removed the PlayerResource:HaveAllPlayersJoined() function which was used in internal/events.lua.  If your gamemode is broken or partially broken, update this file to the newest version of [internal/events.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/internal/events.lua).
 
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.
