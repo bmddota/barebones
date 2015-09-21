@@ -100,15 +100,8 @@ function Projectiles:CalcNormal(pos, unit, scale)
 end
 
 function Projectiles:DefaultUnitTest(unit)
-    local source = self.Source or self.caster
-    if source then
-        if self.iUnitTargetTeam or self.iUnitTargetFlags or self.iUnitTargetType then
-            return 0 == UnitFilter(unit, self.iUnitTargetTeam or 0, self.iUnitTargetType or 0, self.iUnitTargetFlags or 0, source:GetTeam())
-        elseif self.Ability then
-            return 0 == UnitFilter(unit, self.Ability:GetAbilityTargetTeam(), self.Ability:GetAbilityTargetType(), self.Ability:GetAbilityTargetFlags(), source:GetTeam())
-        end
-    end
-    return false
+    return (self.iUnitTargetTeam or self.iUnitTargetFlags or self.iUnitTargetType) 
+           and 0 == UnitFilter(unit, self.iUnitTargetTeam or 0, self.iUnitTargetType or 0, self.iUnitTargetFlags or 0, self.Source:GetTeam())
 end
 
 PROJECTILES_NOTHING = 0
@@ -151,11 +144,19 @@ function Projectiles:CreateProjectile(projectile)
   projectile.ControlPointOrientations = projectile.ControlPointOrientations or {}
   projectile.ControlPointEntityAttaches = projectile.ControlPointEntityAttaches or {}
 
+  --derive defaults from Ability, if given.
+  if projectile.Ability then
+    projectile.Source = projectile.Source or projectile.Ability:GetCaster()
+    projectile.iUnitTargetTeam = projectile.iUnitTargetTeam or projectile.Ability:GetAbilityTargetTeam()
+    projectile.iUnitTargetType = projectile.iUnitTargetType or projectile.Ability:GetAbilityTargetType()
+    projectile.iUnitTargetFlags = projectile.iUnitTargetFlags or projectile.Ability:GetAbilityTargetFlags()
+  end
+  
   if projectile.bTreeFullCollision == nil then projectile.bTreeFullCollision = false end
   projectile.bProvidesVision = projectile.bProvidesVision or false
   if projectile.bFlyingVision == nil then projectile.bFlyingVision = true end
   projectile.iVisionRadius = projectile.iVisionRadius or 200
-  projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam() or projectile.caster:GetTeam()
+  projectile.iVisionTeamNumber = projectile.iVisionTeamNumber or projectile.Source:GetTeam()
   projectile.fVisionTickTime = projectile.fVisionTickTime or .1
   if projectile.fVisionTickTime <= 0 then
     projectile.fVisionTickTime = .1
@@ -180,10 +181,7 @@ function Projectiles:CreateProjectile(projectile)
   else
     projectile.vSpawnOrigin = projectile.vSpawnOrigin or Vector(0,0,0)
   end
-
-  if projectile.Ability then
-    projectile.caster = projectile.Ability:GetCaster()
-  end
+  
   projectile.rehit = {}
   projectile.pos = projectile.vSpawnOrigin
   projectile.vel = projectile.vVelocity / 30
