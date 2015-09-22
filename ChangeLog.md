@@ -1,5 +1,12 @@
 # Barebones ChangeLog
 
+### Version 0.94b
+- [attachments.lua] Added the ability to press Enter in any TextEntry to submit changes in the Attachment Configuration GUI
+- [attachments.lua] Added the ability to scale the value of the + and - buttons for coarse and fine refinement
+- [attachments.lua] Added the ability to toggle on/off the Debug Spheres showing the attachment point and prop point
+- [attachments.lua] Removed the dependency on an external lua_modifier by internalizing the modifier definition to attachments.lua
+- [attachments.lua] Removed the stun particle effect when Freezing a unit
+
 ### Version 0.94a
 - [attachments.lua] Added the ability to set a prop to attach to "attach_origin" point, even if this attach string does not directly exist
 - [attachments.lua] Removed extra "model" and "attach" properties from being saved to the attachment database

@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.81"
+ATTACHMENTS_VERSION = "0.82"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
@@ -6,7 +6,7 @@ ATTACHMENTS_VERSION = "0.81"
   Installation
   -"require" this file inside your code in order to gain access to the StartAnmiation and EndAnimation global.
   -Optionally require "libraries/notifications" before this file so that the Attachment Configuration GUI can display messages via the Notifications library.
-  -Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/modifiers/modifier_animation_freeze.lua file exists and is in the correct path
+  -Additionally, ensure that this file is placed in the vscripts/libraries path
   -Additionally, ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
   -Finally, include the "attachments.txt" in your scripts directory if you have a pre-build database of attachment settings.
 
@@ -56,7 +56,46 @@ ATTACHMENTS_VERSION = "0.81"
 
 ]]
 
-LinkLuaModifier( "modifier_animation_freeze", "libraries/modifiers/modifier_animation_freeze.lua", LUA_MODIFIER_MOTION_NONE )
+--LinkLuaModifier( "modifier_animation_freeze", "libraries/modifiers/modifier_animation_freeze.lua", LUA_MODIFIER_MOTION_NONE )
+
+LinkLuaModifier( "modifier_animation_freeze_stun", "libraries/attachments.lua", LUA_MODIFIER_MOTION_NONE )
+
+modifier_animation_freeze_stun = class({})
+
+function modifier_animation_freeze_stun:OnCreated(keys) 
+
+end
+
+function modifier_animation_freeze_stun:GetAttributes()
+  return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE --+ MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+function modifier_animation_freeze_stun:IsHidden()
+  return true
+end
+
+function modifier_animation_freeze_stun:IsDebuff() 
+  return false
+end
+
+function modifier_animation_freeze_stun:IsPurgable() 
+  return false
+end
+
+function modifier_animation_freeze_stun:CheckState() 
+  local state = {
+    [MODIFIER_STATE_FROZEN] = true,
+    [MODIFIER_STATE_STUNNED] = true,
+  }
+
+  return state
+end
+
+-- Drop out of self-include to prevent execution of timers library and other code in modifier lua VM environment
+if not Entities or not Entities.CreateByClassname then
+  return
+end
+
 require('libraries/timers')
 
 
@@ -104,6 +143,7 @@ function Attachments:start()
   self.currentAttach = {}
   self.hiddenCosmetics = {}
   self.doAttach = true
+  self.doSphere = true
   self.attachDB = LoadKeyValues("scripts/attachments.txt")
 end
 
@@ -135,6 +175,7 @@ function Attachments:ActivateAttachmentSetup(addon)
     file:close()
     
 
+    CustomGameEventManager:RegisterListener("Attachment_DoSphere", Dynamic_Wrap(Attachments, "Attachment_DoSphere"))
     CustomGameEventManager:RegisterListener("Attachment_DoAttach", Dynamic_Wrap(Attachments, "Attachment_DoAttach"))
     CustomGameEventManager:RegisterListener("Attachment_Freeze", Dynamic_Wrap(Attachments, "Attachment_Freeze"))
     CustomGameEventManager:RegisterListener("Attachment_UpdateAttach", Dynamic_Wrap(Attachments, "Attachment_UpdateAttach"))
@@ -149,6 +190,15 @@ function Attachments:ActivateAttachmentSetup(addon)
 
   local ply = Convars:GetCommandClient()
   CustomGameEventManager:Send_ServerToPlayer(ply, "activate_attachment_configuration", {})
+end
+
+function Attachments:Attachment_DoSphere(args)
+  --DebugPrint('Attachment_DoSphere')
+  --DebugPrintTable(args)
+
+  Attachments.doSphere = args.doSphere == 1
+
+  Attachments:Attachment_UpdateAttach(args)
 end
 
 function Attachments:Attachment_DoAttach(args)
@@ -171,12 +221,12 @@ function Attachments:Attachment_Freeze(args)
   end
 
   if args.freeze == 1 then
-    unit:AddNewModifier(unit, nil, "modifier_animation_freeze", {})
+    unit:AddNewModifier(unit, nil, "modifier_animation_freeze_stun", {})
     unit:SetForwardVector(Vector(0,-1,0))
-    unit:AddNewModifier(unit, nil, "modifier_stunned", {})
+    --unit:AddNewModifier(unit, nil, "modifier_stunned", {})
   else
-    unit:RemoveModifierByName("modifier_animation_freeze")
-    unit:RemoveModifierByName("modifier_stunned")
+    unit:RemoveModifierByName("modifier_animation_freeze_stun")
+    --unit:RemoveModifierByName("modifier_stunned")
   end
 end
 
@@ -451,11 +501,13 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
       Timers:RemoveTimer(Attachments.timer)
     end
     Attachments.timer = Timers:CreateTimer(function()
-      if unit and IsValidEntity(unit) then
-        DebugDrawSphere(unit:GetAttachmentOrigin(attach), Vector(255,255,255), 100, 15, true, .03)
-      end
-      if prop and IsValidEntity(prop) then
-        DebugDrawSphere(prop:GetAbsOrigin(), Vector(0,0,0), 100, 15, true, .03)
+      if Attachments.doSphere then
+        if unit and IsValidEntity(unit) then
+          DebugDrawSphere(unit:GetAttachmentOrigin(attach), Vector(255,255,255), 100, 15, true, .03)
+        end
+        if prop and IsValidEntity(prop) then
+          DebugDrawSphere(prop:GetAbsOrigin(), Vector(0,0,0), 100, 15, true, .03)
+        end
       end
       return .03
     end)

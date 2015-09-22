@@ -1,6 +1,7 @@
 var lastUnit = null;
 var activated = false;
 var showing = false;
+var pmscale = 1;
 
 function OnDragStart( panelId, dragCallbacks )
 {
@@ -58,7 +59,7 @@ function ValueChange(panel, amount)
   if (text === NaN)
     text = defText;
 
-  text += amount;
+  text += amount * pmscale;
   if (panel.id == "Scale")
     panel.text = text.toFixed(2);
   else
@@ -139,6 +140,13 @@ function AttachCheckbox()
   GameEvents.SendCustomGameEventToServer( "Attachment_DoAttach", {index: lastUnit, properties:table, doAttach: panel.checked} )
 }
 
+function SphereCheckbox()
+{
+  var panel = $('#SphereCheckbox');
+  var table = GetAttachmentTable();
+  GameEvents.SendCustomGameEventToServer( "Attachment_DoSphere", {index: lastUnit, properties:table, doSphere: panel.checked} )
+}
+
 function HideCosmetics()
 {
   var panel = $('#CosmeticsPanel');
@@ -195,6 +203,13 @@ function SelectUnitUpdated()
   } 
 
   lastUnit = newUnit;
+}
+
+function PlusMinusScale()
+{
+  $.Msg("PlusMinusScale");
+  var dropdown = $("#PlusMinusScale");
+  pmscale = parseFloat(dropdown.GetSelected().text);
 }
 
 function CosmeticListUpdated(msg)
@@ -260,11 +275,12 @@ function ActivateAttachmentConfiguration(msg)
       GameEvents.Subscribe( "dota_player_update_selected_unit", SelectUnitUpdated );
 
       GameEvents.Subscribe( "attachment_cosmetic_list", CosmeticListUpdated );
-      GameEvents.Subscribe( "attachment_update_fields", UpdateFields );
-      activated = true;
+      GameEvents.Subscribe( "attachment_update_fields", UpdateFields ); 
+      activated = true; 
     }
 
     lastUnit = Players.GetLocalPlayerPortraitUnit();
+    $("#PlusMinusScale").SetSelected($("#DD2"));
     if (lastUnit){
       GameEvents.SendCustomGameEventToServer( "Attachment_UpdateUnit", {index: lastUnit} );
     }
@@ -279,14 +295,25 @@ function ActivateAttachmentConfiguration(msg)
   $("#AttachmentsHeader").toDragId = "AttachmentsPanel";
   $("#CosmeticsHeader").toDragId = "CosmeticsPanel";
   $("#AttachCheckbox").checked = true; 
+  $("#SphereCheckbox").checked = true; 
 
   GameEvents.Subscribe( "activate_attachment_configuration", ActivateAttachmentConfiguration );
-
+ 
   //$.Msg(panel.firstLoadDone);
   if (panel.firstLoadDone)
     return;
 
   panel.firstLoadDone = true;
+
+  var options = [.1,.5,1,5,10,25]; 
+  var dropdown = $("#PlusMinusScale");
+  for (var i=0; i<options.length; i++){ 
+    var label = $.CreatePanel('Label', dropdown, 'DD' + i);
+    label.text = options[i];
+    dropdown.AddOption(label); 
+  } 
+
+  dropdown.SetSelected("DD2");
 
   $.RegisterEventHandler( 'DragStart', $('#AttachmentsHeader'), OnDragStart );
   $.RegisterEventHandler( 'DragEnd', $('#AttachmentsHeader'), OnDragEnd );

@@ -249,3 +249,8 @@
   font-weight: bold;
   color: #aaffaa;
 }
+
+#PlusMinusScaleDropDownMenu
+{
+  width:150px;
+}
