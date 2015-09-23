@@ -1,5 +1,9 @@
 # attachments.lua ChangeLog
 
+### Version 0.83
+- Fixed debug spheres appearing when using AttachProp from in game.
+- Fixed attachments.txt database scale not being used when scale is omitted from AttachProp call.
+
 ### Version 0.82
 - Added the ability to press Enter in any TextEntry to submit changes in the Attachment Configuration GUI
 - Added the ability to scale the value of the + and - buttons for coarse and fine refinement

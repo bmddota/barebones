@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.82"
+ATTACHMENTS_VERSION = "0.83"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
@@ -143,7 +143,7 @@ function Attachments:start()
   self.currentAttach = {}
   self.hiddenCosmetics = {}
   self.doAttach = true
-  self.doSphere = true
+  self.doSphere = false
   self.attachDB = LoadKeyValues("scripts/attachments.txt")
 end
 
@@ -186,6 +186,7 @@ function Attachments:ActivateAttachmentSetup(addon)
     CustomGameEventManager:RegisterListener("Attachment_HideCosmetic", Dynamic_Wrap(Attachments, "Attachment_HideCosmetic"))
 
     Attachments.activated = true
+    Attachments.doSphere = true
   end
 
   local ply = Convars:GetCommandClient()
@@ -446,7 +447,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     end
 
     local attach = unit:ScriptLookupAttachment(attachPoint)
-    local scale = scale or 1.0
+    local scale = scale or db[unitModel][attachPoint][propModel]['scale'] or 1.0
 
     properties = properties or db[unitModel][attachPoint][propModel]
     local pitch = tonumber(properties.pitch)

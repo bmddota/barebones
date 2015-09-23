@@ -1,5 +1,9 @@
 # Barebones ChangeLog
 
+### Version 0.94c
+- [attachments.lua] Fixed debug spheres appearing when using AttachProp from in game.
+- [attachments.lua] Fixed attachments.txt database scale not being used when scale is omitted from AttachProp call.
+
 ### Version 0.94b
 - [attachments.lua] Added the ability to press Enter in any TextEntry to submit changes in the Attachment Configuration GUI
 - [attachments.lua] Added the ability to scale the value of the + and - buttons for coarse and fine refinement
