@@ -1,5 +1,18 @@
 "Attachments"
 {
+	"Particles"
+	{
+		"models/items/wraith_king/winterblight_weapon/winterblight_weapon.vmdl"
+		{
+			"ControlPointEntities"
+			{
+				"2"		"attach_mouth"
+				"1"		"attach_eye_l"
+				"0"		"attach_eye_r"
+			}
+			"EffectName"		"particles/econ/items/wraith_king/wraith_king_winterblight_weapon/wraith_king_winterblight_ambient.vpcf"
+		}
+	}
 	"models/heroes/antimage/antimage.vmdl"
 	{
 		"attach_hitloc"
@@ -9,20 +22,20 @@
 				"scale"		"1.1000000238419"
 				"pitch"		"-70"
 				"roll"		"0"
-				"yaw"		"-135"
-				"YPos"		"-17"
 				"ZPos"		"0"
+				"YPos"		"-17"
+				"yaw"		"-135"
 				"XPos"		"-13"
 			}
 			"models/particle/snowball.vmdl"
 			{
 				"scale"		"0.30000001192093"
 				"pitch"		"-113"
+				"roll"		"131"
+				"ZPos"		"112"
+				"YPos"		"-27"
 				"yaw"		"45"
 				"XPos"		"-65"
-				"YPos"		"-27"
-				"ZPos"		"112"
-				"roll"		"131"
 			}
 		}
 		"attach_h2"
@@ -31,11 +44,11 @@
 			{
 				"scale"		"0.30000001192093"
 				"pitch"		"105"
+				"roll"		"-90"
+				"ZPos"		"-19"
+				"YPos"		"-50"
 				"yaw"		"-90"
 				"XPos"		"-80"
-				"YPos"		"-50"
-				"ZPos"		"-19"
-				"roll"		"-90"
 			}
 		}
 		"attach_h1"
@@ -44,11 +57,11 @@
 			{
 				"scale"		"0.30000001192093"
 				"pitch"		"-113"
+				"roll"		"0"
+				"ZPos"		"-19"
+				"YPos"		"97"
 				"yaw"		"0"
 				"XPos"		"60"
-				"YPos"		"97"
-				"ZPos"		"-19"
-				"roll"		"0"
 			}
 		}
 	}
@@ -61,10 +74,20 @@
 				"scale"		"2"
 				"pitch"		"-50"
 				"roll"		"28"
-				"yaw"		"0"
-				"YPos"		"111"
 				"ZPos"		"-63"
+				"YPos"		"111"
+				"yaw"		"0"
 				"XPos"		"0"
+			}
+			"models/items/wraith_king/winterblight_weapon/winterblight_weapon.vmdl"
+			{
+				"scale"		"2.2999999523163"
+				"YPos"		"0"
+				"pitch"		"-140"
+				"ZPos"		"0"
+				"roll"		"30"
+				"yaw"		"180"
+				"XPos"		"70"
 			}
 		}
 		"attach_hitloc"
@@ -74,10 +97,21 @@
 				"scale"		"1.2999999523163"
 				"pitch"		"-70"
 				"roll"		"0"
+				"yaw"		"-135"
+				"YPos"		"0"
+				"ZPos"		"0"
+				"XPos"		"-13"
+			}
+			"models/heroes/tiny_04/tiny04_deathsim.vmdl"
+			{
+				"scale"		"1"
+				"pitch"		"0"
+				"roll"		"0"
 				"ZPos"		"0"
 				"YPos"		"0"
-				"yaw"		"-135"
-				"XPos"		"-13"
+				"yaw"		"0"
+				"XPos"		"0"
+				"Animation" "tiny04_deathsim_anim"
 			}
 		}
 		"attach_origin"
@@ -87,9 +121,9 @@
 				"scale"		"2"
 				"pitch"		"0"
 				"roll"		"0"
-				"ZPos"		"0"
-				"YPos"		"0"
 				"yaw"		"0"
+				"YPos"		"0"
+				"ZPos"		"0"
 				"XPos"		"0"
 			}
 		}

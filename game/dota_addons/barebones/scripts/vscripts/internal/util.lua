@@ -76,3 +76,31 @@ COLOR_PURPLE = '\x1A'
 COLOR_ORANGE = '\x1B'
 COLOR_LRED = '\x1C'
 COLOR_GOLD = '\x1D'
+
+
+--[[Author: Noya
+  Date: 09.08.2015.
+  Hides all dem hats
+]]
+function HideWearables( event )
+  local hero = event.caster
+  local ability = event.ability
+
+  hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+    local model = hero:FirstMoveChild()
+    while model ~= nil do
+        if model:GetClassname() == "dota_item_wearable" then
+            model:AddEffects(EF_NODRAW) -- Set model hidden
+            table.insert(hero.hiddenWearables, model)
+        end
+        model = model:NextMovePeer()
+    end
+end
+
+function ShowWearables( event )
+  local hero = event.caster
+
+  for i,v in pairs(hero.hiddenWearables) do
+    v:RemoveEffects(EF_NODRAW)
+  end
+end

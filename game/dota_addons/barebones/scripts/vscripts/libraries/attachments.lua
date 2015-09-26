@@ -1,10 +1,10 @@
-ATTACHMENTS_VERSION = "0.83"
+ATTACHMENTS_VERSION = "0.84"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
 
   Installation
-  -"require" this file inside your code in order to gain access to the StartAnmiation and EndAnimation global.
+  -"require" this file inside your code in order to gain access to the Attachments global table.
   -Optionally require "libraries/notifications" before this file so that the Attachment Configuration GUI can display messages via the Notifications library.
   -Additionally, ensure that this file is placed in the vscripts/libraries path
   -Additionally, ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
@@ -14,6 +14,7 @@ ATTACHMENTS_VERSION = "0.83"
   -The library when required in loads in the "scripts/attachments.txt" file containing the attachment properties database for use during your game mode.
   -Attachment properties are specified as a 3-tuple of unit model name, attachment point string, and attachment prop model name.
     -Ex: ("models/heroes/antimage/antimage.vmdl" // "attach_hitloc" // "models/items/axe/weapon_heavy_cutter.vmdl")
+  -Optional particles can be specified in the "Particles" block of attachmets.txt.
   -To attach a prop to a unit, use the Attachments:AttachProp(unit, attachPoint, model[, scale[, properties] ]) function
     -Ex: Attachments:AttachProp(unit, "attach_hitloc", "models/items/axe/weapon_heavy_cutter.vmdl", 1.0)
     -This will create the prop and retrieve the properties from the database to attach it to the provided unit
@@ -28,6 +29,7 @@ ATTACHMENTS_VERSION = "0.83"
         XPos = 10.0,
         YPos = -10.0,
         ZPos = -33.0,
+        Animation = "idle_hurt"
       }
   -To retrieve the currently attached prop entity, you can call Attachments:GetCurrentAttachment(unit, attachPoint)
     -Ex: local prop = Attachments:AttachProp(unit, "attach_hitloc")
@@ -262,6 +264,14 @@ function Attachments:Attachment_UpdateAttach(args)
   local db = Attachments.attachDB
   if not db[unitModel] then db[unitModel] = {} end
   if not db[unitModel][attach] then db[unitModel][attach] = {} end
+  local oldProperties = db[unitModel][attach][model] or {}
+
+  -- update old properties
+  for k,v in pairs(properties) do
+    oldProperties[k] = v
+  end
+
+  properties = oldProperties
   db[unitModel][attach][model] = properties
   
 
@@ -335,10 +345,13 @@ function Attachments:Attachment_LoadAttach(args)
   end
 
   local ply = PlayerResource:GetPlayer(args.PlayerID)
-  local properties = db[unitModel][attach][model]
+  local properties = {}
+  for k,v in pairs(db[unitModel][attach][model]) do
+    properties[k] = v
+  end
   properties.attach = attach
   properties.model = model
-  CustomGameEventManager:Send_ServerToPlayer(ply, "attachment_update_fields", db[unitModel][attach][model])
+  CustomGameEventManager:Send_ServerToPlayer(ply, "attachment_update_fields", properties)
 end
 
 function Attachments:Attachment_HideAttach(args)
@@ -455,6 +468,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     local roll = tonumber(properties.roll)
     --local angleSpace = QAngle(properties.QX, properties.QY, properties.QZ)
     local offset = Vector(tonumber(properties.XPos), tonumber(properties.YPos), tonumber(properties.ZPos)) * scale * unit:GetModelScale()
+    local animation = properties.Animation
     
     --offset = RotatePosition(Vector(0,0,0), RotationDelta(angleSpace, QAngle(0,0,0)), offset)
 
@@ -463,7 +477,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     if model.GetName and IsValidEntity(model) then
       prop = model
     else
-      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel})
+      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim=animation})
       prop:SetModelScale(scale * unit:GetModelScale())
     end
 
@@ -497,6 +511,24 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
         prop:SetParent(unit, attachPoint)
       end
     end
+
+
+    -- From Noya
+    local particle_data = nil
+    if db['Particles']  then particle_data = db['Particles'][propModel] end
+    if particle_data then
+      local particleName = particle_data['EffectName']
+      --print("Found particle",particleName)
+      prop.fx = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN, prop)
+
+      -- Loop through the Control Point Entities
+      local control_points = particle_data['ControlPointEntities']
+      for k,ent_point in pairs(control_points) do
+        --print("Making Particle",particleName,prop.fx,k,prop,ent_point)
+        ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
+      end
+    end
+
 
     if Attachments.timer then
       Timers:RemoveTimer(Attachments.timer)

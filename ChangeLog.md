@@ -1,5 +1,12 @@
 # Barebones ChangeLog
 
+### Version 0.94d
+- Added HideWearables and ShowWearables global utility functions.
+- [attachments.lua] Added handling of Particle attachments to props via the attachments.txt database.
+- [attachments.lua] Added Particle example to example attachments.txt database.
+- [attachments.lua] Fixed the Attachments Configuration system being able to override extra keys placed in individual attachment definitions.  Extra key/values will not stick through saves/loads.
+- [attachments.lua] Added optional "Animation" key to attachment properties in the attachments.txt database which will spawn the prop in question and force it into the given animation string.
+
 ### Version 0.94c
 - [attachments.lua] Fixed debug spheres appearing when using AttachProp from in game.
 - [attachments.lua] Fixed attachments.txt database scale not being used when scale is omitted from AttachProp call.

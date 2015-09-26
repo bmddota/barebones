@@ -1,5 +1,11 @@
 # attachments.lua ChangeLog
 
+### Version 0.84
+- Added handling of Particle attachments to props via the attachments.txt database.
+- Added Particle example to example attachments.txt database.
+- Fixed the Attachments Configuration system being able to override extra keys placed in individual attachment definitions.  Extra key/values will not stick through saves/loads.
+- Added optional "Animation" key to attachment properties in the attachments.txt database which will spawn the prop in question and force it into the given animation string.
+
 ### Version 0.83
 - Fixed debug spheres appearing when using AttachProp from in game.
 - Fixed attachments.txt database scale not being used when scale is omitted from AttachProp call.
