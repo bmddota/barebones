@@ -15,7 +15,7 @@
 **Projectiles Library Functions**
 =============================
 ####**Projectiles:CreateProjectile(projectile)**
-  This function is used to create ane release the projectile defined by the projectile table passed to the function.  The function returns an updated reference to the projectile table on which the Proejctile Table Functions can be called.  See the Projectiles Table Format section for more detail on what properties can be used with the projectile table.
+  This function is used to create ane release the projectile defined by the projectile table passed to the function.  The function returns an updated reference to the projectile table on which the Projectile Table Functions can be called.  See the Projectiles Table Format section for more detail on what properties can be used with the projectile table.
 
 
 ####**Projectiles:CalcSlope(pos, unit, dir)**
@@ -24,6 +24,9 @@
 ####**Projectiles:CalcNormal(pos, unit, scale)**
   This function can be used to get the estimated normal Vector of the ground at the world point Vector 'pos'.  The 'unit' parameter is used to specify what unit should be used with GetGroundPosition() in order to handle the ground collision sizing.  This function can return odd values when used around sheer vertical edges.
 
+####**Projectiles:DefaultUnitTest(unit)**
+  This is the default UnitTest function used if none is provided. This test will use the iUnitTargetTeam, iUnitTargetType, and iUnitTargetFlags keys on the projectile, if they're specified. Otherwise, it inherits targeting rules from the ability referenced by the Ability key on the projectile. If none of these keys are available, the test will simply always fail.
+  
 
 **Projectile Table Functions**
 =============================
@@ -45,6 +48,7 @@ Projectiles are effectively a formatted lua table which is registered with the P
 
 | Property  | Default | Description |
 | :------------ | :--------| :-----|
+| Ability | &lt;none&gt; | The ability associated with this projectile |
 | bProvidesVision | false | If set to true, this projectile will provide vision around it as it travels. |
 | bCutTrees | false | If set to true, this projectile will cut any trees that it comes in contact with. |
 | bFlyingVision | true | If set to true and, this projectile will provide flying vision as it travels (if bProvidesVision is enabled) |

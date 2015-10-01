@@ -1,4 +1,4 @@
-PROJECTILES_VERSION = "0.83"
+PROJECTILES_VERSION = "0.84"
 
 PROJECTILES_THINK = 0.01
 
@@ -99,6 +99,11 @@ function Projectiles:CalcNormal(pos, unit, scale)
   return Vector(zl - zr, zd - zu, 2*scale):Normalized()
 end
 
+function Projectiles:DefaultUnitTest(unit)
+    return (self.iUnitTargetTeam or self.iUnitTargetFlags or self.iUnitTargetType) 
+           and 0 == UnitFilter(unit, self.iUnitTargetTeam or 0, self.iUnitTargetType or 0, self.iUnitTargetFlags or 0, self.Source:GetTeam())
+end
+
 PROJECTILES_NOTHING = 0
 PROJECTILES_DESTROY = 1
 PROJECTILES_BOUNCE = 2
@@ -128,7 +133,7 @@ function Projectiles:CreateProjectile(projectile)
   projectile.fGroundOffset = projectile.fGroundOffset or 40
   projectile.nChangeMax = projectile.nChangeMax or 1
   projectile.fChangeDelay = projectile.fChangeDelay or .1
-  projectile.UnitTest = projectile.UnitTest or function() return false end
+  projectile.UnitTest = projectile.UnitTest or Projectiles.DefaultUnitTest
   projectile.OnUnitHit = projectile.OnUnitHit or function() return end
   projectile.OnTreeHit = projectile.OnTreeHit or function() return end
   projectile.OnWallHit = projectile.OnWallHit or function() return end
@@ -139,6 +144,14 @@ function Projectiles:CreateProjectile(projectile)
   projectile.ControlPointOrientations = projectile.ControlPointOrientations or {}
   projectile.ControlPointEntityAttaches = projectile.ControlPointEntityAttaches or {}
 
+  --derive defaults from Ability, if given.
+  if projectile.Ability then
+    projectile.Source = projectile.Source or projectile.Ability:GetCaster()
+    projectile.iUnitTargetTeam = projectile.iUnitTargetTeam or projectile.Ability:GetAbilityTargetTeam()
+    projectile.iUnitTargetType = projectile.iUnitTargetType or projectile.Ability:GetAbilityTargetType()
+    projectile.iUnitTargetFlags = projectile.iUnitTargetFlags or projectile.Ability:GetAbilityTargetFlags()
+  end
+  
   if projectile.bTreeFullCollision == nil then projectile.bTreeFullCollision = false end
   projectile.bProvidesVision = projectile.bProvidesVision or false
   if projectile.bFlyingVision == nil then projectile.bFlyingVision = true end
@@ -168,7 +181,7 @@ function Projectiles:CreateProjectile(projectile)
   else
     projectile.vSpawnOrigin = projectile.vSpawnOrigin or Vector(0,0,0)
   end
-
+  
   projectile.rehit = {}
   projectile.pos = projectile.vSpawnOrigin
   projectile.vel = projectile.vVelocity / 30
