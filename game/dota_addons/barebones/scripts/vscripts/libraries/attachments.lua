@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.84"
+ATTACHMENTS_VERSION = "0.85"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
