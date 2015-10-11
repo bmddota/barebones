@@ -23,7 +23,9 @@
         <Label text="Attachments Configuration"/> 
       </Panel>
       <Panel hittest="false" id="AttachmentsBody">
+
         <Panel class="ButtonRow">
+
           <ToggleButton class="CheckBox" checked="checked" style="align: center center; margin-left:10px;" id="AttachCheckbox" text="Attach?"  onactivate="AttachCheckbox();" />
           <Button id="Freeze" class="SplashButton SButton" onactivate="Freeze()">
             <Label text="Freeze"/> 
@@ -41,6 +43,16 @@
             </DropDown>
           </Panel>
         </Panel>
+		
+		<Panel class="ButtonRow">
+		  <ToggleButton class="CheckBox" checked="checked" style="align: center center; margin-left:5px;" id="MouseAngleCheckbox" text="Mouse angles?"  onactivate="MouseControlAngles();" />
+		  <ToggleButton class="CheckBox" checked="checked" style="align: center center; margin-right:5px;" id="MouseOffsetCheckbox" text="Mouse offsets?"  onactivate="MouseControlOffsets();" />
+		  <Label style="align: center center; font-size: 14px; margin-right:5px;" text="Updates per second:"/>
+		  <DropDown id="MouseUpdateScale" style="align:center center; width: 80px; margin-right:5px;" oninputsubmit="MouseUpdateScale()"> </DropDown>
+		  <Panel class="InfoIcon" tabindex="auto" onmouseover="ShowMouseHelpTooltip()"
+		  										   onmouseout="HideMouseHelpTooltip()"/>
+		</Panel>
+		
         <Label class="LineLabel" text="Attach Point"/>
         <TextEntry id="Attach" class="LineEntry" tabindex="auto"  ontabbackward="SetInputFocus(Roll)" placeholder="attach_something" onblur="UpdateAttachment();" oninputsubmit="UpdateAttachment()"/>
         <Label class="LineLabel" text="Model"/>
