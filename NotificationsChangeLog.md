@@ -1,5 +1,8 @@
 # notifications.lua ChangeLog
 
+### Version 0.89
+- Changed the names of the panorama files from barebones_hud_base.* to barebones_notifications.*
+
 ### Version 0.88
 - Updated notifications subsystem to support deleting notifications on-demand
 

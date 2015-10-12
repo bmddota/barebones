@@ -2,6 +2,6 @@
 {
   custom_net_tables =
   [
-//    "game_state",
+    "containers_lua",
   ]
 }

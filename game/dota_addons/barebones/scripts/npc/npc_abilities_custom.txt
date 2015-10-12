@@ -3,6 +3,64 @@
 "DOTAAbilities"
 {
   "Version"   "1"
+
+  "containers_lua_targeting"
+  {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+    //"AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL"
+    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL" 
+    "BaseClass"         "ability_lua"
+    "AbilityTextureName"        "rubick_empty1"
+    "ScriptFile"          "libraries/abilities/containers_lua_targeting"
+    "MaxLevel"            "1"
+    "IsCastableWhileHidden" "1"
+    
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "0"
+    "AbilityCastPoint"        "0.0"
+
+    // Time   
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"       "0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"       "0 0 0 0"
+  }
+
+  "containers_lua_targeting_tree"
+  {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+    //"AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_TREE"
+    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL" 
+    "BaseClass"         "ability_lua"
+    "AbilityTextureName"        "rubick_empty1"
+    "ScriptFile"          "libraries/abilities/containers_lua_targeting_tree"
+    "MaxLevel"            "1"
+    "IsCastableWhileHidden" "1"
+    
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "0"
+    "AbilityCastPoint"        "0.0"
+
+    // Time   
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"       "0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"       "0 0 0 0"
+  }
   
   "example_ability"
   {

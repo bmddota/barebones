@@ -1,5 +1,12 @@
 # Barebones ChangeLog
 
+### Version 0.95b
+- [attachments.lua] Added the ability to attach multiple particles to a given prop.
+
+### Version 0.95
+- [notifications.lua] Changed the names of the panorama files from barebones_hud_base.* to barebones_notifications.*
+- [projectiles.lua] Fixed 0-velocity projectiles producing a divide by 0 error
+
 ### Version 0.94d
 - Added HideWearables and ShowWearables global utility functions.
 - [attachments.lua] Added handling of Particle attachments to props via the attachments.txt database.

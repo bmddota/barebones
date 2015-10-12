@@ -1,5 +1,8 @@
 # projectiles.lua ChangeLog
 
+### Version 0.84
+- Fixed 0-velocity projectiles producing a divide by 0 error
+
 ### Version 0.83
 - Added additional guards to better handle 'script_reload' 
 

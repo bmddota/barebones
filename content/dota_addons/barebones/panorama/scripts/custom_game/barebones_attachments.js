@@ -80,7 +80,6 @@ function GetAttachmentTable()
   table['XPos'] =  parseFloat($('#XPos').text) || 0.0;
   table['YPos'] =  parseFloat($('#YPos').text) || 0.0;
   table['ZPos'] =  parseFloat($('#ZPos').text) || 0.0;
-  $.Msg(table);
 
   return table;
 }
@@ -276,6 +275,8 @@ function ActivateAttachmentConfiguration(msg)
 
       GameEvents.Subscribe( "attachment_cosmetic_list", CosmeticListUpdated );
       GameEvents.Subscribe( "attachment_update_fields", UpdateFields ); 
+      //GameUI.SetMouseCallback(HandleMouseEvent);
+
       activated = true; 
     }
 
@@ -288,9 +289,134 @@ function ActivateAttachmentConfiguration(msg)
     showing = true;
   } 
 }
- 
+
+
+var IsMouseControlledAngles = false;
+var IsMouseControlledOffsets = false;
+var lastMousePos;
+var mouseUpdateInterval = 2.0;
+function MouseControlAngles()
+{
+  if(IsMouseControlledAngles == false) {
+    IsMouseControlledAngles = true;
+    MouseControlAnglesLoop();
+  }
+  else {
+    IsMouseControlledAngles = false;
+  }
+}
+
+function MouseControlOffsets()
+{
+  if(IsMouseControlledOffsets == false) {
+    IsMouseControlledOffsets = true;
+    MouseControlOffsetsLoop();
+  }
+  else {
+    IsMouseControlledOffsets = false;
+  }
+}
+
+function MouseControlAnglesLoop()
+{
+  var mousePos = GameUI.GetCursorPosition();
+  var difX = lastMousePos[0] - mousePos[0];
+  var difY = lastMousePos[1] - mousePos[1];
+  
+  if(GameUI.IsMouseDown(0) == false) {
+    var yaw = MouseCalc($('#Yaw'), difX, pmscale/8);
+    var pitch = MouseCalc($('#Pitch'), difY, pmscale/8);
+    var roll = MouseCalc($("#Roll"), g_MouseYaw, pmscale*10);
+
+    $("#Yaw").text = yaw;
+    $("#Pitch").text = pitch;
+    $("#Roll").text = roll;
+    UpdateAttachment();
+  }
+
+  g_MouseYaw = 0;
+  lastMousePos = mousePos;
+  if(IsMouseControlledAngles == true) {
+    $.Schedule(1.0/mouseUpdateInterval, MouseControlAnglesLoop);
+  }
+}
+
+function MouseCalc(panel, dif, scale)
+{
+  var num = parseFloat(panel.text);
+  if(isNaN(num)) {
+    panel.text = num.toString();
+    num = 0;
+  }
+  var angle = num + (scale * dif);
+  angle = Math.round(angle * 100) / 100;
+  return angle.toString();
+}
+
+function MouseControlOffsetsLoop()
+{
+  var mousePos = GameUI.GetCursorPosition();
+  var difX = mousePos[0] - lastMousePos[0];
+  var difY = lastMousePos[1] - mousePos[1];
+  
+  if(GameUI.IsMouseDown(0) == false) {
+    var x = MouseCalc($('#XPos'), difX, pmscale/8);
+    var y = MouseCalc($('#YPos'), difY, pmscale/8);
+    var z = MouseCalc($("#ZPos"), g_MouseYaw, pmscale*10);
+    
+    $('#XPos').text = x.toString();
+    $('#YPos').text = y.toString();
+    $('#ZPos').text = z.toString();
+    
+    if(IsMouseControlledAngles == false)
+    {
+      UpdateAttachment();
+    }
+  }
+  
+  if(IsMouseControlledAngles == false) {
+    lastMousePos = mousePos;
+    g_MouseYaw = 0;
+  }
+  if(IsMouseControlledOffsets == true)
+  {
+    $.Schedule(1.0/mouseUpdateInterval, MouseControlOffsetsLoop);
+  }
+}
+
+function MouseUpdateScale()
+{
+  var dropdown = $("#MouseUpdateScale");
+  mouseUpdateInterval = parseFloat(dropdown.GetSelected().text);
+}
+
+function ShowMouseHelpTooltip()
+{
+  $.DispatchEvent("DOTAShowTextTooltip", "Holding the left mouse button down disables updating. Scale affects the rate at which items are oriented or moved. Vertical mouse movement affects the Y offset and pitch. Horizontal mouse movement affects the  X offset and yaw. Mouse wheel movement affects the Z offset and roll.");
+}
+
+function HideMouseHelpTooltip()
+{
+  $.DispatchEvent("DOTAHideTextTooltip");
+}
+
+var g_MouseYaw = 0;
+
+function HandleMouseEvent(eventName, arg)
+{
+  if ( eventName === "wheeled" ) {
+    g_MouseYaw += arg * pmscale;
+    if(IsMouseControlledAngles == true || IsMouseControlledOffsets == true) {
+      return true;
+    }
+  }
+  return false;
+}
+
 (function()
 { 
+  lastMousePos = GameUI.GetCursorPosition();
+
   var panel = $("#AttachmentsPanel");
   $("#AttachmentsHeader").toDragId = "AttachmentsPanel";
   $("#CosmeticsHeader").toDragId = "CosmeticsPanel";
@@ -314,6 +440,16 @@ function ActivateAttachmentConfiguration(msg)
   } 
 
   dropdown.SetSelected("DD2");
+
+  options = [2, 5, 10, 15, 20, 25, 30]; 
+  dropdown = $("#MouseUpdateScale");
+  for (var i=0; i<options.length; i++){ 
+    var label = $.CreatePanel('Label', dropdown, 'mDD' + i);
+    label.text = Math.ceil(options[i] * 100) / 100;
+    dropdown.AddOption(label); 
+  } 
+
+  dropdown.SetSelected("mDD3");
 
   $.RegisterEventHandler( 'DragStart', $('#AttachmentsHeader'), OnDragStart );
   $.RegisterEventHandler( 'DragEnd', $('#AttachmentsHeader'), OnDragEnd );

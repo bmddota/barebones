@@ -1,5 +1,8 @@
 # attachments.lua ChangeLog
 
+### Version 0.85
+- Added the ability to attach multiple particles to a given prop.
+
 ### Version 0.84
 - Added handling of Particle attachments to props via the attachments.txt database.
 - Added Particle example to example attachments.txt database.

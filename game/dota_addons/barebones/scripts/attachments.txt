@@ -4,13 +4,12 @@
 	{
 		"models/items/wraith_king/winterblight_weapon/winterblight_weapon.vmdl"
 		{
-			"ControlPointEntities"
+			"particles/econ/items/wraith_king/wraith_king_winterblight_weapon/wraith_king_winterblight_ambient.vpcf"
 			{
 				"2"		"attach_mouth"
 				"1"		"attach_eye_l"
 				"0"		"attach_eye_r"
 			}
-			"EffectName"		"particles/econ/items/wraith_king/wraith_king_winterblight_weapon/wraith_king_winterblight_ambient.vpcf"
 		}
 	}
 	"models/heroes/antimage/antimage.vmdl"
@@ -124,6 +123,22 @@
 				"yaw"		"0"
 				"YPos"		"0"
 				"ZPos"		"0"
+				"XPos"		"0"
+			}
+		}
+	}
+	"models/heroes/dragon_knight/dragon_knight.vmdl"
+	{
+		"attach_attack1"
+		{
+			"models/items/faceless_void/battlefury/battlefury.vmdl"
+			{
+				"scale"		"1.7999999523163"
+				"pitch"		"180"
+				"roll"		"10"
+				"ZPos"		"-90"
+				"YPos"		"120"
+				"yaw"		"190"
 				"XPos"		"0"
 			}
 		}

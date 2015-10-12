@@ -1,4 +1,4 @@
-PROJECTILES_VERSION = "0.83"
+PROJECTILES_VERSION = "0.84"
 
 PROJECTILES_THINK = 0.01
 
@@ -329,7 +329,7 @@ function Projectiles:CreateProjectile(projectile)
       -- frame and sub-frame collision checks
       local subpos = pos
       local velLength = vel:Length()
-      local tot = math.ceil(velLength / 32) -- lookahead number
+      local tot = math.max(1, math.ceil(velLength / 32)) -- lookahead number
       local div = 1 / tot
 
       -- unit detection prep

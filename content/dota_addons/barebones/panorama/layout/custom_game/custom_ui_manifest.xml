@@ -1,4 +1,7 @@
 <root>
+  <scripts>
+    <!--<include src="file://{resources}/scripts/custom_game/playertables/playertables_base.js" />-->
+  </scripts>
   <script>
     // Uncomment any of the following lines in order to disable that portion of the default UI
 
@@ -36,15 +39,14 @@
     GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "#c7e40d;";
     GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "#8c2af4;";
 
-
   </script>
 
   <Panel>
     <!-- CustomUIElements go here.-->
 
-    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_hud_base.xml" /> 
+    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
     <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" /> 
-    <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_container_base.xml" />-->
+    <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/containers/container_base.xml" /-->
     <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_progress.xml" /> -->
 
     <!-- From Overthrow.

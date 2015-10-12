@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.84"
+ATTACHMENTS_VERSION = "0.85"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
@@ -517,10 +517,14 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     local particle_data = nil
     if db['Particles']  then particle_data = db['Particles'][propModel] end
     if particle_data then
-      local particleName = particle_data['EffectName']
-      --print("Found particle",particleName)
-      prop.fx = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN, prop)
+      for particleName,control_points in pairs(particle_data) do
+        prop.fx = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN, prop)
 
+        -- Loop through the Control Point Entities
+        for k,ent_point in pairs(control_points) do
+          ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
+        end
+      end    
       -- Loop through the Control Point Entities
       local control_points = particle_data['ControlPointEntities']
       for k,ent_point in pairs(control_points) do
