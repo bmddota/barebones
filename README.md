@@ -1,6 +1,10 @@
 # Barebones Starter Mod Kit
-### Version 0.95b
+
+### Version 0.95c
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
+
+# NOTE: IF YOUR GAME IS CRASHING ON RESTART IN TOOLS MODE, FIND AND COMMENT OUT [THIS LINE](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/internal/gamemode.lua#L114)
+# Valve screwed something up with RegisterConvar badly and hasn't fixed it.  Be sure to comment out all RegisterConvar lines!
 
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.
@@ -55,8 +59,8 @@ Barebones uses a few internal lua files in order to put together and handle the 
 These files are found in the internal directory.
 
 ##Debugging
-Barebones now only prints out (spams) debugging information when told to, either by setting the BAREBONES_DEBUG_SPEW value in gamemode.lua to true or adjusting the 'barebones_spew' cvar.
-You can change the 'barebones_spew' cvar at any time by typing 'barebones_spew 0' (for off) or 'barebones_spew 1' (for on) in your console.
+Barebones now only prints out (spams) debugging information when told to by setting the BAREBONES_DEBUG_SPEW value in gamemode.lua to true.
+Previously there was a 'barebones_spew' cvar that could be used to change the debug printing state at any time from the console, but Valve broke RegisterConvar for some reason, so this has been disabled.
 
 
 ##Additional Information

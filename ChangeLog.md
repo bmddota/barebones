@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 0.95c
+- Removed the RegisterConvar call from internal/gamemode.lua since Valve broke it and has yet to fix it.
+
 ### Version 0.95b
 - [attachments.lua] Added the ability to attach multiple particles to a given prop.
 

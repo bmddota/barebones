@@ -111,7 +111,7 @@ function GameMode:_InitGameMode()
   if BAREBONES_DEBUG_SPEW then
     spew = 1
   end
-  Convars:RegisterConvar('barebones_spew', tostring(spew), 'Set to 1 to start spewing barebones debug info.  Set to 0 to disable.', 0)
+  --Convars:RegisterConvar('barebones_spew', tostring(spew), 'Set to 1 to start spewing barebones debug info.  Set to 0 to disable.', 0)
 
   -- Change random seed
   local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
