@@ -956,7 +956,7 @@ function Physics:Unit(unit)
             --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
             ent = Entities:FindInSphere(ent, position, 35)
           end
-          if blocked or blockedPos or GridNav:IsNearbyTree(position, 30, true) then
+          if (not unit:NoUnitCollision() and blocked) or blockedPos or GridNav:IsNearbyTree(position, 30, true) then
             FindClearSpaceForUnit(unit, position, true)
             unit.nSkipSlide = 1
             --print('FCS hib')
@@ -979,7 +979,7 @@ function Physics:Unit(unit)
           --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
           ent = Entities:FindInSphere(ent, position, 35)
         end
-        if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or GridNav:IsNearbyTree(position, 30, true) then
+        if (not unit:NoUnitCollision() and blocked) or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or GridNav:IsNearbyTree(position, 30, true) then
           FindClearSpaceForUnit(unit, position, true)
           unit.nSkipSlide = 1
           --print('FCS nothib lowv + blocked')
