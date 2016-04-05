@@ -26,6 +26,9 @@ function Precache( context )
   PrecacheResource("model_folder", "particles/heroes/antimage", context)
   PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
   PrecacheModel("models/heroes/viper/viper.vmdl", context)
+  --PrecacheModel("models/props_gameplay/treasure_chest001.vmdl", context)
+  --PrecacheModel("models/props_debris/merchant_debris_chest001.vmdl", context)
+  --PrecacheModel("models/props_debris/merchant_debris_chest002.vmdl", context)
 
   -- Sounds can precached here like anything else
   PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
@@ -44,5 +47,5 @@ end
 -- Create the game mode when we activate
 function Activate()
   GameRules.GameMode = GameMode()
-  GameRules.GameMode:InitGameMode()
+  GameRules.GameMode:_InitGameMode()
 end

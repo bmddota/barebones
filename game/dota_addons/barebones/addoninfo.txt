@@ -1,9 +1,13 @@
 "AddonInfo"
 {
   "TeamCount" "10"
-  "maps"      "template_map"
+  "maps"      "template_map playground"
   "IsPlayable"  "1"
   "template_map"
+  {
+          "MaxPlayers"                    "10"
+  }
+  "playground"
   {
           "MaxPlayers"                    "10"
   }

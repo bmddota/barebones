@@ -1,5 +1,11 @@
 # attachments.lua ChangeLog
 
+### Version 1.00
+- Ensured that created attachment props have unique entity names.
+- Fixed a bug related to the "Particles" section of the attachment database breaking on AttachProp
+- Made it so that you don't have to enter the addon name when doing "attachment_configure"
+- Fixed GetCurrentAttachment not working in normal non-gui use
+
 ### Version 0.85
 - Added the ability to attach multiple particles to a given prop.
 

@@ -1,5 +1,4 @@
 -- This file contains all barebones-registered events and has already set up the passed-in parameters for your use.
--- Do not remove the GameMode:_Function calls in these events as it will mess with the internal barebones systems.
 
 -- Cleanup a player when they leave
 function GameMode:OnDisconnect(keys)
@@ -17,9 +16,6 @@ function GameMode:OnGameRulesStateChange(keys)
   DebugPrint("[BAREBONES] GameRules State Changed")
   DebugPrintTable(keys)
 
-  -- This internal handling is used to set up main barebones functions
-  GameMode:_OnGameRulesStateChange(keys)
-
   local newState = GameRules:State_Get()
 end
 
@@ -27,9 +23,6 @@ end
 function GameMode:OnNPCSpawned(keys)
   DebugPrint("[BAREBONES] NPC Spawned")
   DebugPrintTable(keys)
-
-  -- This internal handling is used to set up main barebones functions
-  GameMode:_OnNPCSpawned(keys)
 
   local npc = EntIndexToHScript(keys.entindex)
 end
@@ -59,7 +52,13 @@ function GameMode:OnItemPickedUp(keys)
   DebugPrint( '[BAREBONES] OnItemPickedUp' )
   DebugPrintTable(keys)
 
-  local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+  local unitEntity = nil
+  if keys.UnitEntitIndex then
+    unitEntity = EntIndexToHScript(keys.UnitEntitIndex)
+  elseif keys.HeroEntityIndex then
+    unitEntity = EntIndexToHScript(keys.HeroEntityIndex)
+  end
+
   local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
   local player = PlayerResource:GetPlayer(keys.PlayerID)
   local itemname = keys.itemname
@@ -220,8 +219,6 @@ end
 function GameMode:OnEntityKilled( keys )
   DebugPrint( '[BAREBONES] OnEntityKilled Called' )
   DebugPrintTable( keys )
-
-  GameMode:_OnEntityKilled( keys )
   
 
   -- The Unit that was Killed
@@ -258,8 +255,6 @@ end
 function GameMode:OnConnectFull(keys)
   DebugPrint('[BAREBONES] OnConnectFull')
   DebugPrintTable(keys)
-
-  GameMode:_OnConnectFull(keys)
   
   local entIndex = keys.index+1
   -- The Player entity of the joining user

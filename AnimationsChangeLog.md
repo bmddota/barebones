@@ -1,5 +1,8 @@
 # animations.lua ChangeLog
 
+### Version 1.00
+- Updated version number to reflect Barebones 1.0 release
+
 ### Version 0.84
 - Added FreezeAnimation function to allow for animations to be paused at any time
 - Added UnfreezeAnimation function to allow animations to be unpaused at any time

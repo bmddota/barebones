@@ -1,0 +1,106 @@
+.Hourglass.Outer
+{
+  background-color: #ADD8E622;
+}
+
+.Hourglass #Header
+{
+  background-color: #55222288;
+}
+
+.Hourglass #Footer
+{
+  
+}
+
+.Hourglass #HeaderLabel
+{ 
+  color: #ffffff;
+}
+
+.Hourglass #Inner
+{
+  background-color: #ADD8E6;
+}
+
+.Hourglass .ItemRow
+{
+  margin-top: 2px;
+  margin-bottom: 2px;
+  background-color: #aa8833;
+} 
+
+.Hourglass .ItemPanel
+{
+  width:66px;
+  height:48px;
+}
+
+.Hourglass #row1
+{
+  clip: rect(-100%, 200%, 200%, -100%);
+  background-color: #ccaa44;
+}
+
+.Hourglass #row2
+{
+  background-color: #aa8833;
+}
+
+.Hourglass #row3
+{
+  background-color: #776622;
+}
+
+.Hourglass #slot1
+{
+  border: 8px solid red;
+  box-shadow: fill black 1px 1px 2px 2px;
+  pre-transform-scale2d: 1.0;
+  animation-name: goleft;
+  //animation-delay: 0s;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite; 
+}
+
+.Hourglass #slot2
+{
+  border: 5px solid green;
+  box-shadow: fill black 1px 1px 2px 2px;
+  animation-name: goright;
+  //animation-delay: 0s;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite; 
+}
+
+
+@keyframes 'goleft'
+{
+  0%   {transform: translateX( 0px ) translateY( 0px );}
+  50%  {transform: translateX( -25px ) translateY( 0px );}
+  100% {transform: translateX( 0px ) translateY( 0px );}
+}
+
+@keyframes 'goright'
+{
+  0%   {transform: translateX( 0px ) translateY( 0px );}
+  50%  {transform: translateX( 25px ) translateY( 0px );}
+  100% {transform: translateX( 0px ) translateY( 0px );}
+}
+
+
+
+.SmallItems .ItemPanel
+{
+  width:33px;
+  height:24px;
+  margin:1px;
+}
+
+.SmallItems .ItemRow
+{
+  margin-top: 1px;
+  margin-bottom: 1px;
+}

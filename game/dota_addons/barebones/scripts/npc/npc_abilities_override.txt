@@ -266,4 +266,12 @@
   //"item_guardian_greaves"     "REMOVE"  
   //"item_recipe_glimmer_cape"      "REMOVE"  
   //"item_glimmer_cape"     "REMOVE"  
+
+  //"item_faerie_fire"     "REMOVE"
+  //"item_recipe_aether_lens"     "REMOVE"
+  //"item_aether_lens"     "REMOVE"
+  //"item_recipe_dragon_lance"     "REMOVE"
+  //"item_dragon_lance"     "REMOVE"
+  //"item_recipe_iron_talon"     "REMOVE"
+  //"item_iron_talon"     "REMOVE"
 }

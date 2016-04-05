@@ -1,9 +1,10 @@
-PHYSICS_VERSION = "0.91"
+PHYSICS_VERSION = "1.00"
 
 PHYSICS_NAV_NOTHING = 0
 PHYSICS_NAV_HALT = 1
 PHYSICS_NAV_SLIDE = 2
 PHYSICS_NAV_BOUNCE = 3
+PHYSICS_NAV_GROUND = 4
 
 PHYSICS_GROUND_NOTHING = 0
 PHYSICS_GROUND_ABOVE = 1
@@ -53,7 +54,8 @@ function Physics:start()
     self.colliderSkipOffset = 0
     self.frameCount = 0
 
-    self.thinkEnt = Entities:CreateByClassname("info_target") -- Entities:FindByClassname(nil, 'CWorld')
+    --self.thinkEnt = Entities:CreateByClassname("info_target") -- Entities:FindByClassname(nil, 'CWorld')
+    self.thinkEnt = SpawnEntityFromTableSynchronous("info_target", {targetname="physics_lua_thinker"})
     --wspawn:SetContextThink("PhysicsThink", Dynamic_Wrap( Physics, 'Think' ), PHYSICS_THINK )
     self.thinkEnt:SetThink("Think", self, "physics", PHYSICS_THINK)
 
@@ -120,33 +122,25 @@ function Physics:Think()
 
   -- Process timers
   for k,v in pairs(Physics.timers) do
-    local bUseGameTime = false
-    if v.useGameTime and v.useGameTime == true then
-      bUseGameTime = true;
-    end
-    -- Check if the timer has finished
-    if (bUseGameTime and GameRules:GetGameTime() > v.endTime) or (not bUseGameTime and Time() > v.endTime) then
-      -- Remove from timers list
-      Physics.timers[k] = nil
-      
-      -- Run the callback
-      local status, nextCall = pcall(v.callback, Physics, v)
+    -- Run the callback
+    local status, nextCall = pcall(v.callback, Physics, v)
 
-      -- Make sure it worked
-      if status then
-        -- Check if it needs to loop
-        if nextCall then
-          -- Change it's end time
-          v.endTime = nextCall
-          Physics.timers[k] = v
-        end
-
-        -- Update timer data
-        --self:UpdateTimerData()
+    -- Make sure it worked
+    if status then
+      -- Check if it needs to loop
+      if nextCall then
+        -- Change it's end time
+        v.endTime = nextCall
       else
-        -- Nope, handle the error
-        Physics:HandleEventError('Timer', k, nextCall)
+        Physics.timers[k] = nil
       end
+
+      -- Update timer data
+      --self:UpdateTimerData()
+    else
+      -- Nope, handle the error
+      Physics.timers[k] = nil
+      print('[PHYSICS] Timer error:' .. nextCall)
     end
   end
 
@@ -366,25 +360,6 @@ function Physics:Think()
   return PHYSICS_THINK
 end
 
-function Physics:HandleEventError(name, event, err)
-  print(err)
-
-  -- Ensure we have data
-  name = tostring(name or 'unknown')
-  event = tostring(event or 'unknown')
-  err = tostring(err or 'unknown')
-
-  -- Tell everyone there was an error
-  --Say(nil, name .. ' threw an error on event '..event, false)
-  --Say(nil, err, false)
-
-  -- Prevent loop arounds
-  if not self.errorHandled then
-    -- Store that we handled an error
-    self.errorHandled = true
-  end
-end
-
 function Physics:CreateTimer(name, args)
   if not args.endTime or not args.callback then
     print("Invalid timer created: "..name)
@@ -562,10 +537,44 @@ function Physics:AngleGrid( anggrid, angoffsets )
   end
 end
 
+function Physics:CalcSlope(pos, unit, dir)
+
+  dir = Vector(dir.x, dir.y, 0):Normalized()
+  local f = GetGroundPosition(pos + dir, unit)
+  local b = GetGroundPosition(pos - dir, unit)
+
+  return (f - b):Normalized() 
+end
+
+function Physics:CalcNormal(pos, unit, scale)
+  scale = scale or 1
+  local nscale = -1 * scale
+  local diag = 0.70710678118 * scale
+  local ndiag = -1 * diag
+
+  local zl =  GetGroundPosition(pos + Vector(nscale,0,0), unit).z
+  local zr =  GetGroundPosition(pos + Vector(scale,0,0), unit).z
+  local zu =  GetGroundPosition(pos + Vector(0,scale,0), unit).z
+  local zd =  GetGroundPosition(pos + Vector(0,nscale,0), unit).z
+
+  --[[local zld = GetGroundPosition(pos + Vector(ndiag,ndiag,0), unit).z
+  local zlu = GetGroundPosition(pos + Vector(ndiag,diag,0), unit).z
+  local zrd = GetGroundPosition(pos + Vector(diag,ndiag,0), unit).z
+  local zru = GetGroundPosition(pos + Vector(diag,diag,0), unit).z]]
+
+  --print (Vector(zld - zlu, zrd - zru, 2*scale))
+  --print (Vector(zl - zr, zd - zu, 2*scale))
+  --return (RotatePosition(Vector(0,0,0), QAngle(0,45,0), Vector(zld - zlu, zrd - zru, 2*scale)) + Vector(zl - zr, zd - zu, 2*scale)):Normalized()
+  return Vector(zl - zr, zd - zu, 2*scale):Normalized()
+end
+
 function Physics:Unit(unit)
   if IsPhysicsUnit(unit) then
-    --unit:StopPhysicsSimulation()
-    return
+    if Convars:GetBool("developer") then
+      unit:StopPhysicsSimulation()
+    else
+      return
+    end
   end
   function unit:StopPhysicsSimulation ()
     Physics.timers[unit.PhysicsTimerName] = nil
@@ -648,8 +657,9 @@ function Physics:Unit(unit)
     end
   end
   
-  function unit:SetPhysicsFriction (friction)
-    unit.fFriction = friction
+  function unit:SetPhysicsFriction (percFriction, flatFriction)
+    unit.fFriction = percFriction
+    unit.fFlatFriction = (flatFriction or (unit.fFlatFriction*30))/30
   end
   
   function unit:GetPhysicsVelocity ()
@@ -659,7 +669,7 @@ function Physics:Unit(unit)
     return unit.vAcceleration * 900
   end
   function unit:GetPhysicsFriction ()
-    return unit.fFriction
+    return unit.fFriction, unit.fFlatFriction*30
   end
   
   function unit:FollowNavMesh (follow)
@@ -873,7 +883,97 @@ function Physics:Unit(unit)
   function unit:SetMass(mass)
     unit.fMass = mass
   end
-  
+
+  function unit:GetNavGroundAngle()
+    return math.acos(unit.fNavGroundAngle) * 180 / math.pi 
+  end
+
+  function unit:SetNavGroundAngle(angle)
+    unit.fNavGroundAngle = math.cos(angle * math.pi / 180)
+  end
+
+  function unit:CutTrees(cut)
+    unit.bCutTrees = cut
+  end
+
+  function unit:IsCutTrees()
+    return unit.bCutTrees
+  end
+
+  function unit:IsInSimulation()
+    return unit.bStarted
+  end
+
+  function unit:SetBoundOverride(bound)
+    unit.fBoundOverride = bound
+  end
+
+  function unit:GetBoundOverride()
+    return unit.fBoundOverride
+  end
+
+  function unit:ClearStaticVelocity()
+    unit.staticForces = {}
+    unit.staticSum = Vector(0,0,0)
+  end
+
+  function unit:SetStaticVelocity(name, velocity)
+    if unit.staticForces[name] ~= nil then
+      unit.staticSum = unit.staticSum - unit.staticForces[name]
+    end
+    unit.staticForces[name] = velocity / 30
+    unit.staticSum = unit.staticSum + unit.staticForces[name]
+
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.vLastVelocity = Vector(0,0,0)
+      unit.vSlideVelocity = Vector(0,0,0)
+      unit.bHibernating = false
+    end
+  end
+
+  function unit:GetStaticVelocity(name)
+    if name == nil then
+      return unit.staticSum
+    else
+      return unit.staticForces[name]
+    end
+  end
+
+  function unit:AddStaticVelocity(name, velocity)
+    if unit.staticForces[name] == nil then
+      unit.staticForces[name] = velocity / 30
+      unit.staticSum = unit.staticSum + unit.staticForces[name]
+    else
+      unit.staticSum = unit.staticSum - unit.staticForces[name]
+      unit.staticForces[name] = unit.staticForces[name] + velocity / 30
+      unit.staticSum = unit.staticSum + unit.staticForces[name]
+    end
+
+    if unit.bStarted and unit.bHibernating then
+      Physics.timers[unit.PhysicsTimerName] = unit.PhysicsTimer
+      unit.PhysicsTimer.endTime = GameRules:GetGameTime()
+      unit.PhysicsLastPosition = unit:GetAbsOrigin()
+      unit.PhysicsLastTime = GameRules:GetGameTime()
+      unit.vLastVelocity = Vector(0,0,0)
+      unit.vSlideVelocity = Vector(0,0,0)
+      unit.bHibernating = false
+    end
+  end
+
+  function unit:SetPhysicsFlatFriction(flatFriction)
+    unit.fFlatFriction = flatFriction / 30
+  end
+
+  function unit:GetPhysicsFlatFriction()
+    return unit.fFlatFriction
+  end
+
+
+  unit.lastGoodGround = Vector(0,0,0)
   unit.PhysicsTimerName = DoUniqueString('phys')
   Physics:CreateTimer(unit.PhysicsTimerName, {
     endTime = GameRules:GetGameTime(),
@@ -888,7 +988,6 @@ function Physics:Unit(unit)
       local position = unit:GetAbsOrigin()
       local slideVelocity = Vector(0,0,0)
       local lastVelocity = unit.vLastVelocity
-      unit.vLastVelocity = unit.vVelocity
       unit.vTotalVelocity = (position - prevPosition) / (curTime - prevTime)
 
       unit.PhysicsLastTime = curTime
@@ -909,24 +1008,31 @@ function Physics:Unit(unit)
       
       -- Adjust velocity
       local newVelocity = unit.vVelocity + unit.vAcceleration + (-1 * unit.fFriction * unit.vVelocity) + slideVelocity
-      
+      local newVelLength
+      if unit.fFlatFriction > 0 then
+        newVelLength = newVelocity:Length()
+        if newVelLength ~= 0 then
+          newVelocity = newVelocity * (math.max(0, newVelLength - unit.fFlatFriction) / newVelLength)
+        end
+      end
+
+      local staticSum = unit.staticSum
+      newVelocity = newVelocity + staticSum
+      newVelLength = newVelocity:Length()
+      local staticSumLength = staticSum:Length()
+
+
+      local vel = unit.vVelocity + staticSum
+      local staticSumz = staticSum.z
+      local newVelz = newVelocity.z
+      local dontSet = false
+      local dontSetGround = false
       --print('vel: ' .. tostring(unit.vVelocity:Length()) .. ' -- svel: ' .. tostring(slideVelocity:Length()) .. " -- nvel: " .. tostring(newVelocity:Length()))
       
       -- Calculate new position
-      local newPos = position + unit.vVelocity
-      if unit.nLockToGround == PHYSICS_GROUND_LOCK then
-        local groundPos = GetGroundPosition(newPos, unit)
-        newPos = groundPos
-        newVelocity.z = 0
-      elseif unit.nLockToGround == PHYSICS_GROUND_ABOVE then
-        local groundPos = GetGroundPosition(newPos, unit)
-        if groundPos.z > newPos.z then
-          newPos = groundPos
-          newVelocity.z = 0
-        end
-      end
+      local newPos = position + vel
       
-      local newVelLength = newVelocity:Length()
+      
       
       local blockedPos = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
       if not blockedPos then
@@ -935,73 +1041,226 @@ function Physics:Unit(unit)
       else
         unit.nStuckFrames = unit.nStuckFrames + 1
       end
+
       
-      if unit.nVelocityMax > 0 and newVelLength > unit.nVelocityMax then
-        newVelocity = newVelocity:Normalized() * unit.nVelocityMax
-      end
-      if unit.vAcceleration.x == 0 and unit.vAcceleration.y == 0 and newVelLength < unit.fVelocityClamp then
-        --print('clamp')
-        newVelocity = Vector(0,0,newVelocity.z)
-        if unit:HasModifier("modifier_rooted") then
-          unit:RemoveModifierByName("modifier_rooted")
-        end
-        if unit.bHibernate then
-          unit:DoHibernate()
-          local ent = Entities:FindInSphere(nil, position, 35)
-          local blocked = false
-          while ent ~= nil and not blocked do
-            if ent.IsHero ~= nil and ent ~= unit then
-              blocked = true
+      if vel ~= Vector(0,0,0) or slideVelocity ~= Vector(0,0,0) or unit.nNavCollision == PHYSICS_NAV_GROUND then
+        if unit.nNavCollision == PHYSICS_NAV_GROUND then
+          local newGround = GetGroundPosition(newPos, unit)
+          local ground = GetGroundPosition(position, unit)
+
+          --if unit.vVelocity.x ~= 0 and unit.vVelocity.y ~= 0 then
+          if newPos.z - newGround.z < 0 or position.z - ground.z < 0 then -- and newPos.z ~= position.z then
+            local velLen = Vector(vel.x,vel.y,0):Length()
+            local diff = vel:Normalized()
+            local subpos = position
+            local minnormal = Vector(0,0,1)
+            --local avgnormal = Vector(0,0,0)
+            for i=1,math.ceil(velLen)+1 do
+              local normal = Physics:CalcNormal(subpos, unit, 15)
+              --local subground = GetGroundPosition(subpos, unit)
+              --print(i .. ' -- ' .. tostring(normal))
+              if normal.z < minnormal.z then
+                minnormal = normal
+                --subground = subpos
+              end
+              --DebugDrawLine_vCol(subground, subground + normal * 100, Vector(100,0,0), true, 1.1)
+              subpos = subpos + diff
+              --avgnormal = avgnormal + normal
             end
-            --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
-            ent = Entities:FindInSphere(ent, position, 35)
-          end
-          if blocked or blockedPos or GridNav:IsNearbyTree(position, 30, true) then
-            FindClearSpaceForUnit(unit, position, true)
-            unit.nSkipSlide = 1
-            --print('FCS hib')
-          end
-          if unit.PhysicsHibernateCallback ~= nil then
-            local status, nextCall = pcall(unit.PhysicsHibernateCallback, unit)
-            if not status then
-              print('[PHYSICS] Failed HibernateCallback: ' .. nextCall)
+
+            --DebugDrawLine_vCol(position, position + Physics:CalcSlope(position, unit, vel) * 100, Vector(0,0,200), true, 1.1)
+
+            --avgnormal = avgnormal / math.ceil(velLen)+1
+            --avgnormal = Vector(avgnormal.x, avgnormal.y, minnormal.z):Normalized()
+            --DebugDrawLine_vCol(position, position + minnormal * 200, Vector(255,0,0), true, 1.1)
+
+            if minnormal.z < unit.fNavGroundAngle then
+              --steep
+              local xynorm = Vector(minnormal.x, minnormal.y, 0)
+              local xynormlen = xynorm:Length()
+              if xynorm:Length() > .98 then
+                minnormal = xynorm / xynormlen                
+                --avgnormal = Vector(avgnormal.x, avgnormal.y, 0):Normalized()
+              end
+              --print('-------------')
+              --print(minnormal)
+
+              --DebugDrawLine_vCol(position, position + Physics:CalcSlope(position, unit, minnormal) * 200, Vector(0,200,200), true, 1)
+              --DebugDrawLine_vCol(position, position + avgnormal * 200, Vector(0,100,0), true, 1.1)
+
+              local velz = vel.z
+              --newVelocity.z = 0
+              --vel.z = 0
+
+              local dot = vel:Dot(-1 * minnormal) *1.01
+              if dot >= 0 then
+                vel = vel + dot * minnormal
+                --DebugDrawLine_vCol(position, position + vel, Vector(0,255,0), true, 1.1)
+
+                newVelocity = newVelocity + newVelocity:Dot(-1 * minnormal)*1.01 * minnormal
+                --DebugDrawLine_vCol(position, position + newVelocity, Vector(0,255,122), true, 1.1)
+                staticSum = staticSum + staticSum:Dot(-1 * minnormal)*1.01 * minnormal
+                --DebugDrawLine_vCol(position, position + staticSum, Vector(255,0,122), true, 1.1)
+
+                --DebugDrawLine_vCol(position, position + vel * 10, Vector(0,255,0), true, 1.1)
+              end
+              
+              newPos = position + vel
+              local nz = newPos.z
+              --DebugDrawCircle(newPos, Vector(0,255,0), 1, 15, true, 1.1)
+              local gnorm = GetGroundPosition(newPos + minnormal * 50, unit)
+              --DebugDrawCircle(gnorm, Vector(255,0,0), 1, 15, true, 1.1)
+              --DebugDrawCircle(unit.lastGoodGround, Vector(255,255,255), 1, 15, true, 1.1)
+              local ng = GetGroundPosition(newPos, unit)
+              if ng.z >= newPos.z and newPos.z < gnorm.z then
+                --print(tostring(newPos.z) .. ' -- ' .. tostring(gnorm.z) .. ' -- ' .. tostring(ng.z) .. ' -- ' .. tostring(unit.lastGoodGround.z))
+                if ng.z > gnorm.z then
+                  newPos.z = gnorm.z
+                else
+                  newPos.z = ng.z
+                end
+                staticSum.z = 0
+                if newPos.z > position.z and (newPos - position):Normalized().z > unit.fNavGroundAngle then --newPos.z-position.z > vel.z*1.5 then
+                  --newPos = Vector(position.x,position.y,unit.lastGoodGround.z)
+                  newPos = position + Vector(0,0,newVelocity.z)
+                  if newPos.z < unit.lastGoodGround.z then
+                    newPos.z = unit.lastGoodGround.z
+                    newVelocity.z = math.max(0, newVelocity.z)
+                  end
+
+                  --newVelocity.z = 0
+                else
+                  newVelocity.z = math.max(0, newVelocity.z)
+                end
+              end
+              --DebugDrawCircle(newPos, Vector(150,0,255), 1, 15, true, 1.1)
+              
+              unit:SetAbsOrigin(newPos)
+              dontSet = true
+              dontSetGround = true
+              ground = ng
+              --unit:SetAbsOrigin(position)
+            --elseif (ground - position):Normalized().z > unit.fNavGroundAngle then
+              --unit.lastGoodGround = ground
             end
+          else
+            unit.lastGoodGround = ground
           end
-          return
-        end
-        
-        local ent = Entities:FindInSphere(nil, position, 35)
-        local blocked = false
-        while ent ~= nil and not blocked do
-          if ent.IsHero ~= nil and ent ~= unit then
-            blocked = true
-          end
-          --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
-          ent = Entities:FindInSphere(ent, position, 35)
-        end
-        if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or GridNav:IsNearbyTree(position, 30, true) then
-          FindClearSpaceForUnit(unit, position, true)
-          unit.nSkipSlide = 1
-          --print('FCS nothib lowv + blocked')
-        end 
-        --return curTime
-      end
-      
-      
-      if unit.vVelocity ~= Vector(0,0,0) or slideVelocity ~= Vector(0,0,0) then
-        if unit.bFollowNavMesh then
-          local diff = unit.vVelocity:Normalized()
-          --FindClearSpaceForUnit(unit, newPos, true)
-          unit:SetAbsOrigin(newPos)
 
           local bound = 1
-          if unit.GetPaddedCollisionRadius then
+          if unit.fBoundOverride then
+            bound = unit.fBoundOverride
+          elseif unit.GetPaddedCollisionRadius then
+            bound = unit:GetPaddedCollisionRadius()
+          elseif unit.GetBoundingMaxs then
+            bound = math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)
+          end
+          -- tree check
+          local connect = position-- + diff * bound
+          local treeConnect = (not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect)) and GridNav:IsNearbyTree(connect, 30, true)
+          local lookaheadNum = unit.nNavGridLookahead
+          if unit.bAdaptiveNavGridLookahead then
+            lookaheadNum = math.ceil(vel:Length() / 16)
+          end
+          local diff = vel:Normalized()
+          local tot = lookaheadNum + 1
+          local div = 1 / tot
+          local index = 1
+          while not treeConnect and index < tot do
+            connect = position + vel * (div * index) + diff * bound
+            treeConnect = (not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect)) and GridNav:IsNearbyTree(connect, 30, true)
+            if treeConnect then
+              --DebugDrawCircle(connect, Vector(0,200,0), 100, 10, true, 1)
+            end
+            index = index + 1
+          end
+
+          --print (tostring(treeConnect) .. ' -- ' .. ground.z .. ' -- ' .. newPos.z .. ' -- ' .. position.z)
+          if treeConnect and ground.z + 340 >= newPos.z and newPos.z + 2 > ground.z then
+            if position.z >= ground.z + 340 then
+              newVelocity.z = math.max(0, newVelocity.z)
+              staticSum.z = math.max(0, staticSum.z)
+              --unit:SetAbsOrigin(newPos + Vector(0,0,ground.z + 340 - newPos.z))
+              newPos = Vector(newPos.x, newPos.y, ground.z + 340)
+              --print('treetop')
+            else
+              --print('treeConnect')
+              local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(connect.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(connect.y)), ground.z)
+              --DebugDrawCircle(vec, Vector(200,200,200), 100, 10, true, .5)
+              if unit.bCutTrees then
+                local ents = Entities:FindAllByClassnameWithin("ent_dota_tree", vec, 70)
+                if #ents > 0 then
+                  local tree = ents[1]
+                  tree:CutDown(unit:GetTeamNumber())
+                end
+              else
+                local off = (Vector(position.x,position.y,vec.z) - vec):Normalized()
+                local normal = nil
+                if math.abs(off.x) > math.abs(off.y) then
+                  normal = Vector(math.abs(off.x)/off.x, 0, 0)
+                  local vec2 = vec + normal * 64
+                  local treeConnect2 = (not GridNav:IsTraversable(vec2) or GridNav:IsBlocked(vec2)) and GridNav:IsNearbyTree(vec2, 30, true)
+                  if treeConnect2 then
+                    normal = Vector(0, math.abs(off.y)/off.y, 0)
+                    vec2 = vec + normal * 64
+                    treeConnect2 = (not GridNav:IsTraversable(vec2) or GridNav:IsBlocked(vec2)) and GridNav:IsNearbyTree(vec2, 30, true)
+                    if treeConnect2 then
+                      normal = (Vector(diff.x,diff.y,0) * -1):Normalized()
+                    end
+                  end
+                else
+                  normal = Vector(0, math.abs(off.y)/off.y, 0)
+                  local vec2 = vec + normal * 64
+                  local treeConnect2 = (not GridNav:IsTraversable(vec2) or GridNav:IsBlocked(vec2)) and GridNav:IsNearbyTree(vec2, 30, true)
+                  if treeConnect2 then
+                    normal = Vector(math.abs(off.x)/off.x, 0, 0)
+                    vec2 = vec + normal * 64
+                    treeConnect2 = (not GridNav:IsTraversable(vec2) or GridNav:IsBlocked(vec2)) and GridNav:IsNearbyTree(vec2, 30, true)
+                    if treeConnect2 then
+                      normal = (Vector(diff.x,diff.y,0) * -1):Normalized()
+                    end
+                  end
+                end
+
+                --DebugDrawLine_vCol(vec, vec + off * 100, Vector(0,200,0), true, 1)
+                --DebugDrawLine_vCol(vec, vec + normal * 100, Vector(200,200,200), true, 1)
+
+                --newVelocity.z = newVelz
+                local dot = vel:Dot(-1 * normal)
+                if dot >= 0 then
+                  vel = vel + dot * 1.0 * normal
+                  newVelocity = newVelocity + newVelocity:Dot(-1 * normal) * 1.0 * normal
+                  staticSum = staticSum + staticSum:Dot(-1 * normal) * 1.0 * normal
+                  local newground = GetGroundPosition(position + vel, unit)
+                  local new = position + vel
+                  if newground.z > new.z then
+                    new.z = newground.z
+                  end
+
+                  off = (Vector(new.x, new.y, vec.z) - vec):Normalized()
+                  local scalar = math.min((32+bound) / math.abs(off.x), (32+bound) / math.abs(off.y))
+                  --local scalar = math.min((32) / math.abs(off.x), (32) / math.abs(off.y))
+                  unit.nSkipSlide = 1
+                  newPos = vec + Vector(scalar*off.x, scalar*off.y, new.z - vec.z)
+                end
+                --unit:SetAbsOrigin(new)
+              end
+            end
+          end
+        elseif unit.bFollowNavMesh then
+          local diff = vel:Normalized()
+          --FindClearSpaceForUnit(unit, newPos, true)
+
+          local bound = 1
+          if unit.fBoundOverride then
+            bound = unit.fBoundOverride
+          elseif unit.GetPaddedCollisionRadius then
             bound = unit:GetPaddedCollisionRadius() + 1
           elseif unit.GetBoundingMaxs then
             bound = math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)
           end
           
-          local connect = newPos-- + diff * bound
+          local connect = position-- + diff * bound
           local navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
           local lookaheadNum = unit.nNavGridLookahead
           if unit.bAdaptiveNavGridLookahead then
@@ -1011,17 +1270,19 @@ function Physics:Unit(unit)
           local div = 1 / tot
           local index = 1
           while not navConnect and index < tot do
-            connect = newPos + unit.vVelocity * (div * index) + diff * bound
-            navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect) 
+            connect = position + unit.vVelocity * (div * index) + diff * bound
+            navConnect = not GridNav:IsTraversable(connect) or GridNav:IsBlocked(connect)
             index = index + 1
           end
           --or not GridNav:IsTraversable(newPos + unit.vVelocity * .5) -- diff * unit.nNavGridLookahead
             --or  or GridNav:IsBlocked(newPos + unit.vVelocity * .5)
           if unit.nNavCollision == PHYSICS_NAV_HALT and navConnect then
             newVelocity = Vector(0,0,0)
+            staticSum = Vector(0,0,0)
             FindClearSpaceForUnit(unit, newPos, true)
+            dontSet = true
             unit.nSkipSlide = 1
-          elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then        
+          elseif unit.nNavCollision == PHYSICS_NAV_SLIDE and navConnect then
             local navX = GridNav:WorldToGridPosX(connect.x)
             local navY = GridNav:WorldToGridPosY(connect.y)
             local navPos = Vector(GridNav:GridPosToWorldCenterX(navX), GridNav:GridPosToWorldCenterY(navY), 0)
@@ -1063,13 +1324,12 @@ function Physics:Unit(unit)
               --print(dir:Dot(Vector(0,1,0)))
               --print(dir:Dot(Vector(0,-1,0)))
               --print('---------------')
-              local vVelocity = unit.vVelocity
               if dir:Dot(Vector(1,0,0)) > .707 then
                 normal = Vector(1,0,0)
                 local navPos2 = navPos + Vector(-64,0,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.y > 0 then
+                  if vel.y > 0 then
                     normal = Vector(0,1,0)
                     navPos2 = navPos + Vector(0,-64,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1090,7 +1350,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(64,0,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.y > 0 then
+                  if vel.y > 0 then
                     normal = Vector(0,1,0)
                     navPos2 = navPos + Vector(0,-64,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1111,7 +1371,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(0,-64,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.x > 0 then
+                  if vel.x > 0 then
                     normal = Vector(1,0,0)
                     navPos2 = navPos + Vector(-64,0,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1132,7 +1392,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(0,64,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.x > 0 then
+                  if vel.x > 0 then
                     normal = Vector(-1,0,0)
                     navPos2 = navPos + Vector(-64,0,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1161,12 +1421,12 @@ function Physics:Unit(unit)
             end
 
             newVelocity = (-1 * newVelocity:Dot(normal) * normal) + newVelocity
-            unit.vVelocity = newVelocity
+            staticSum = (-1 * staticSum:Dot(normal) * normal) + staticSum
             local ndir = dir * -1
             local scalar = math.min((32+bound) / math.abs(ndir.x), (32+bound) / math.abs(ndir.y))
 
             unit.nSkipSlide = 1
-            unit:SetAbsOrigin(navPos + Vector(scalar*ndir.x, scalar*ndir.y, position.z))
+            newPos = navPos + Vector(scalar*ndir.x, scalar*ndir.y, newPos.z)
             
             if unit.PhysicsOnSlide then
               local status, nextCall = pcall(unit.PhysicsOnSlide, unit, normal)
@@ -1216,13 +1476,12 @@ function Physics:Unit(unit)
               --print(dir:Dot(Vector(0,1,0)))
               --print(dir:Dot(Vector(0,-1,0)))
               --print('---------------')
-              local vVelocity = unit.vVelocity
               if dir:Dot(Vector(1,0,0)) > .707 then
                 normal = Vector(1,0,0)
                 local navPos2 = navPos + Vector(-64,0,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.y > 0 then
+                  if vel.y > 0 then
                     normal = Vector(0,1,0)
                     navPos2 = navPos + Vector(0,-64,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1243,7 +1502,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(64,0,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.y > 0 then
+                  if vel.y > 0 then
                     normal = Vector(0,1,0)
                     navPos2 = navPos + Vector(0,-64,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1264,7 +1523,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(0,-64,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.x > 0 then
+                  if vel.x > 0 then
                     normal = Vector(1,0,0)
                     navPos2 = navPos + Vector(-64,0,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1285,7 +1544,7 @@ function Physics:Unit(unit)
                 local navPos2 = navPos + Vector(0,64,0)
                 local navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
                 if navConnect2 then
-                  if vVelocity.x > 0 then
+                  if vel.x > 0 then
                     normal = Vector(-1,0,0)
                     navPos2 = navPos + Vector(-64,0,0)
                     navConnect2 = not GridNav:IsTraversable(navPos2) or GridNav:IsBlocked(navPos2)
@@ -1313,7 +1572,7 @@ function Physics:Unit(unit)
               end
             end
             newVelocity = ((-2 * newVelocity:Dot(normal) * normal) + newVelocity) * unit.fBounceMultiplier
-            unit.vVelocity = newVelocity
+            staticSum = ((-2 * staticSum:Dot(normal) * normal) + staticSum) * unit.fBounceMultiplier
             if unit.PhysicsOnBounce then
               local status, nextCall = pcall(unit.PhysicsOnBounce, unit, normal)
               if not status then
@@ -1321,13 +1580,107 @@ function Physics:Unit(unit)
               end
             end
           end
-        else
-          unit:SetAbsOrigin(newPos)
         end
+      end
+
+      --if newPos.z > unit:GetAbsOrigin().z then print (tostring(newPos) .. ' -- ' .. tostring(unit:GetAbsOrigin())) end
+      --if newPos == unit:GetAbsOrigin() and newPos ~= prevPosition then print (tostring(dontSet) .. ' -- ' .. tostring(newPos) .. ' -- ' .. tostring(unit:GetAbsOrigin())) end
+      newVelLength = newVelocity:Length()
+      local groundPos = GetGroundPosition(newPos, unit)
+
+      if unit.nVelocityMax > 0 and newVelLength > unit.nVelocityMax then
+        newVelocity = newVelocity:Normalized() * unit.nVelocityMax
+        staticSum = staticSum:Normalized() * unit.nVelocityMax
+      end
+
+      local xylen = newVelocity:Length2D()
+      if unit.vAcceleration.x == 0 and unit.vAcceleration.y == 0 and xylen < unit.fVelocityClamp and (unit.vAcceleration.z == 0 or groundPos.z == newPos.z) then
+        --print('clamp')
+        newVelocity = Vector(0,0,newVelocity.z)
+        staticSum = Vector(0,0,staticSum.z)
+
+        if unit.bHibernate then
+          unit:DoHibernate()
+          local ent = Entities:FindInSphere(nil, position, 35)
+          local blocked = false
+          while ent ~= nil and not blocked do
+            if ent.GetUnitName ~= nil and ent ~= unit then
+              blocked = true
+            end
+            --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
+            ent = Entities:FindInSphere(ent, position, 35)
+          end
+          if blocked or blockedPos or GridNav:IsNearbyTree(position, 30, true) then
+            FindClearSpaceForUnit(unit, position, true)
+            unit.nSkipSlide = 1
+            --print('FCS hib')
+          end
+          if unit.PhysicsHibernateCallback ~= nil then
+            local status, nextCall = pcall(unit.PhysicsHibernateCallback, unit)
+            if not status then
+              print('[PHYSICS] Failed HibernateCallback: ' .. nextCall)
+            end
+          end
+          return
+        end
+
+        --[[if unit:HasModifier("modifier_rooted") then
+          unit:RemoveModifierByName("modifier_rooted")
+        end
+
+        local ent = Entities:FindInSphere(nil, position, 35)
+        local blocked = false
+        while ent ~= nil and not blocked do
+          if ent.IsHero ~= nil and ent ~= unit then
+            blocked = true
+          end
+          --print(ent:GetClassname() .. " -- " .. ent:GetName() .. " -- " .. tostring(ent.IsHero))
+          ent = Entities:FindInSphere(ent, position, 35)
+        end
+        if blocked or not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) or GridNav:IsNearbyTree(position, 30, true) then
+          FindClearSpaceForUnit(unit, position, true)
+          unit.nSkipSlide = 1
+          --print('FCS nothib lowv + blocked')
+        end ]]
+      end
+
+      if not dontSetGround then
+        if unit.nLockToGround == PHYSICS_GROUND_LOCK then
+          local groundPos = GetGroundPosition(newPos, unit)
+          newPos = groundPos
+          newVelocity.z = 0
+          staticSum.z = 0
+        elseif unit.nLockToGround == PHYSICS_GROUND_ABOVE then
+          local groundPos = GetGroundPosition(newPos, unit)
+          --print(groundPos.z .. ' -- ' .. newPos.z .. ' -- ' .. (groundPos - position):Normalized().z)
+          if unit.nNavCollision == PHYSICS_NAV_GROUND and groundPos.z > position.z and (groundPos - position):Normalized().z > unit.fNavGroundAngle then
+            newVelocity.z = math.max(0, newVelocity.z)
+            staticSum.z = 0
+            --[[newPos = position + Vector(0,0,newVelocity.z)
+            if newPos.z < unit.lastGoodGround.z then
+              DebugDrawCircle(unit.lastGoodGround, Vector(255,255,255), 1, 15, true, 1.1)
+              DebugDrawCircle(groundPos, Vector(255,0,0), 1, 15, true, 1.1)
+              DebugDrawCircle(newPos, Vector(0,255,0), 1, 15, true, 1.1)
+              print ('LAST GROUND2') 
+              newPos.z = unit.lastGoodGround.z
+              newVelocity.z = 0
+              staticSum.z = 0
+            end]]
+          elseif groundPos.z >= newPos.z then
+            newPos = groundPos
+            newVelocity.z = 0
+            staticSum.z = 0
+          end
+        end
+      end
+
+      if not dontSet then
+        unit:SetAbsOrigin(newPos)
       end
       
       unit.nRebounceFrames = unit.nRebounceFrames - 1
-      unit.vVelocity = newVelocity
+      unit.vLastVelocity = unit.vVelocity
+      unit.vVelocity = newVelocity - staticSum
       
       if unit.PhysicsFrameCallback ~= nil then
         local status, nextCall = pcall(unit.PhysicsFrameCallback, unit)
@@ -1336,7 +1689,7 @@ function Physics:Unit(unit)
         end
       end
       
-      if unit.bAutoUnstuck and unit.nStuckFrames >= unit.nStuckTimeout then
+      if unit.nNavCollision ~= PHYSICS_NAV_NOTHING and  unit.bAutoUnstuck and unit.nStuckFrames >= unit.nStuckTimeout then
         unit.nStuckFrames = 0
         unit.nSkipSlide = 1
 
@@ -1377,6 +1730,7 @@ function Physics:Unit(unit)
   unit.vLastVelocity = Vector(0,0,0)
   unit.vAcceleration = Vector(0,0,0)
   unit.fFriction = .05
+  unit.fFlatFriction = 0
   unit.PhysicsLastPosition = unit:GetAbsOrigin()
   unit.PhysicsLastTime = GameRules:GetGameTime()
   unit.vTotalVelocity = Vector(0,0,0)
@@ -1385,6 +1739,7 @@ function Physics:Unit(unit)
   unit.bPreventDI = false
   unit.bSlide = false
   unit.nNavCollision = PHYSICS_NAV_SLIDE
+  unit.fNavGroundAngle = .6
   unit.fSlideMultiplier = 0.1
   unit.nVelocityMax = 0
   unit.PhysicsFrameCallback = nil
@@ -1392,6 +1747,7 @@ function Physics:Unit(unit)
   unit.bHibernate = true
   unit.bHibernating = false
   unit.bStarted = true
+  unit.bCutTrees = false
   unit.vSlideVelocity = Vector(0,0,0)
   unit.nNavGridLookahead = 1
   unit.bAdaptiveNavGridLookahead = false
@@ -1400,11 +1756,13 @@ function Physics:Unit(unit)
   unit.nRebounceFrames = 2
   unit.vLastGoodPosition = unit:GetAbsOrigin()
   unit.bAutoUnstuck = true
-  unit.nStuckTimeout = 300
+  unit.nStuckTimeout = 600
   unit.nStuckFrames = 0
   unit.fBounceMultiplier = 1.0
   unit.oColliders = {}
   unit.fMass = 100
+  unit.staticForces = {}
+  unit.staticSum = Vector(0,0,0)
 end
 
 
@@ -2164,6 +2522,58 @@ Physics:CreateColliderProfile("momentum",
         
         local dot = dir:Dot(unit:GetTotalVelocity())
         local dot2 = dir:Dot(v:GetTotalVelocity())
+
+        local v1 = (self.elasticity * vMass * (dot2 - dot) + (mass * dot) + (vMass * dot2)) / (mass + vMass)
+        local v2 = (self.elasticity * mass * (dot - dot2) + (mass * dot) + (vMass * dot2)) / (mass + vMass)
+        
+        --if dot < 1 and dot2 < 1 then
+          --return
+        --end
+
+        unit:AddPhysicsVelocity((v1 - dot) * dir)
+        v:AddPhysicsVelocity((v2 - dot2) * dir)
+
+        if self.block then
+          if self.moveSelf then
+            Physics:BlockInSphere(v, unit, self.blockRadius, self.findClearSpace)
+          else
+            Physics:BlockInSphere(unit, v, self.blockRadius, self.findClearSpace)
+          end
+        end
+
+        self.hitTime = GameRules:GetGameTime() + self.recollideTime
+      end
+    end
+  })
+
+Physics:CreateColliderProfile("momentumFull", 
+  {
+    type = COLLIDER_SPHERE,
+    radius = 100,
+    recollideTime = .1,
+    skipFrames = 0,
+    block = true,
+    blockRadius = 50,
+    moveSelf = false,
+    findClearSpace = false,
+    elasticity = 1,
+    test = function(self, collider, collided)
+      return collided.IsRealHero and collided:IsRealHero() and collider:GetTeam() ~= collided:GetTeam() and IsPhysicsUnit(collided)
+    end,
+    action = function(self, unit, v)
+      if self.hitTime == nil or GameRules:GetGameTime() >= self.hitTime then
+        local pos = unit:GetAbsOrigin()
+        local vPos = v:GetAbsOrigin()
+        local dir = vPos - pos
+        local mass = unit:GetMass()
+        local vMass = v:GetMass()
+        --dir.z = 0
+        dir = dir:Normalized()
+        
+        local neg = -1 * dir
+        
+        local dot = unit:GetTotalVelocity():Length()
+        local dot2 = -1 * v:GetTotalVelocity():Length()
 
         local v1 = (self.elasticity * vMass * (dot2 - dot) + (mass * dot) + (vMass * dot2)) / (mass + vMass)
         local v2 = (self.elasticity * mass * (dot - dot2) + (mass * dot) + (vMass * dot2)) / (mass + vMass)

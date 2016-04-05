@@ -1,6 +1,10 @@
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:_InitGameMode()
+  if GameMode._reentrantCheck then
+    return
+  end
+
   -- Setup rules
   GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
   GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
@@ -20,6 +24,20 @@ function GameMode:_InitGameMode()
 
   GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
   GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
+
+  GameRules:SetCustomGameEndDelay( GAME_END_DELAY )
+  GameRules:SetCustomVictoryMessageDuration( VICTORY_MESSAGE_DURATION )
+  GameRules:SetStartingGold( STARTING_GOLD )
+
+  if SKIP_TEAM_SETUP then
+    GameRules:SetCustomGameSetupAutoLaunchDelay( 0 )
+    GameRules:LockCustomGameSetupTeamAssignment( true )
+    GameRules:EnableCustomGameSetupAutoLaunch( true )
+  else
+    GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
+    GameRules:LockCustomGameSetupTeamAssignment( LOCK_TEAM_SETUP )
+    GameRules:EnableCustomGameSetupAutoLaunch( ENABLE_AUTO_LAUNCH )
+  end
 
 
   -- This is multiteam configuration stuff
@@ -62,8 +80,8 @@ function GameMode:_InitGameMode()
   ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(GameMode, 'OnPlayerLevelUp'), self)
   ListenToGameEvent('dota_ability_channel_finished', Dynamic_Wrap(GameMode, 'OnAbilityChannelFinished'), self)
   ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(GameMode, 'OnPlayerLearnedAbility'), self)
-  ListenToGameEvent('entity_killed', Dynamic_Wrap(GameMode, 'OnEntityKilled'), self)
-  ListenToGameEvent('player_connect_full', Dynamic_Wrap(GameMode, 'OnConnectFull'), self)
+  ListenToGameEvent('entity_killed', Dynamic_Wrap(GameMode, '_OnEntityKilled'), self)
+  ListenToGameEvent('player_connect_full', Dynamic_Wrap(GameMode, '_OnConnectFull'), self)
   ListenToGameEvent('player_disconnect', Dynamic_Wrap(GameMode, 'OnDisconnect'), self)
   ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(GameMode, 'OnItemPurchased'), self)
   ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(GameMode, 'OnItemPickedUp'), self)
@@ -76,8 +94,8 @@ function GameMode:_InitGameMode()
   ListenToGameEvent('entity_hurt', Dynamic_Wrap(GameMode, 'OnEntityHurt'), self)
   ListenToGameEvent('player_connect', Dynamic_Wrap(GameMode, 'PlayerConnect'), self)
   ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(GameMode, 'OnAbilityUsed'), self)
-  ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(GameMode, 'OnGameRulesStateChange'), self)
-  ListenToGameEvent('npc_spawned', Dynamic_Wrap(GameMode, 'OnNPCSpawned'), self)
+  ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(GameMode, '_OnGameRulesStateChange'), self)
+  ListenToGameEvent('npc_spawned', Dynamic_Wrap(GameMode, '_OnNPCSpawned'), self)
   ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(GameMode, 'OnPlayerPickHero'), self)
   ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(GameMode, 'OnTeamKillCredit'), self)
   ListenToGameEvent("player_reconnected", Dynamic_Wrap(GameMode, 'OnPlayerReconnect'), self)
@@ -111,10 +129,10 @@ function GameMode:_InitGameMode()
   if BAREBONES_DEBUG_SPEW then
     spew = 1
   end
-  --Convars:RegisterConvar('barebones_spew', tostring(spew), 'Set to 1 to start spewing barebones debug info.  Set to 0 to disable.', 0)
+  Convars:RegisterConvar('barebones_spew', tostring(spew), 'Set to 1 to start spewing barebones debug info.  Set to 0 to disable.', 0)
 
   -- Change random seed
-  local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
+  local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '^0+','')
   math.randomseed(tonumber(timeTxt))
 
   -- Initialized tables for tracking state
@@ -122,6 +140,9 @@ function GameMode:_InitGameMode()
   self.vUserIds = {}
 
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
+  GameMode._reentrantCheck = true
+  GameMode:InitGameMode()
+  GameMode._reentrantCheck = false
 end
 
 mode = nil
@@ -167,7 +188,11 @@ function GameMode:_CaptureGameMode()
       mode:SetRuneEnabled(rune, spawn)
     end
 
-    mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
+    mode:SetUnseenFogOfWarEnabled( USE_UNSEEN_FOG_OF_WAR )
+
+    mode:SetDaynightCycleDisabled( DISABLE_DAY_NIGHT_CYCLE )
+    mode:SetKillingSpreeAnnouncerDisabled( DISABLE_KILLING_SPREE_ANNOUNCER )
+    mode:SetStickyItemDisabled( DISABLE_STICKY_ITEM )
 
     self:OnFirstPlayerLoaded()
   end 

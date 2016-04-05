@@ -1,0 +1,26 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/containers/container.css" />
+    <include src="file://{resources}/styles/containers/container_skins.css" />
+
+    <include src="s2r://panorama/styles/hero_splash.vcss_c" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/containers/container_base.js" /> 
+    <include src="file://{resources}/scripts/containers/container_events.js" /> 
+    <include src="file://{resources}/scripts/containers/dota_inventory.js" /> 
+  </scripts>
+  <Panel hittest="false" class="ContainersBase">
+
+    <Panel hittest="false" style="width:100%; height:100%;" id="PanoramaInventory">
+      <Panel id="stash_row" />
+      <Panel id="inventory_items">
+        <Panel id="inventory_row_1" />
+        <Panel id="inventory_row_2" />
+      </Panel>
+    </Panel>
+
+  </Panel>
+</root>
+ 

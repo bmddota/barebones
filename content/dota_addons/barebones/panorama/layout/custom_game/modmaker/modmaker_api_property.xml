@@ -1,0 +1,20 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/modmaker/modmaker.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/modmaker/modmaker_api_property.js" /> 
+  </scripts>
+  <Panel hittest="false" class="Property">
+    <Panel hittest="false" class="PropNameLink">
+      <Label text="" id="PropertyName"/>
+      <Button id="Github" class="Github" onactivate="OpenGitHub()">
+        <Label text="Search Github"/>  
+      </Button>
+    </Panel>
+    <Label text="" id="PropertyFunction" onactivate="FuncClicked()"/>
+    <Label text="" id="PropertyDescription"/>
+  </Panel>
+</root>
+ 

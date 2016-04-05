@@ -1,0 +1,27 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/modmaker/modmaker.css" />
+
+    <include src="s2r://panorama/styles/hero_splash.vcss_c" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/modmaker/modmaker.js" /> 
+  </scripts>
+  <Panel hittest="false" class="ModmakerBase">
+
+    <Panel hittest="true" id="APIWindow">
+      <Panel hittest="true" id="TitleSearch">
+        <Label text="Lua API" id="Title"/>
+        <TextEntry placeholder="Search API..." id="Search" oninputsubmit="SearchAPI()"/>
+        <Button class="SplashButton" id="SearchButton" onactivate="SearchAPI()">
+          <Label text="Search"/>
+        </Button>
+        <Button class="CloseButton" id="CloseButton" style="align: right top;" onactivate="CloseClicked()"/>
+      </Panel>
+      <Panel hittest="true" id="API"/>
+    </Panel> 
+
+  </Panel>
+</root>
+ 

@@ -1,4 +1,4 @@
-ANIMATIONS_VERSION = "0.84"
+ANIMATIONS_VERSION = "1.00"
 
 --[[
   Lua-controlled Animations Library by BMD

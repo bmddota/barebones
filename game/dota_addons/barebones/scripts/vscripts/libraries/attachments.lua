@@ -1,4 +1,4 @@
-ATTACHMENTS_VERSION = "0.85"
+ATTACHMENTS_VERSION = "1.00"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
@@ -6,8 +6,10 @@ ATTACHMENTS_VERSION = "0.85"
   Installation
   -"require" this file inside your code in order to gain access to the Attachments global table.
   -Optionally require "libraries/notifications" before this file so that the Attachment Configuration GUI can display messages via the Notifications library.
-  -Additionally, ensure that this file is placed in the vscripts/libraries path
-  -Additionally, ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
+  -Ensure that this file is placed in the vscripts/libraries path
+  -Ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
+  -Ensure that barebones_attachments.xml is included in your custom_ui_manifest.xml with
+    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
   -Finally, include the "attachments.txt" in your scripts directory if you have a pre-build database of attachment settings.
 
   Library Usage
@@ -138,22 +140,60 @@ if not Attachments then
 end
 
 function Attachments:start()
-  Convars:RegisterCommand( "attachment_configure", Dynamic_Wrap(Attachments, 'ActivateAttachmentSetup'), "Attachment Setup: attachment_configure <ADDON_NAME>  (e.g. attachment_configure barebones)", FCVAR_CHEAT )
-  
-  self.activated = false
-  self.dbFilePath = nil
-  self.currentAttach = {}
-  self.hiddenCosmetics = {}
-  self.doAttach = true
-  self.doSphere = false
-  self.attachDB = LoadKeyValues("scripts/attachments.txt")
+
+  local src = debug.getinfo(1).source
+  --print(src)
+
+  self.gameDir = ""
+  self.addonName = ""
+
+  if IsInToolsMode() then
+
+    if src:sub(2):find("(.*dota 2 beta[\\/]game[\\/]dota_addons[\\/])([^\\/]+)[\\/]") then
+
+      self.gameDir, self.addonName = string.match(src:sub(2), "(.*dota 2 beta[\\/]game[\\/]dota_addons[\\/])([^\\/]+)[\\/]")
+      --print('[attachments] ', self.gameDir)
+      --print('[attachments] ', self.addonName)
+
+      self.initialized = true
+
+      self.activated = false
+      self.dbFilePath = nil
+      self.currentAttach = {}
+      self.hiddenCosmetics = {}
+      self.doAttach = true
+      self.doSphere = false
+      self.attachDB = LoadKeyValues("scripts/attachments.txt")
+
+
+      if IsInToolsMode() then
+        print('[attachments] Tools Mode')
+        SendToServerConsole("dota_combine_models 0")
+        Convars:RegisterCommand( "attachment_configure", Dynamic_Wrap(Attachments, 'ActivateAttachmentSetup'), "Activate Attachment Setup", FCVAR_CHEAT )
+      end
+    else
+      print("[attachments] RELOADING")
+      SendToServerConsole("script_reload_code " .. src:sub(2))
+    end
+  else
+    self.initialized = true
+
+    self.activated = false
+    self.dbFilePath = nil
+    self.currentAttach = {}
+    self.hiddenCosmetics = {}
+    self.doAttach = true
+    self.doSphere = false
+    self.attachDB = LoadKeyValues("scripts/attachments.txt")
+  end
 end
 
-function Attachments:ActivateAttachmentSetup(addon)
-  if addon == nil or addon == "" then
+function Attachments:ActivateAttachmentSetup()
+  addon = Attachments.addonName
+  --[[if addon == nil or addon == "" then
     print("[Attachments.lua] Addon name must be specified.")
     return
-  end
+  end]]
 
   if not io then
     print("[Attachments.lua] Attachments Setup is only available in tools mode.")
@@ -175,7 +215,6 @@ function Attachments:ActivateAttachmentSetup(addon)
       print("[Attachments.lua] Created file: 'dota_addons/" .. addon .. "/scripts/attachments.txt'.")
     end
     file:close()
-    
 
     CustomGameEventManager:RegisterListener("Attachment_DoSphere", Dynamic_Wrap(Attachments, "Attachment_DoSphere"))
     CustomGameEventManager:RegisterListener("Attachment_DoAttach", Dynamic_Wrap(Attachments, "Attachment_DoAttach"))
@@ -234,8 +273,8 @@ function Attachments:Attachment_Freeze(args)
 end
 
 function Attachments:Attachment_UpdateAttach(args)
-  --DebugPrint('Attachment_UpdateAttach')
-  --DebugPrintTable(args)
+  DebugPrint('Attachment_UpdateAttach')
+  DebugPrintTable(args)
 
   local unit = EntIndexToHScript(args.index)
   if not unit then
@@ -281,7 +320,8 @@ function Attachments:Attachment_UpdateAttach(args)
     prop:RemoveSelf()
   end
 
-  Attachments.currentAttach[args.index][attach] = Attachments:AttachProp(unit, attach, model, properties.scale)
+  --Attachments.currentAttach[args.index][attach] = Attachments:AttachProp(unit, attach, model, properties.scale)
+  Attachments:AttachProp(unit, attach, model, properties.scale)
 end
 
 function Attachments:Attachment_SaveAttach(args)
@@ -426,6 +466,7 @@ function Attachments:Attachment_HideCosmetic(args)
         child:RemoveEffects(EF_NODRAW)
         hiddenCosmetics[model] = nil
       else
+        --print("HIDING")
         child:AddEffects(EF_NODRAW)
         hiddenCosmetics[model] = true
       end
@@ -477,7 +518,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     if model.GetName and IsValidEntity(model) then
       prop = model
     else
-      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim=animation})
+      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim=animation, targetname=DoUniqueString("prop_dynamic")})
       prop:SetModelScale(scale * unit:GetModelScale())
     end
 
@@ -525,12 +566,6 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
           ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
         end
       end    
-      -- Loop through the Control Point Entities
-      local control_points = particle_data['ControlPointEntities']
-      for k,ent_point in pairs(control_points) do
-        --print("Making Particle",particleName,prop.fx,k,prop,ent_point)
-        ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
-      end
     end
 
 
@@ -549,7 +584,10 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
       return .03
     end)
 
+
+    Attachments.currentAttach[unit:GetEntityIndex()][attachPoint] = prop
+
     return prop
 end
 
-if not Attachments.attachDB then Attachments:start() end
+if not Attachments.initialized then Attachments:start() end

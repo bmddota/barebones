@@ -174,6 +174,18 @@ A momentum collider applies a force to the colliding unit and collider-attached 
 | findClearSpace      | If blocking, whether to use FindClearSpaceForUnit to block the colliding unit out.  Defaults to false. | 
 | moveSelf      | If blocking and set to true, this collider will move the attached unit instead of the colliding unit. Defaults to false.| 
 
+###**momentumFull**
+A momentumFull collider applies a force to the colliding unit and collider-attached unit in accordance with their mass as set on their Physics Unit settings.  MomentumFull differs from a standard momentum collider by ensuring that full force is always transferred regardless of the angle.  The elasticity coefficient of the collision can be set.  Additionally can act as a blocker.
+
+| Property  | Description |
+| :------------ | :-----|
+| block | Whether this collider should also act as a blocker for units.  Defaults to true.|
+| blockRadius      | If blocking, the radius from the collider-attached unit from which to begin blocking units.  Defaults to 100.|
+| buffer      | If blocking, the additional distance beyond the collider radius to block units out that collide with this collider.  Defaults to 0.|
+| elasticity | The elasticity of the collision mediated by this collider. A setting of 1 means a fully elastic collision, while a setting of 0 means a fully inelastic collision.  If two momentum colliders collide, a setting of 0 will result in an elastic collision after both colliders process the collision. Defaults to 1.|
+| findClearSpace      | If blocking, whether to use FindClearSpaceForUnit to block the colliding unit out.  Defaults to false. | 
+| moveSelf      | If blocking and set to true, this collider will move the attached unit instead of the colliding unit. Defaults to false.| 
+
 
 -----------------------------------
 ##**COLLIDER_AABOX / COLLIDER_BOX**

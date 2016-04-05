@@ -39,6 +39,15 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**AddPhysicsVelocity (velocityVector)**
   Adds a new velocity vector to the current internal velocity vector.  This is effectively a force push on the unit.
 
+####**AddStaticVelocity (name, velocityVector)**
+  Adds a new velocity vector to the current internal static velocity vector of the given name.
+
+####**ClearStaticVelocity ()**
+  Clears all current static velocity vectors, effectively setting them to (0,0,0)
+
+####**CutTrees (boolean)**
+  Sets whether this unit should automatically cut trees when it collides with them or not.  Default is false.
+
 ####**FollowNavMesh (boolean)**
   Whether this unit should respect the NavMesh when moving and exhibit NavCollisionType behavior when interacting with a NavGrid block
 
@@ -48,14 +57,20 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**GetBounceMultiplier ()**
   Returns the float representing the multiplier to apply to a unit's velocity's magnitude in the event that they bounce via PHYSICS_NAV_BOUNCE.  Default is 1.0 (aka no velocity magnitude change)
 
+####**GetBoundOverride ()**
+  Returns the current boundary radius override for this unit, which will be used when blocking the unit out from navigation grid collisions so that it doesn't get stuck.  Default is the larget value of "unit:GetPaddedCollisionRadius() + 1" or "math.max(unit:GetBoundingMaxs().x, unit:GetBoundingMaxs().y)"
+
 ####**GetLastGoodPosition ()**
   Returns the vector position which was the last known position that the unit was in that was unblocked/pathable.
 
 ####**GetNavCollisionType ()**
-  Returns the current GridNav Collision Type (PHYSICS_NAV_NOTHING, PHYSICS_NAV_HALT, PHYSICS_NAV_SLIDE, or PHYSICS_NAV_BOUNCE)
+  Returns the current GridNav Collision Type (PHYSICS_NAV_NOTHING, PHYSICS_NAV_HALT, PHYSICS_NAV_SLIDE, PHYSICS_NAV_BOUNCE, or PHYSICS_NAV_GROUND)
 
 ####**GetNavGridLookahead ()**
   Returns the current number of Navigation Grid lookahead points.  See SetNavGridLookahead for more details. Default is 1
+
+####**GetNavGroundAngle ()**
+  Returns the current terrain angle that will cause PHYSICS_NAV_GROUND based navigation to slide.
 
 ####**GetPhysicsAcceleration ()**
   Returns the current acceleration vector.  Default is (0,0,0)
@@ -63,8 +78,11 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**GetPhysicsBoundingRadius ()**
   Returns the current bounding radius used for navgrid collision.  Default is the PaddedCollisionRadius of a unit.
 
+####**GetPhysicsFlatFriction ()**
+  Returns the current flat friction amount.  Default is 0
+
 ####**GetPhysicsFriction ()**
-  Returns the current friction multiplier.  Default it .05
+  Returns the current friction multiplier and flat friction amount.  Default is .05, 0
 
 ####**GetPhysicsVelocity ()**
   Returns the current velocity vector.  Default is (0,0,0)
@@ -74,6 +92,9 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 
 ####**GetRebounceFrames ()**
   Returns the number of rebounce frames to wait between PHYSICS_NAV_BOUNCE collisions.  Default is 2.
+
+####**GetStaticVelocity (name)**
+  Returns the current static velocity force for the given name.
 
 ####**GetStuckTimeout ()**
   Returns the number of frames necessary to determine if a unit is stuck in unpathable terrain and to activate AutoUnstuck
@@ -93,11 +114,17 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**IsAdaptiveNavGridLookahead ()**
   Returns whether this unit will use an adaptive navgrid lookahead system to more reliably detect GNV collisions at high speed
 
+####**IsCutTrees ()**
+  Returns whether this unit is currently set to automatically cut trees it collides with.  Default is false
+
 ####**IsFollowNavMesh ()**
   Returns whether this unit will respect the navigation mesh when moving the unit around.
 
 ####**IsHibernate ()**
   Returns whether this unit should hibernate when there are no physics calculations to be performed
+
+####**IsInSimulation ()**
+  Returns whether this unit is currently in an active physics simulation or not.
 
 ####**IsLockToGround ()**
   Returns whether this unit will lock the unit to the ground while performing position calculations. 
@@ -135,6 +162,9 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**SetBounceMultiplier (bounceMultipler)**
   Sets the magnitude to adjust the velocity of a unit in the event of a PHYSICS_NAV_BOUNCE bounce.  .5 would halve the total velocity of the unit, while 2.0 would double it on bounce. Default is 1.0. 
 
+####**SetBoundOverride (bound)**
+  Sets the current boundary radius override for this unit, which will be used when blocking the unit out from navigation grid collisions so that it doesn't get stuck.
+
 ####**SetGroundBehavior (groundBehavior)**
 
  - PHYSICS_GROUND_NOTHING: The unit will be able to pass through terrain and will not change its z-coordinate in any way concerning terrain
@@ -148,9 +178,13 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
  - PHYSICS_NAV_HALT: The unit will halt its velocity immediately in all directions
  - PHYSICS_NAV_SLIDE: The unit will halt its velocity in only the x or y direction depending on the collision direction with the GridNav
  - PHYSICS_NAV_BOUNCE: The unit will bounce off of the GridNav mesh face it contacts with, continuing on in a different direction with the same velocity magnitude
+ - PHYSICS_NAV_GROUND: The unit will travel along the ground based on the slope of the terrain, ignoring the GNV entirely.  If the slope of the terrain exceeds the slope limit set with SetNavGroundAngle, then the unit will slide down the terrain.
 
 ####**SetNavGridLookahead (lookaheadPoints)**
   Sets the number of navigation grid lookahead points to use when determining a navigation grid collision for PHYSICS_NAV_HALT/NOTHING/SLIDE/BOUCE.  The physics system will lookahead to the 1..lookaheadPoints-1 / lookaheadPoints the distance to the next position in order to determine if the unit will pass into an unwalkable location during the next frame. Increasing this number allows for higher speed collisions with the navigation grid and helps to prevent units from slipping through the grid by using speed.  Default is 1.  Note: This adds a lot of calculations even at 3 or 4, so be careful with this value for performance reasons.
+
+####**SetNavGroundAngle (angle)**
+  Sets the current terrain angle that will cause PHYSICS_NAV_GROUND based navigation to slide.
 
 ####**SetPhysicsAcceleration (accelerationVector)**
   Sets the internal acceleration vector to the given vector, eliminating any existing acceleration
@@ -158,8 +192,11 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 ####**SetPhysicsBoundingRadius (boundingRadius)**
   Sets the internal bounding radius used for navgrid collision.
 
-####**SetPhysicsFriction (frictionMultiplier)**
-  Sets the friction multiplier.  The default is .05
+####**SetPhysicsFlatFriction (flatFriction)**
+  Sets the flat friction amount.  The default is 0.
+
+####**SetPhysicsFriction (frictionMultiplier[, flatFriction])**
+  Sets the friction multiplier and/or flat friction amount.  The default is .05 and 0.  Not providing flatFriction will keep the current value.
 
 ####**SetPhysicsVelocity (velocityVector)**
   Sets the internal velocity vector to the given vector, eliminating any existing velocity
@@ -172,6 +209,9 @@ See [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/Colli
 
 ####**SetSlideMultiplier (slideMultiplier)**
   Sets the slide multiplier.  The default is 0.1
+
+####**SetStaticVelocity (name, velocityVector)**
+  Sets the internal static velocity vector to the given vector for this named static velocity vector, eliminating any existing static velocity for this named vector
 
 ####**SetStuckTimeout (stuckFrames)**
   Sets the number of frames to wait before determining that the player is "stuck" in an unpathable area before returning them via AutoUnstuck to their last known good position.  The default is 3 frames (aka .1 seconds).

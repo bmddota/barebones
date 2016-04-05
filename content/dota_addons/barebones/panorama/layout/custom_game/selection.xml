@@ -1,0 +1,7 @@
+<root> 
+    <scripts>
+        <include src="file://{resources}/scripts/selection/selection.js" />
+        <include src="file://{resources}/scripts/selection/selection_filter.js" />
+    </scripts>
+    <Panel></Panel>
+</root>

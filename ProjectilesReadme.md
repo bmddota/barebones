@@ -38,6 +38,17 @@ A projectile table which has been fed to CreateProjectile will have the followin
 ####**projectile:SetVelocity(newVel[, newPos])**
   This function can be called to adjust the current velocity of the projectile, as well as the current simulated position of the unit (if specified).  The projectile simulation and particle will only update if the projectile is within its nMaxChanges velocity change limit.
 
+####**projectile:GetCreationTime()**
+  This function reutnrs the creation time in GameTime of this projectile.
+
+####**projectile:GetDistanceTraveled()**
+  This function returns the total distance traveled by this projectile in hammer units per second.  Only counts distance moved due to velocity and not by setting a new position with SetVelocity.
+
+####**projectile:GetPosition()**
+  This function returns the current world position of the projectile.
+
+
+
 
 **Projectiles Table Format**
 =============================

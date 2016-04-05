@@ -3,65 +3,125 @@ containers_lua_targeting = class({})
 --------------------------------------------------------------------------------
 function containers_lua_targeting:GetBehavior()
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return self.BaseClass.GetBehavior(self) end 
 
-  if result then 
-    if bit.band(result.behavior, DOTA_ABILITY_BEHAVIOR_CHANNELLED) ~= 0 then return result.behavior - DOTA_ABILITY_BEHAVIOR_CHANNELLED end
-    print('not channeled')
-    return result.behavior 
-  else
-    return self.BaseClass.GetBehavior(self)
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem then
+    return proxyItem:GetBehavior()
   end
 end
 
 function containers_lua_targeting:GetAOERadius()
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return self.BaseClass.GetAOERadius(self) end 
 
-  if result then
-    return result.aoe
-  else
-    return self.BaseClass.GetAOERadius(self)
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetAOERadius then
+    return proxyItem:GetAOERadius()
   end
+    
+  return result.aoe
 end
 
 function containers_lua_targeting:GetCastRange(vLocation, hTarget)
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
-  
-  if result then
-    return result.range
-  else
-    return self.BaseClass.GetCastRange(self, vLocation, hTarget)
+  if not result then return self.BaseClass.GetCastRange(self, vLocation, hTarget) end 
+
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetCastRange then
+    return proxyItem:GetCastRange(vLocation, hTarget)
   end
+  
+  return result.range
 end
 
 function containers_lua_targeting:GetChannelTime()
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return self.BaseClass.GetChannelTime(self) end 
 
-  if result then
-    return result.channelTime
-  else
-    return self.BaseClass.GetChannelTime(self)
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetChannelTime then
+    return proxyItem:GetChannelTime()
   end
+
+  return result.channelTime
 end
 
 function containers_lua_targeting:GetChannelledManaCostPerSecond(iLevel)
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
-  
-  if result then
-    return result.channelCost
-  else
-    return self.BaseClass.GetChannelledManaCostPerSecond(self, iLevel)
+  if not result then return self.BaseClass.GetChannelledManaCostPerSecond(self, iLevel) end 
+
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetChannelledManaCostPerSecond then
+    return proxyItem:GetChannelledManaCostPerSecond(iLevel)
   end
+  
+  return result.channelCost
+end
+
+--------------------------------------------------------------------------------
+
+function containers_lua_targeting:CastFilterResult( )
+  local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return UF_SUCCESS end
+ 
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.CastFilterResult then
+    return proxyItem:CastFilterResult()
+  end
+ 
+  return UF_SUCCESS
+end
+ 
+function containers_lua_targeting:GetCustomCastError( )
+  local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return "" end
+
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetCustomCastError then
+    return proxyItem:GetCustomCastError()
+  end
+
+  return ""
+end
+
+--------------------------------------------------------------------------------
+
+function containers_lua_targeting:CastFilterResultLocation( vLocation )
+  local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return UF_SUCCESS end
+ 
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.CastFilterResultLocation then
+    return proxyItem:CastFilterResultLocation(vLocation)
+  end
+ 
+  return UF_SUCCESS
+end
+ 
+function containers_lua_targeting:GetCustomCastErrorLocation( vLocation )
+  local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return "" end
+
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetCustomCastErrorLocation then
+    return proxyItem:GetCustomCastErrorLocation(vLocation)
+  end
+
+  return ""
 end
 
 --------------------------------------------------------------------------------
 
 function containers_lua_targeting:CastFilterResultTarget( hTarget )
   local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
-  print(result.targetTeam, result.targetType, result.targetFlags)
-  if not result then
-    return UF_SUCCESS
-  end
+  if not result then return UF_SUCCESS end
  
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.CastFilterResultTarget then
+    return proxyItem:CastFilterResultTarget(hTarget)
+  end
+
   local nResult = UnitFilter( hTarget, result.targetTeam, result.targetType, result.targetFlags, self:GetCaster():GetTeamNumber() )
   if nResult ~= UF_SUCCESS then
     return nResult
@@ -70,9 +130,15 @@ function containers_lua_targeting:CastFilterResultTarget( hTarget )
   return UF_SUCCESS
 end
  
---------------------------------------------------------------------------------
- 
 function containers_lua_targeting:GetCustomCastErrorTarget( hTarget )
+  local result = CustomNetTables:GetTableValue("containers_lua", tostring(self:entindex()))
+  if not result then return "" end
+
+  local proxyItem = EntIndexToHScript(result.proxyItem)
+  if proxyItem and proxyItem.GetCustomCastErrorTarget then
+    return proxyItem:GetCustomCastErrorTarget(hTarget)
+  end
+
   return ""
 end
 
@@ -88,14 +154,16 @@ function containers_lua_targeting:OnChannelFinish(bInterrupted)
   self.proxyItem:OnChannelFinish(bInterrupted)
 end
 
-function containers_lua_targeting:OnSpellStart()
-  print("Onspellstart")
-  if IsServer() then
-    print("server:")
-  else
-    print("client:")
-  end
+function containers_lua_targeting:OnAbilityPhaseStart()
+  return self.proxyItem:OnAbilityPhaseStart()
 
+end
+
+function containers_lua_targeting:OnAbilityPhaseInterrupted()
+  self.proxyItem:OnAbilityPhaseInterrupted()
+end
+
+function containers_lua_targeting:OnSpellStart()
   local target = self:GetCursorTarget()
   local pos = self:GetCursorPosition()
 
@@ -112,40 +180,6 @@ function containers_lua_targeting:OnSpellStart()
   owner:SetCursorCastTarget(target)
 
   item:OnSpellStart()
-
-  --[[local hCaster = self:GetCaster()
-  local hTarget = self:GetCursorTarget()
-
-  if hCaster == nil or hTarget == nil or hTarget:TriggerSpellAbsorb( this ) then
-    return
-  end
-
-  local vPos1 = hCaster:GetOrigin()
-  local vPos2 = hTarget:GetOrigin()
-
-  GridNav:DestroyTreesAroundPoint( vPos1, 300, false )
-  GridNav:DestroyTreesAroundPoint( vPos2, 300, false )
-
-  hCaster:SetOrigin( vPos2 )
-  hTarget:SetOrigin( vPos1 )
-
-  FindClearSpaceForUnit( hCaster, vPos2, true )
-  FindClearSpaceForUnit( hTarget, vPos1, true )
-  
-  hTarget:Interrupt()
-
-  local nCasterFX = ParticleManager:CreateParticle( "particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf", PATTACH_ABSORIGIN_FOLLOW, hCaster )
-  ParticleManager:SetParticleControlEnt( nCasterFX, 1, hTarget, PATTACH_ABSORIGIN_FOLLOW, nil, hTarget:GetOrigin(), false )
-  ParticleManager:ReleaseParticleIndex( nCasterFX )
-
-  local nTargetFX = ParticleManager:CreateParticle( "particles/units/heroes/hero_vengeful/vengeful_nether_swap_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, hTarget )
-  ParticleManager:SetParticleControlEnt( nTargetFX, 1, hCaster, PATTACH_ABSORIGIN_FOLLOW, nil, hCaster:GetOrigin(), false )
-  ParticleManager:ReleaseParticleIndex( nTargetFX )
-
-  EmitSoundOn( "Hero_VengefulSpirit.NetherSwap", hCaster )
-  EmitSoundOn( "Hero_VengefulSpirit.NetherSwap", hTarget )
-
-  hCaster:StartGesture( ACT_DOTA_CHANNEL_END_ABILITY_4 )]]
 end
 
 --------------------------------------------------------------------------------

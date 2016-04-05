@@ -1,0 +1,225 @@
+.ModmakerBase
+{
+  width:100%;
+  height:100%;
+}
+
+#APIWindow
+{
+  align: center center;
+  min-width:800px;
+  min-height:800px;
+  flow-children: down;
+  visibility: collapse;
+}
+
+#TitleSearch
+{
+  height:50px;
+  background-color: #222222;
+  width:100%;
+  flow-children:right;
+}
+
+#Title
+{
+  vertical-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  margin-left: 20px;
+}
+
+#Search
+{
+  align: center center;
+  margin-left: 50px;
+  margin-right:10px;
+  margin-bottom: 2px;
+  width: 450px;
+}
+
+#Search Label
+{
+  padding-top: 3px;
+}
+
+#SearchButton
+{
+  margin-top:-1px;
+  margin-bottom: 0px;
+  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  vertical-align: center;
+  width: fit-children;
+  horizontal-align: right;
+}
+
+#SearchButton Label
+{
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+  color: lightblue;
+  align: center center;
+}
+
+
+#API
+{
+  height:750px;
+  border: 1px solid black;
+  overflow: scroll scroll;
+  background-color: #000000FE;
+  min-width: 800px;
+  flow-children: down;
+}
+
+.FileLine
+{
+  font-size: 16px;
+  font-weight: thin;
+  height: 16px;
+}
+
+.CategoryRoot
+{
+  flow-children: down;
+}
+
+.CategoryBase
+{
+  background-color: #11006666;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1px solid black;
+  border-radius: 15px;
+  transition: background-color 0.1s ease-in-out 0.0s;
+}
+
+.CategoryBase:hover
+{
+  background-color: #110066FF;
+  flow-children: down;
+}
+
+.CategoryBase:hover #CategoryName
+{
+  color: white; 
+}
+
+.Category
+{
+  margin-left: 10px; 
+  flow-children: right;
+  //background-color: gradient( linear, 0% 0%, 100% 100%, from( #110066AA ), to( #11006600 ) );
+  
+  border-radius: 3px;
+  min-width: 800px;
+  padding-left: 10px;
+  padding-top:1px;
+  padding-bottom:-20px;
+}
+
+
+
+#PlusMinus
+{
+  margin-right: 15px;
+  margin-top: -3px;
+  font-size: 32px;
+  font-weight: bold;
+  vertical-align: center;
+  color: gold;
+}
+
+#CategoryName
+{
+  font-size: 18px;
+  vertical-align: center;
+}
+
+#Properties
+{
+  flow-children: down;
+}
+
+
+.Property
+{
+  flow-children: down;
+  margin-left: 20px;
+  width: 800px;
+}
+
+.PropNameLink
+{
+  flow-children:right;
+  width:100%;
+  background-color: #111111;
+  margin-right:20px;
+}
+
+#PropertyName
+{
+  font-size: 18px;
+  color: #CCCCCC;
+  font-weight: bold;
+  margin-left: 20px;
+  horizontal-align: left;
+  vertical-align: center;
+  min-width:500px;
+}
+
+#Github
+{
+  margin-bottom: 0px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  width: fit-children;
+  margin-left: 50px;
+  vertical-align: center;
+  background-color: gradient( linear, 0% 0%, 0% 100%, from( #434b4b55 ), to( #636f6f55 ) );
+  transition-property: background-color, opacity;
+  transition-duration: 0.2s;
+}
+
+#Github:hover
+{
+  background-color: gradient( linear, 0% 0%, 0% 100%, from( #434b4b ), to( #636f6f ) );
+}
+
+#Github Label
+{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+  color: lightblue;
+  align: center center;
+}
+
+#PropertyFunction
+{
+  font-size: 14px;
+  color: red;
+  margin-left: 40px;
+  transition: color 0.1s ease-in-out 0.0s;
+}
+
+#PropertyFunction:hover
+{
+  color: pink;
+}
+
+#PropertyDescription
+{
+  font-size: 14px;
+  margin-left: 40px;
+}

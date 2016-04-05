@@ -1,0 +1,19 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/modmaker/modmaker.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/modmaker/modmaker_api_category.js" /> 
+  </scripts>
+  <Panel hittest="false" class="CategoryRoot">
+    <Panel hittest="true" class="CategoryBase" onactivate="Clicked()">
+      <Panel hittest="false" class="Category">
+        <Label text="+" id="PlusMinus"/>
+        <Label text="Category" id="CategoryName"/>
+      </Panel>
+    </Panel>
+    <Panel hittest="false" id="Properties"/>
+  </Panel>
+</root>
+ 

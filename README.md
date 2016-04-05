@@ -1,10 +1,7 @@
 # Barebones Starter Mod Kit
 
-### Version 0.95c
+### Version 1.00
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
-
-# NOTE: IF YOUR GAME IS CRASHING ON RESTART IN TOOLS MODE, FIND AND COMMENT OUT [THIS LINE](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/internal/gamemode.lua#L114)
-# Valve screwed something up with RegisterConvar badly and hasn't fixed it.  Be sure to comment out all RegisterConvar lines!
 
 ## Introduction
 Barebones is meant to be a jumping off point for creating a mod with all (or nearly all) of the boilerplate taken care of for you.
@@ -40,19 +37,41 @@ I've included some helpful libraries with barebones that may prove useful in you
 This library allow for easily delayed/timed actions without the messiness of thinkers and dealing with pauses.
 
 ####physics.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/PhysicsChangeLog.md)
-This library can be used for advancted physics/motion/collision of units.  See [PhysicsReadme.md](https://github.com/bmddota/barebones/blob/source2/PhysicsReadme.md) and [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/CollidersReadme.md) for more information.
+This library can be used for advancted physics/motion/collision of units.  
+See [PhysicsReadme.md](https://github.com/bmddota/barebones/blob/source2/PhysicsReadme.md) and [CollidersReadme.md](https://github.com/bmddota/barebones/blob/source2/CollidersReadme.md) for more information.
 
 ####projectiles.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ProjectilesChangeLog.md)
-This library can be used for advanced 3D projectile systems.  See [ProjectilesReadme.md](https://github.com/bmddota/barebones/blob/source2/ProjectilesReadme.md) for more information.
+This library can be used for advanced 3D projectile systems.  
+See [ProjectilesReadme.md](https://github.com/bmddota/barebones/blob/source2/ProjectilesReadme.md) for more information.
 
 ####notifications.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/NotificationsChangeLog.md)
-This library can be used to send panorama notifications to individuals/teams/everyone in your game.  See [libraries/notifications.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/notifications.lua) for usage details and examples.
+This library can be used to send panorama notifications to individuals/teams/everyone in your game.  
+See [libraries/notifications.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/notifications.lua) for usage details and examples.
 
 ####animations.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/AnimationsChangeLog.md)
-This library can be used to start animations with customized animation rates, activities, and translations.  See [libraries/animations.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/animations.lua) for usage details and examples.
+This library can be used to start animations with customized animation rates, activities, and translations.  
+See [libraries/animations.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/animations.lua) for usage details and examples.
 
 ####attachments.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/AttachmentsChangeLog.md)
-This library can be used to set up and put in place 'Frankenstein' attachments for attaching props to units.  See [libraries/attachments.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/attachments.lua) for usage details and examples.
+This library can be used to set up and put in place 'Frankenstein' attachments for attaching props to units.  
+See [libraries/attachments.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/attachments.lua) for usage details and examples.
+
+####containers.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ContainersChangeLog.md)
+This library allows for additional inventory/item containing objects and shops to be used in your game mode.
+See [libraries/containers.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/containers.lua) for usage details.  
+See [examples/playground.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/examples/playground.lua) for detailed examples.
+
+####selection.lua  [By Noya](https://github.com/MNoya)
+This library allows for querying and managing the selection status of players from the server-side lua script.  It also allows for automatic redirection and selection event handling.
+See [libraries/selection.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/selection.lua) for usage details and examples.  
+
+####pathgraph.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/PathGraphChangeLog.md)
+This library constructs a full-edge graph of all "path_corner" objects, allowing for the use of the path links via lua script.
+See [libraries/pathgraph.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/pathgraph.lua) for usage details and examples.  
+
+####modmaker.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ModmakerChangeLog.md)
+This library offers a searchable version of the lua server vscript API through the "modmaker_api" console command (in tools mode)
+See [libraries/modmaker.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/modmaker.lua) for usage details and examples.  
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.
@@ -65,7 +84,6 @@ Previously there was a 'barebones_spew' cvar that could be used to change the de
 
 ##Additional Information
 - Barebones also comes with a sample loading screen implementation in panorama which you can view and edit via the content panorama directory.
-- Barebones also comes with a simple notifications system built into panorama to server as a jumping off point (and potentially be useful)
 - You can change the name of the multiteams used at the Game Setup screen by editing the game/barebones/panorama/localization/addon_english.txt file.
 - You can adjust the number of players allowed on each of your maps by editing addoninfo.txt.
 

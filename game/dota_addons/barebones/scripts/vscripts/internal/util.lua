@@ -78,29 +78,48 @@ COLOR_LRED = '\x1C'
 COLOR_GOLD = '\x1D'
 
 
+function DebugAllCalls()
+    if not GameRules.DebugCalls then
+        print("Starting DebugCalls")
+        GameRules.DebugCalls = true
+
+        debug.sethook(function(...)
+            local info = debug.getinfo(2)
+            local src = tostring(info.short_src)
+            local name = tostring(info.name)
+            if name ~= "__index" then
+                print("Call: ".. src .. " -- " .. name .. " -- " .. info.currentline)
+            end
+        end, "c")
+    else
+        print("Stopped DebugCalls")
+        GameRules.DebugCalls = false
+        debug.sethook(nil, "c")
+    end
+end
+
+
+
+
 --[[Author: Noya
   Date: 09.08.2015.
   Hides all dem hats
 ]]
-function HideWearables( event )
-  local hero = event.caster
-  local ability = event.ability
-
-  hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-    local model = hero:FirstMoveChild()
+function HideWearables( unit )
+  unit.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+    local model = unit:FirstMoveChild()
     while model ~= nil do
         if model:GetClassname() == "dota_item_wearable" then
             model:AddEffects(EF_NODRAW) -- Set model hidden
-            table.insert(hero.hiddenWearables, model)
+            table.insert(unit.hiddenWearables, model)
         end
         model = model:NextMovePeer()
     end
 end
 
-function ShowWearables( event )
-  local hero = event.caster
+function ShowWearables( unit )
 
-  for i,v in pairs(hero.hiddenWearables) do
+  for i,v in pairs(unit.hiddenWearables) do
     v:RemoveEffects(EF_NODRAW)
   end
 end

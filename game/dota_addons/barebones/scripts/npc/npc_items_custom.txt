@@ -1,5 +1,36 @@
 "DOTAAbilities"
 {
+  "item_containers_lua_pack"
+  {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "ID"              "1835"
+    "BaseClass"         "item_lua"
+    "AbilityTextureName"        "item_present"
+    "ScriptFile"          "libraries/abilities/item_containers_lua_pack.lua"
+    "MaxLevel"            "1"
+
+    "ItemCost"            "0"
+    "ItemPurchasable"          "0"
+    "ItemKillable"             "0"
+    "ItemDroppable"            "0"
+    "ItemSellable"             "0"
+    "ItemCanChangeContainer"   "0"
+    
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "0"
+
+    // Time   
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"       "0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"       "0 0 0 0"
+  }
+
   //Shield
   "item_example_item"
   {
@@ -90,6 +121,27 @@
         "Properties"
         {
           "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"    "%damage_reduction"
+        }
+      }
+
+      "modifier_item_ex"
+      {
+        "Passive" "1"
+        "Attributes"  "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+        "Properties"
+        {
+          "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"    "33"
+        }
+      }
+
+      "modifier_item_ex2"
+      {
+        "Passive" "1"
+
+        "Properties"
+        {
+          "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"    "3"
         }
       }
     }

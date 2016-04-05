@@ -1,0 +1,31 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/containers/container.css" />
+		<include src="file://{resources}/styles/containers/container_skins.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/containers/dota_inventory_context_menu.js" />
+	</scripts>
+	<Panel class="ItemMenu">
+		<Button class="ItemMenuButton" id="ShowInShop" onmouseactivate="OnShowInShop()">
+			<Label text="Show In Shop" />
+		</Button>
+		<Button class="ItemMenuButton" id="Sell" onactivate="OnSell()">
+			<Label text="Sell" />
+		</Button>
+		<Button class="ItemMenuButton" id="Disassemble" onactivate="OnDisassemble()">
+			<Label text="Disassemble" />
+		</Button>
+		<Button class="ItemMenuButton" id="DropFromStash" onactivate="OnDropFromStash()">
+			<Label text="Drop From Stash" />
+		</Button>
+		<Button class="ItemMenuButton" id="Alert" onactivate="OnAlert()">
+			<Label text="Alert" />
+		</Button>
+		<Button class="ItemMenuButton" id="MoveToStash" onactivate="OnMoveToStash()">
+			<Label text="Move To Stash" />
+		</Button>
+	</Panel>
+</root>
+ 

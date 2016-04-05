@@ -1,5 +1,5 @@
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
-
+BAREBONES_VERSION = "1.00"
 
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
@@ -22,7 +22,16 @@ require('libraries/notifications')
 require('libraries/animations')
 -- This library can be used for performing "Frankenstein" attachments on units
 require('libraries/attachments')
-
+-- This library can be used to synchronize client-server data via player/client-specific nettables
+require('libraries/playertables')
+-- This library can be used to create container inventories or container shops
+require('libraries/containers')
+-- This library provides a searchable, automatically updating lua API in the tools-mode via "modmaker_api" console command
+require('libraries/modmaker')
+-- This library provides an automatic graph construction of path_corner entities within the map
+require('libraries/pathgraph')
+-- This library (by Noya) provides player selection inspection and management from server lua
+require('libraries/selection')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -32,6 +41,12 @@ require('internal/events')
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
+
+
+-- This is a detailed example of many of the containers.lua possibilities, but only activates if you use the provided "playground" map
+if GetMapName() == "playground" then
+  require("examples/playground")
+end
 
 --[[
   This function should be used to set up Async precache calls at the beginning of the gameplay.
@@ -84,7 +99,7 @@ function GameMode:OnHeroInGame(hero)
   DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
-  hero:SetGold(500, false)
+  --hero:SetGold(500, false)
 
   -- These lines will create an item and add it to the player, effectively ensuring they start with the item
   local item = CreateItem("item_example_item", hero, hero)
@@ -120,11 +135,6 @@ end
 function GameMode:InitGameMode()
   GameMode = self
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
-
-  -- Call the internal function to set up the rules/behaviors specified in constants.lua
-  -- This also sets up event hooks for all event handlers in events.lua
-  -- Check out internals/gamemode to see/modify the exact code
-  GameMode:_InitGameMode()
 
   -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
   Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )

@@ -1,5 +1,42 @@
 # Barebones ChangeLog
 
+### Version 1.00
+- New Library: Containers  --  Containers allows for additional inventory/item containing objects and shops
+- New Library: (by Noya): Selection API.
+- New Library: PathGraph  --  Constructs a full-edge graph of all "path_corner" objects.
+- New Library: Modmaker  --  Offers a searchable version of the lua server vscript API through the "modmaker_api" console command (in tools mode)
+- Fixed HideWearables utility function.
+- Fixed OnItemPickedUp to work if a non-hero unit picks up an item.
+- Fixed a minor potential deficiency in the randomseed selection
+- Removed the need to call internal Barebones functions from the implementation events.lua
+- Re-enabled "barebones_spew" cvar to allow for adjusting the visibility of barebones debugging messages
+- Added new dota items to the commented out removal lines in npc_abilities_override.txt
+- Added several new settings to settings.lua.
+- Added an "animation_example" folder containing a demonstration of lua-scripted animation adjustments for models.
+- [attachments.lua] Ensured that created attachment props have unique entity names.
+- [attachments.lua] Fixed a bug related to the "Particles" section of the attachment database breaking on AttachProp
+- [attachments.lua] Made it so that you don't have to enter the addon name when doing "attachment_configure"
+- [attachments.lua] Fixed GetCurrentAttachment not working in normal non-gui use
+- [projectiles.lua] Added a bDestroyImmediate property to the projectile definition which determines whether the DestroyParticle call should perform an immediate destruction.
+- [projectiles.lua] Fixed a bug with changing velocity of certain projectiles.
+- [projectiles.lua] Fixed a bug with OnFinish on ground collision.
+- [projectiles.lua] Fixed an issue where projectile:Destroy() did not halt the particle simulation.
+- [projectiles.lua] Added projectile:GetCreationTime(), projectile:GetDistanceTraveled(), projectile:GetPosition(), projectile:GetVelocity()
+- [projectiles.lua] Projectiles now reports its thinker as "projectiles_lua_thinker" if the Entity System warns of the projectiles simulation running too long in console.
+- [physics.lua] Updated to a new order of operations within the simulation.  If your existing code breaks, use physics_old.lua to maintain the old operation order.
+- [physics.lua] Fixed an issue where unit:StopPhysicsSimulation() did not halt the physics simulation.
+- [physics.lua] Calling Physics:Unit again now reinitializes the simulation in tools mode, but is ignored in live game mode.
+- [physics.lua] Added a flat friction in addition to the percentage friction already existing.
+- [physics.lua] Added static velocity setting/getting to manipulate individual force components separate from the combined force.
+- [physics.lua] Added the ability to have a physics unit cut trees as it moves.
+- [physics.lua] Added the ability for a unit to navigate according to the slope of the terrain itself for non-GNV navigation.
+- [physics.lua] Physics now reports its thinker as "physics_lua_thinker" if the Entity System warns of the physics simulation running too long in console.
+- [timers.lua] Added a shorthand for Timers:CreateTimer(...) as Timers(...)
+- [timers.lua] Timers now continue to run after the game ends for post-game timing execution.
+- [timers.lua] Timers library is now accessible as GameRules.Timers for instances where the Timers global is out of scope (triggers, etc)
+- [timers.lua] Timers now allows a timer to successfully call Timers:RemoveTimer on itself from within the execution callback of the timer
+- [timers.lua] Timers now reports its thinker as "timers_lua_thinker" if the Entity System warns of timers running too long in console.
+
 ### Version 0.95c
 - Removed the RegisterConvar call from internal/gamemode.lua since Valve broke it and has yet to fix it.
 

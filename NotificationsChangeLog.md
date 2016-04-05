@@ -1,5 +1,8 @@
 # notifications.lua ChangeLog
 
+### Version 1.00
+- Updated version to reflect the Barebones 1.0 release
+
 ### Version 0.89
 - Changed the names of the panorama files from barebones_hud_base.* to barebones_notifications.*
 

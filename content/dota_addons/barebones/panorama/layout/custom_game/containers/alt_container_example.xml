@@ -1,0 +1,30 @@
+<root>
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/containers/container.css" />
+    <include src="file://{resources}/styles/containers/container_skins.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/containers/container.js" /> 
+  </scripts>
+  <Panel draggable="true" class="Outer">
+    <Panel id="Header">
+      <Label hittest="false" id="HeaderLabel" text="Container Header"/>
+      <Button class="CloseButton" draggable="true" id="CloseButton" onactivate="CloseClicked()"/>
+    </Panel>
+    <Panel style="flow-children:right;">
+      <Panel style="height:95%; flow-children:down; background-color:#000000ee;">
+        <Label text="Helm" style="font-weight:bold; height:fill-parent-flow(1.0); horizontal-align:right; padding:15px 0px 0px 15px;" />
+        <Label text="Chest" style="font-weight:bold; height:fill-parent-flow(1.0); horizontal-align:right; padding:15px 0px 0px 15px;"/>
+        <Label text="Feet" style="font-weight:bold; height:fill-parent-flow(1.0); horizontal-align:right; padding:15px 0px 0px 15px;"/>
+      </Panel>
+      <Panel id="Inner" draggable="true">
+
+      </Panel>
+    </Panel>
+    <Panel id="Footer">
+      
+    </Panel>
+  </Panel>
+</root>
+ 
