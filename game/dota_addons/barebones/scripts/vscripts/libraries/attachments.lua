@@ -585,6 +585,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     end)
 
 
+    if not Attachments.currentAttach[unit:GetEntityIndex()] then Attachments.currentAttach[unit:GetEntityIndex()] = {} end
     Attachments.currentAttach[unit:GetEntityIndex()][attachPoint] = prop
 
     return prop
