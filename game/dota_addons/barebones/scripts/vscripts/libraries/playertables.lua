@@ -1,4 +1,4 @@
-PLAYERTABLES_VERSION = "0.80"
+PLAYERTABLES_VERSION = "0.90"
 
 --[[
   PlayerTables: Player-specific shared state/nettable Library by BMD

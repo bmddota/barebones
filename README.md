@@ -56,6 +56,10 @@ See [libraries/animations.lua](https://github.com/bmddota/barebones/blob/source2
 This library can be used to set up and put in place 'Frankenstein' attachments for attaching props to units.  
 See [libraries/attachments.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/attachments.lua) for usage details and examples.
 
+####playertables.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/PlayerTablesChangeLog.md)
+This library sets up tables that are shared between server (lua) and client (javascript) between specific (but changeable) clients.  Similar to nettables.
+See [libraries/playertables.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/playertables.lua) for usage details and examples.  
+
 ####containers.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ContainersChangeLog.md)
 This library allows for additional inventory/item containing objects and shops to be used in your game mode.
 See [libraries/containers.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/containers.lua) for usage details.  
