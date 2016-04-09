@@ -6,7 +6,7 @@ require('libraries/timers')
   ModMaker Library by BMD
 
   Installation
-  -"require" this file inside your code in order to make the ModMaker API available in 
+  -"require" this file inside your code in order to make the ModMaker API available in game
   -Ensure that this file is placed in the vscripts/libraries path
   -Ensure that you have the modmaker/modmaker.xml, modmaker/modmaker_api_category.xml, and modmaker/modmaker_api_property.xml in your panorama content layout folder.
   -Ensure that you have the modmaker/modmaker.js, modmaker/modmaker_api_category.js, and modmaker/modmaker_api_property.js in your panorama content scripts folder.

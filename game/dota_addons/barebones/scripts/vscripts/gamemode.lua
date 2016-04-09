@@ -48,6 +48,8 @@ if GetMapName() == "playground" then
   require("examples/playground")
 end
 
+--require("examples/worldpanelsExample")
+
 --[[
   This function should be used to set up Async precache calls at the beginning of the gameplay.
 

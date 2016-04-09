@@ -1,0 +1,11 @@
+<root> 
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/barebones_worldpanels.js" /> 
+  </scripts>
+  <Panel hittest="false" style="width:100%; height:100%; z-index:1000;">
+    
+  </Panel>
+</root>

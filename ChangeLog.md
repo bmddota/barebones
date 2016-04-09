@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 1.01
+- New Library: WorldPanels  --  Containers allows for creating panorama layout panels that track the world position of an entity (or fixed world coordinate).
+
 ### Version 1.00
 - New Library: Containers  --  Containers allows for additional inventory/item containing objects and shops
 - New Library: (by Noya): Selection API.

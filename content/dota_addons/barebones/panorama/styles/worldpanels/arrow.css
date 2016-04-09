@@ -1,0 +1,19 @@
+.ArrowPanel
+{
+  wash-color: gold;
+  animation-name: oscillate;
+  //animation-delay: 0s;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite; 
+  pre-transform-scale2d: .5;
+}
+
+
+
+@keyframes 'oscillate'
+{
+  0%   {transform: translateX( 0px ) translateY( 0px );}
+  50%  {transform: translateX( 0px ) translateY( 25px );}
+  100% {transform: translateX( 0px ) translateY( 0px );}
+}

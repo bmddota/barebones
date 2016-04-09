@@ -1,0 +1,26 @@
+<root> 
+  <styles>
+    <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    <include src="file://{resources}/styles/worldpanels/healthbar.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/worldpanels/healthbar.js" /> 
+  </scripts>
+  <Panel hittest="false" class="HealthBar">
+    <Panel class="Bubble">
+      <Panel id="HP1" class="HP"/>
+    </Panel>
+    <Panel class="Bubble">
+      <Panel id="HP2" class="HP"/>
+    </Panel>
+    <Panel class="Bubble">
+      <Panel id="HP3" class="HP"/>
+    </Panel>
+    <Panel class="Bubble">
+      <Panel id="HP4" class="HP"/>
+    </Panel>
+    <Panel class="Bubble">
+      <Panel id="HP5" class="HP"/>
+    </Panel>
+  </Panel>
+</root>

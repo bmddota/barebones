@@ -1,6 +1,6 @@
 # Barebones Starter Mod Kit
 
-### Version 1.00
+### Version 1.01
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
@@ -61,6 +61,10 @@ This library allows for additional inventory/item containing objects and shops t
 See [libraries/containers.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/containers.lua) for usage details.  
 See [examples/playground.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/examples/playground.lua) for detailed examples.
 
+####worldpanels.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/WorldPanelsChangeLog.md)
+This library allows for creating panorama layout panels that track the world position of an entity (or fixed world coordinate).
+See [libraries/worldpanels.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/worldpanels.lua) for usage details and examples.  
+
 ####selection.lua  [By Noya](https://github.com/MNoya)
 This library allows for querying and managing the selection status of players from the server-side lua script.  It also allows for automatic redirection and selection event handling.
 See [libraries/selection.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/selection.lua) for usage details and examples.  
@@ -72,6 +76,8 @@ See [libraries/pathgraph.lua](https://github.com/bmddota/barebones/blob/source2/
 ####modmaker.lua  [Change Log](https://github.com/bmddota/barebones/blob/source2/ModmakerChangeLog.md)
 This library offers a searchable version of the lua server vscript API through the "modmaker_api" console command (in tools mode)
 See [libraries/modmaker.lua](https://github.com/bmddota/barebones/blob/source2/game/dota_addons/barebones/scripts/vscripts/libraries/modmaker.lua) for usage details and examples.  
+
+
 
 ##Internals
 Barebones uses a few internal lua files in order to put together and handle the properties and pseudo-events systems.  You will likely not have to adjust these files at all.
