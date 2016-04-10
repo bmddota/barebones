@@ -3,5 +3,6 @@
   custom_net_tables =
   [
     "containers_lua",
+    "selection",
   ]
 }
