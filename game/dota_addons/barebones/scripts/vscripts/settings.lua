@@ -79,13 +79,13 @@ AUTO_LAUNCH_DELAY = 30                  -- How long should the default team sele
 LOCK_TEAM_SETUP = false                 -- Should we lock the teams initially?  Note that the host can still unlock the teams 
 
 
--- NOTE: You always need at least 2 non-bounty (non-regen while broken) type runes to be able to spawn or your game will crash!
+-- NOTE: You always need at least 2 non-bounty type runes to be able to spawn or your game will crash!
 ENABLED_RUNES = {}                      -- Which runes should be enabled to spawn in our game mode?
 ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
 ENABLED_RUNES[DOTA_RUNE_HASTE] = true
 ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
 ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
-ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true -- Regen runes are currently not spawning as of the writing of this comment
+ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
 ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
 ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 

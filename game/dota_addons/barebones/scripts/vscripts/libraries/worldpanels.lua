@@ -1,4 +1,4 @@
-WORLDPANELS_VERSION = "0.80"
+WORLDPANELS_VERSION = "0.81"
 
 --[[
   Lua-controlled Frankenstein WorldPanels Library by BMD
@@ -29,6 +29,8 @@ WORLDPANELS_VERSION = "0.80"
     -entityHeight: An optional (default is 0) height offset to use for the entity world panel (see: "HealthBarOffset" in unit KV definition)
     -edgePadding: An optional (default is to not lock to screen edge) padding percentage of the screen to limit the worldpanel to.
     -duration: An optional (default is infinite) duration in GameTime seconds that the panel will exist for and then be automatically destroyed.
+    -data: An optional table of data which will be attached to the worldpanel so that valeus can be used in javascript through $.GetContextPanel().Data
+      This table should only contain numeric, string, or table values (no entities/hscripts)
 
   -WorldPanels returned by the Create methods have the following methods:
     wp:SetPosition(position)
@@ -39,6 +41,7 @@ WORLDPANELS_VERSION = "0.80"
     wp:SetOffsetY(offsetY)
     wp:SetEdgePadding(edge)
     wp:SetEntityHeight(entityHeight)
+    wp:SetData(data)
     wp:Delete()
 
   -See examples/worldpanelsExample.lua for usage examples.
@@ -54,6 +57,7 @@ WORLDPANELS_VERSION = "0.80"
       {layout, offsetX, offsetY, position, entity, entityHeight, hAlign, vAlign, edge}
     $.GetContextPanel().OnEdge          true if this worldpanel has edgelocking/padding and is touching the edge/padded edge of the screen.  false otherwise.  Updates every frame.
     $.GetContextPanel().OffScreen       true if this worldpanel has no edgelocking/padding and is completely off screen.  false otherwise.  Updates every frame.
+    $.GetContextPanel().Data            the "data" object passed in to CreateWorldPanel.
 
   Examples
   -Create a special worldpanel for the hero entity of player 0, only visible to player 0. Adds 210 to the unit position for the height of the panel.
@@ -159,7 +163,7 @@ function WorldPanels:CreateWorldPanelForTeam(team, conf)
 end
 
 function WorldPanels:CreateWorldPanel(pids, conf)
-  --{position, entity, offsetX, offsetY, hAlign, vAlign, entityHeight, edge, duration}
+  --{position, entity, offsetX, offsetY, hAlign, vAlign, entityHeight, edge, duration, data}
   -- duration?
   if type(pids) == "number" then
     pids = {pids}
@@ -182,6 +186,7 @@ function WorldPanels:CreateWorldPanel(pids, conf)
     offsetX =           conf.offsetY,
     entityHeight =      conf.entityHeight,
     edge =              conf.edgePadding,
+    data =              conf.data,
   }
 
   if conf.horizontalAlign then pt.hAlign = haStoI[conf.horizontalAlign] end
@@ -240,6 +245,11 @@ function WorldPanels:CreateWorldPanel(pids, conf)
 
   function wp:SetEdgePadding(edge)
     self.pt.edge = edge
+    UpdateTable(self)
+  end
+
+  function wp:SetData(data)
+    self.pt.data = data
     UpdateTable(self)
   end
 

@@ -1,5 +1,9 @@
 # Barebones ChangeLog
 
+### Version 1.01a
+- [worldpanels.lua] Added "data" object which can be added in the world panel configuration table to send arbitrary primitive data to the created worldpanel in javascript, accessible as $.GetContextPanel().Data
+- [worldpanels.lua] Fixed an issue with completely client-unknown entities immideately deleting their world panels on create.
+
 ### Version 1.01
 - New Library: WorldPanels  --  Containers allows for creating panorama layout panels that track the world position of an entity (or fixed world coordinate).
 

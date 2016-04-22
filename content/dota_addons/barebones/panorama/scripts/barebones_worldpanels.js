@@ -36,6 +36,7 @@ function WorldPanelChange(id, changes, dels)
       wp.panel.WorldPanel = wp;
       wp.panel.OnEdge = false;
       wp.panel.OffScreen = false;
+      wp.panel.Data = wp.data;
       wp.panel.DeleteWorldPanel = function(pan){ 
         return function(){
           pan.DeleteAsync(0);
@@ -50,6 +51,10 @@ function WorldPanelChange(id, changes, dels)
         wp[j] = changes[k][j].split(' ');
         wp[j] = [parseFloat(wp[j][0]), parseFloat(wp[j][1]), parseFloat(wp[j][2])]
       }
+      else if (j == "data"){
+        wp.panel.Data = changes[k][j];
+        wp[j] = changes[k][j];
+      }
       else
         wp[j] = changes[k][j];
     }
@@ -61,6 +66,7 @@ function WorldPanelChange(id, changes, dels)
     wp.hAlign = wp.hAlign || HA_CENTER;
     wp.vAlign = wp.vAlign || VA_BOTTOM;
     wp.edge = wp.edge || -1;
+    wp.seen = wp.entity ? Entities.IsValidEntity(wp.entity) : null;
 
   }
 
@@ -78,10 +84,18 @@ function PositionPanels()
     var pos = wp.position;
     if (!pos){
       if (!Entities.IsValidEntity(wp.entity)){
-        panels[k].panel.DeleteAsync(0);
-        delete panels[k];
-        continue;
+        if (wp.seen){
+          panels[k].panel.DeleteAsync(0);
+          delete panels[k];
+          continue;
+        }
+        else{
+          continue;
+        }
       }
+
+
+      wp.seen = true;
 
       pos = Entities.GetAbsOrigin(wp.entity);
       if (entities.indexOf(wp.entity) === -1){

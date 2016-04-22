@@ -1,6 +1,6 @@
 # Barebones Starter Mod Kit
 
-### Version 1.01
+### Version 1.01a
 ### [Change Log](https://github.com/bmddota/barebones/blob/source2/ChangeLog.md)
 
 ## Introduction
