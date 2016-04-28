@@ -1,5 +1,8 @@
 # physics.lua ChangeLog
 
+### Version 1.01
+- Fixed visual issue in physics.lua box drawing + CreateBox bug
+
 ### Version 1.00
 - Updated to a new order of operations within the simulation.  If your existing code breaks, use physics_old.lua to maintain the old operation order.
 - Fixed an issue where unit:StopPhysicsSimulation() did not halt the physics simulation.

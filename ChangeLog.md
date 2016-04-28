@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 1.01b
+- [physics.lua] Fixed visual issue in physics.lua box drawing + CreateBox bug
+
 ### Version 1.01a
 - [worldpanels.lua] Added "data" object which can be added in the world panel configuration table to send arbitrary primitive data to the created worldpanel in javascript, accessible as $.GetContextPanel().Data
 - [worldpanels.lua] Fixed an issue with completely client-unknown entities immideately deleting their world panels on create.
