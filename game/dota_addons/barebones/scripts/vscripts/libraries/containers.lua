@@ -1615,7 +1615,7 @@ end
 
 
 function Containers:GetEntityContainers(entity)
-  if entity and type(entity) ~= "number" and entity.GetEntityIndex then
+  if entity and type(entity) ~= "number" and entity.GetEntityIndex and IsValidEntity(entity) then
     entity = entity:GetEntityIndex()
   end
 

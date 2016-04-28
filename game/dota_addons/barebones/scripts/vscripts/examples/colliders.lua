@@ -132,10 +132,10 @@ if testCount == 0 then
   Physics:RemoveCollider("testbox")
   boxcollider = Physics:AddCollider("testbox", Physics:ColliderFromProfile("boxblocker"))
   boxcollider.box = {Vector(-200,0,0), Vector(0,0,0), Vector(-200,1000,500)}
-  boxcollider.test = function(self, unit)
-  boxcollider.draw = {color = Vector(50,200,50), alpha = 5}
+  boxcollider.test = function(self, unit)  
     return IsPhysicsUnit(unit)
   end
+  boxcollider.draw = {color = Vector(50,200,50), alpha = 5}
   units = {}
   --[[for i=1,4 do
     units[i] = CreateUnitByName('npc_dummy_unit', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
@@ -149,9 +149,10 @@ if testCount == 0 then
   boxcollider2 = Physics:AddCollider("testbox2", Physics:ColliderFromProfile("boxreflect"))
   boxcollider2.box = {Vector(-100,700,0), Vector(1000,700,0), Vector(-100,900,500)}
   boxcollider2.test = function(self, unit)
-  boxcollider2.draw = {color = Vector(200,50,200), alpha = 5}
     return IsPhysicsUnit(unit)
   end
+  boxcollider2.draw = {color = Vector(200,50,200), alpha = 5}
+    
 end
 
 -- Self-blocker

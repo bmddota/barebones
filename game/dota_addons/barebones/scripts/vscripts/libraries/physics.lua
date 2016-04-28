@@ -229,8 +229,7 @@ function Physics:Think()
                Physics:PrecalculateBoxDraw(collider.box)
             end
 
-            -- what the hell is that xoffset on the origin, but it works
-            DebugDrawBoxDirection(Vector(box.drawAngle * 9,0,0), box.drawMins, box.drawMaxs, RotatePosition(Vector(0,0,0), QAngle(0,box.drawAngle,0), Vector(1,0,0)), color, alpha, .01)
+            DebugDrawBoxDirection(box.drawMins, Vector(0,0,0), box.drawMaxs - box.drawMins, RotatePosition(Vector(0,0,0), QAngle(0,box.drawAngle,0), Vector(1,0,0)), color, alpha, .01)
           end
 
           local ents = nil
@@ -2226,20 +2225,24 @@ end
 function Physics:CreateBox(a, b, width, center)
   local az = Vector(a.x,a.y,0)
   local bz = Vector(b.x,b.y,0)
-  local heightVec = bz - az
-  local height = heightVec:Length()
-  local dir = heightVec:Normalized()
+  local height = math.abs(b.z - a.z)
+  if height < 1 then 
+    b.z = b.z + width/2 
+    a.z = a.z - width/2
+  end
+
+  local dir = (bz-az):Normalized()
+  local rot = Vector(-1*dir.y,dir.x,0)
 
   local box = {}
   if center then
-    local rot = RotatePosition(Vector(0,0,0), QAngle(0, -90, 0), dir)
     box[1] = a + -1 * rot * width / 2
-    box[2] = box[1] + height
+    box[2] = b + -1 * rot * width / 2
     box[3] = a + rot * width / 2
   else
     box[1] = a
     box[2] = b
-    box[3] = a + RotatePosition(Vector(0,0,0), QAngle(0, -90, 0), dir) * width
+    box[3] = a + rot * width
   end
 
   return box
