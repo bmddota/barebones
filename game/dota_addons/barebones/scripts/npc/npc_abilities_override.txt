@@ -274,4 +274,16 @@
   //"item_dragon_lance"     "REMOVE"
   //"item_recipe_iron_talon"     "REMOVE"
   //"item_iron_talon"     "REMOVE"
+
+  //"item_recipe_bloodthorn"      "REMOVE"
+  //"item_bloodthorn"      "REMOVE"
+  //"item_wind_lace"      "REMOVE"
+  //"item_infused_raindrop"      "REMOVE"
+  //"item_blight_stone"      "REMOVE"
+  //"item_recipe_echo_sabre"      "REMOVE"
+  //"item_echo_sabre"      "REMOVE"
+  //"item_tome_of_knowledge"      "REMOVE"
+  //"item_recipe_hurricane_pike"      "REMOVE"
+  //"item_hurricane_pike"      "REMOVE"
+  //"item_banana"      "REMOVE"
 }

@@ -1,5 +1,8 @@
 # Barebones ChangeLog
 
+### Version 1.01c
+- Added example "REMOVE" lines to npc_abilities_override.txt for the new 6.87 items.
+
 ### Version 1.01b
 - [physics.lua] Fixed visual issue in physics.lua box drawing + CreateBox bug
 
