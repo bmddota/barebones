@@ -1,0 +1,129 @@
+/**
+ * dropdown.css
+ *
+ * Contains styling for DropDown panels.
+ */
+
+DropDownMenu
+{
+    background-color: #3d4448;
+    box-shadow: fill #00000066 -3px -3px 6px 6px;
+    color: #e1e1e1;
+    flow-children: down;
+    opacity: 0.0;
+    overflow: squish scroll;
+    transform: translateY(-40px);
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in;
+    width: 284px;
+    z-index: 0;
+}
+
+DropDownMenu.DropDownMenuVisible
+{
+    max-height: 480px;
+    opacity: 1.0;
+    transform: translateY(0px);
+    transition-property: box-shadow;
+}
+
+DropDownMenu Label
+{
+    background-color: #3d4448;
+    border-bottom: 1px solid #00000066;
+    border-top: 1px solid #00000066;
+    color: #ffffff99;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px 0px;
+    padding: 8px 0px 4px 16px;
+    transition-duration: 0.2s;
+    transition-property: background-color;
+    transition-timing-function: ease-in-out;
+    width: 100%;
+    z-index: 0;
+}
+
+DropDownMenu Label:hover
+{
+    background-color: #585e62;
+}
+
+.SettingsContentItem
+{
+    flow-children: down;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentItemDropDown
+{
+    flow-children: right;
+}
+
+.SettingsContentItem DropDown
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#292e2e), to(#191e1e));
+    background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
+    background-position: right 38px 35%;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    border: 2px solid #5e686966;
+    box-shadow: #00000055 -2px -2px 1px 4px;
+    height: 32px;
+    max-width: 284px;
+    min-width: 100px;
+    padding-right: 8px;
+    padding-top: 4px;
+    transition-duration: 0.15s;
+    transition-property: background-color, border;
+    transition-timing-function: linear;
+    width: fill-parent-flow(1);
+    z-index: 1;
+}
+
+.SettingsContentItem DropDown:hover
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#393e3e), to(#292e2e));
+}
+
+.SettingsContentItem DropDown Label
+{
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin: 2px 29px 0px 6px;
+    transition-duration: 0.15s;
+    transition-property: color;
+    transition-timing-function: linear;
+    width: fit-children;
+}
+
+.SettingsContentItem DropDown:disabled
+{
+    background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_disabled_png.vtex");
+    background-color: transparent;
+    border: 2px solid #3b414266;
+}
+
+.SettingsContentItem DropDown:disabled Label
+{
+    color: #444444;
+}
+
+.SettingsContentItem > Label
+{
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled > Label
+{
+    color: #444444;
+}

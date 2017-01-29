@@ -1,0 +1,89 @@
+/**
+ * dropdown.css
+ *
+ * Contains styling for DropDown panels.
+ */
+
+.SettingsNavButtonContainer
+{
+    height: fit-children;
+    width: 100%;
+}
+
+.SettingsNavButton
+{
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: #00000055 -2px -2px 8px 8px;
+    padding: 4px;
+    text-transform: uppercase;
+    height: fit-children;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    min-height: 36px;
+    transition-duration: 0.05s;
+    transition-property: background-color;
+    transition-timing-function: linear;
+    vertical-align: top;
+    width: 100%;
+}
+
+.SettingsNavButton.SettingsActive
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#373d45), to(#4d5860));
+    border-bottom-color: #333333;
+    border-left-color: #494949;
+    border-right-color: #404040;
+    border-top-color: #555555;
+    wash-color: #000000aa;
+}
+
+.SettingsNavButton.SettingsInactive
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#373d45), to(#4d5860));
+    border-bottom-color: #333333;
+    border-left-color: #494949;
+    border-right-color: #404040;
+    border-top-color: #555555;
+    wash-color: #74eafe66;
+}
+
+.SettingsNavButton.SettingsInactive:hover
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#4c5561), to(#6c7d88));
+    border-bottom-color: #333333;
+    border-left-color: #aaaaaa33;
+    border-right-color: #404040;
+    border-top-color: #aaaaaa77;
+    wash-color: #74eafe66;
+}
+
+.SettingsNavButton.SettingsInactive:active
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#393939), to(#555555));
+    border-bottom-color: #666666;
+    border-left-color: #303030;
+    border-right-color: #444444;
+    border-top-color: #222222;
+    sound: "ui_generic_button_click";
+    wash-color: #74eafe66;
+}
+
+.SettingsNavButton Label
+{
+    color: #FFFFFF;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    horizontal-align: center;
+    font-size: 14px;
+    margin-top: 3px;
+    padding: 0px 4px 2px 4px;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px 1.0 #000000;
+    vertical-align: center;
+}
+
+.SettingsNavButton.SettingsActive Label
+{
+    color: #999999;
+}

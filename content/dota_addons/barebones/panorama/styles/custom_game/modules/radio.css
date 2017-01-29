@@ -1,0 +1,121 @@
+/**
+ * radio.css
+ *
+ * Contains styling for RadioButton panels.
+ */
+
+.SettingsContentItem
+{
+    flow-children: down;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentItem Label
+{
+    color: #7d8688;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 18px;
+    font-weight: thin;
+    letter-spacing: 1px;
+    margin-right: 8px;
+}
+
+.SettingsContentItem .SettingsContentItemRadioContainer
+{
+    flow-children: down;
+}
+
+.SettingsContentRadioButton
+{
+    background-color: none;
+    color: white;
+    flow-children: right;
+    transition-duration: 0.25s;
+    transition-property: background-color, box-shadow, color;
+    transition-timing-function: ease-in-out;
+}
+
+.SettingsContentRadioButton .SettingsContentRadioBox
+{
+    background-color: gradient(radial, 50% 50%, 0% 0%, 10% 10%, from(#000000), to(#000000));
+    border: 2px solid #5e686966;
+    border-radius: 50%;
+    box-shadow: #00000055 -2px -2px 1px 4px;
+    margin-left: 10px;
+    min-height: 20px;
+    min-width: 20px;
+    transition-duration: 0.2s;
+    transition-property: background-color, box-shadow, color, border;
+    transition-timing-function: ease-in-out;
+}
+
+.SettingsContentRadioButton:hover .SettingsContentRadioBox
+{
+    border: 2px solid #697879;
+}
+
+.SettingsContentRadioButton.SettingsContentRadioButtonSelected .SettingsContentRadioBox
+{
+    background-color: gradient(radial, 50% 50%, 0% 0%, 50% 50%, from(#e7f6f5), to(#333399));
+    border: 3px solid #000000;
+    box-shadow: #5b62bf77 -4px -4px 8px 8px;
+    transition-duration: 0.5s;
+    transition-property: background-color;
+    transition-timing-function: ease-in-out;
+}
+
+.SettingsContentRadioButton Label
+{
+    color: #7d8688;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 18px;
+    font-weight: thin;
+    transition-duration: 0.2s;
+    transition-property: color;
+    transition-timing-function: linear;
+}
+
+.SettingsContentRadioButton:hover Label
+{
+    color: #d2d6d1;
+}
+
+.SettingsContentRadioButton.SettingsContentRadioButtonSelected Label
+{
+    color: white;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled Label
+{
+    color: #444444;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled .SettingsContentRadioButton Label
+{
+    color: #444444;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled .SettingsContentRadioButton .SettingsContentRadioBox
+{
+    box-shadow: #33333377 -4px -4px 8px 8px;
+    color: transparent;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled .SettingsContentRadioButton.SettingsContentRadioButtonSelected .SettingsContentRadioBox
+{
+    background-color: gradient(radial, 50% 50%, 0% 0%, 50% 50%, from(#e7f6f533), to(#33339933));
+}
+
+.SettingsContentItem.SettingsContentItemDisabled .SettingsContentRadioButton:hover .SettingsContentRadioBox
+{
+    border: 2px solid #5e686966;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled .SettingsContentRadioButton.SettingsContentRadioButtonSelected:hover .SettingsContentRadioBox
+{
+    border: 3px solid #000000;
+}

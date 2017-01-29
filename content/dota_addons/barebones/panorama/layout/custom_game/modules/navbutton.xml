@@ -1,0 +1,12 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/modules/navbutton.css" />
+    </styles>
+    <scripts>
+    </scripts>
+    <Panel class="SettingsNavButtonContainer">
+        <Button class="SettingsNavButton">
+            <Label />
+        </Button>
+    </Panel>
+</root>

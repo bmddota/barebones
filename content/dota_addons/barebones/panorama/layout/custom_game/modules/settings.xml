@@ -1,0 +1,16 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/modules/settings.css" />
+    </styles>
+    <scripts>
+    </scripts>
+    <Panel class="SettingsContainer">
+        <Panel id="SettingsSectionHeader">
+            <Label text="Game Settings" />
+        </Panel>
+        <Panel id="SettingsMain">
+            <Panel id="SettingsNav" />
+            <Panel id="SettingsContent" />
+        </Panel>
+    </Panel>
+</root>

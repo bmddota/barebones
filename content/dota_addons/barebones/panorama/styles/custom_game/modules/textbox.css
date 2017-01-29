@@ -1,0 +1,66 @@
+/**
+ * textbox.css
+ *
+ * Contains styling for TextEntry panels.
+ */
+
+.SettingsContentItem
+{
+    flow-children: down;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentItemTextBox
+{
+    flow-children: right;
+}
+
+.SettingsContentItem > Label
+{
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.SettingsContentItem TextEntry
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#111111ff), to(#222222ff));
+    border: 1px solid #5e686966;
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 20px;
+    height: 32px;
+    max-width: 284px;
+    padding: 5px 7px 3px 7px;
+    text-overflow: clip;
+    white-space: nowrap;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentItem TextEntry #PlaceholderText
+{
+    color: #555555;
+    font-size: 18px;
+    margin-top: -2px;
+    opacity: 1.0;
+    transition-duration: 0.2s;
+    transition-property: opacity;
+}
+
+.SettingsContentItem.SettingsContentItemDisabled > Label
+{
+    color: #444444;
+}
+
+.SettingsContentItem TextEntry:disabled
+{
+    background-color: transparent;
+    color: #444444;
+}
+
+.SettingsContentItem TextEntry:focus #PlaceholderText, .SettingsContentItem TextEntry.HasInput #PlaceholderText
+{
+    opacity: 0.0;
+}

@@ -1,0 +1,90 @@
+/**
+ * checkbox.css
+ *
+ * Contains styling for ToggleButton panels.
+ */
+
+.SettingsContentItem
+{
+    flow-children: right;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: fill-parent-flow(1);
+}
+
+.SettingsContentItem ToggleButton
+{
+    flow-children: right;
+    padding: 1px 4px;
+    transition-duration: 0.25s;
+    transition-property: background-color, box-shadow, color;
+    transition-timing-function: ease-in-out;
+}
+
+.SettingsContentItem ToggleButton .TickBox
+{
+    background-color: black;
+    border: 2px solid #5e686966;
+    box-shadow: #00000055 -2px -2px 1px 4px;
+    height: 18px;
+    transition-duration: 0.2s;
+    transition-property: background-color, box-shadow, color, border;
+    transition-timing-function: ease-in-out;
+    vertical-align: center;
+    width: 18px;   
+}
+
+.SettingsContentItem ToggleButton:selected .TickBox
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#e7f6f5), to(#a0d6d7));
+    border: 3px solid #000000;
+    box-shadow: #5b62bf77 -4px -4px 8px 8px;
+}
+
+.SettingsContentItem ToggleButton:hover .TickBox
+{
+    border: 2px solid #697879;
+}
+
+.SettingsContentItem ToggleButton:disabled .TickBox
+{
+    border-color: #333333;
+}
+
+.SettingsContentItem ToggleButton:disabled:selected .TickBox
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#222222), to(#333333));
+    border: 3px solid #000000;
+    box-shadow: #33333377 -4px -4px 8px 8px;
+}
+
+.SettingsContentItem ToggleButton Label
+{
+    color: #7d8688;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 18px;
+    font-weight: thin;
+    letter-spacing: 1px;
+    margin: 0px;
+    padding-left: 5px;
+    padding-top: 4px;
+    transition-duration: 0.2s;
+    transition-property: color;
+    transition-timing-function: linear;
+    vertical-align: center;
+}
+
+.SettingsContentItem ToggleButton:hover Label
+{
+    color: #d2d6d1;
+}
+
+.SettingsContentItem ToggleButton:selected Label
+{
+    color: white;
+}
+
+.SettingsContentItem ToggleButton:disabled Label
+{
+    color: #333333;
+}

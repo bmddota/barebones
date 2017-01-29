@@ -1,0 +1,90 @@
+/**
+ * popup.css
+ *
+ * Contains styling for the PopUp module.
+ */
+
+.SettingsPopUp
+{
+    horizontal-align: center;
+    max-width: 550px;
+    opacity: 0.0;
+    vertical-align: center;
+    z-index: 1;
+}
+
+.SettingsPopUp.SettingsPopUpVisible
+{
+    opacity: 1.0;
+}
+
+#SettingsPopUpContainer
+{
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#272d2eee), to(#131617ee));
+    border: 1px solid #5e6869;
+    box-shadow: black -4px -4px 8px 8px;
+    flow-children: down;
+    pre-transform-scale2d: 1;
+    margin: 20px;
+    padding: 32px 64px 32px 64px;
+    transition-delay: 0.0s;
+    transition-duration: 0.2s;
+    transition-property: transform, pre-transform-scale2d, opacity;
+    transition-timing-function: ease-in;
+}
+
+#SettingsPopUpContainer > Label
+{
+    color: white;
+    font-family: Radiance,FZLanTingHei-R-GBK,Gulim,MingLiU;
+    font-size: 24px;
+    horizontal-align: center;
+    text-align: center;
+    vertical-align: center;
+    width: fit-children;
+}
+
+#SettingsPopUpCloseButton
+{
+    background-color: #333333;
+    background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    border: 1px solid #333333;
+    border-radius: 50%;
+    box-shadow: #000000 -3px -3px 6px 6px;
+    height: 38px;
+    horizontal-align: right;
+    margin-top: 4px;
+    margin-right: 4px;
+    transition-duration: 0.1s;
+    transition-property: wash-color, pre-transform-scale2d, background-color;
+    transition-timing-function: ease-in;
+    wash-color: white;
+    width: 38px;
+    z-index: 1;
+}
+
+#SettingsPopUpCloseButton:hover
+{
+    background-color: #666666;
+}
+
+#SettingsPopUpCloseButton:active
+{
+    background-size: 20px 20px;
+}
+
+#SettingsPopUpDimBackground
+{
+    background-color: black;
+    desaturation: 0.1;
+    height: 100%;
+    opacity: 0.8;
+    transition-delay: 0.0s;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease-in;
+    width: 100%;
+}
