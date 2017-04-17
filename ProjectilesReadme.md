@@ -1,11 +1,11 @@
-#**BMD's Lua Advanced Projectiles Library**
+# **BMD's Lua Advanced Projectiles Library**
 --------------------------------
 
-####**How to install:**
+#### **How to install:**
 - Drop projectiles.lua in with your vscripts
 - Add require( 'projectiles' ) somewhere in your lua instantiation path
 
-####**How to use:**
+#### **How to use:**
 - The projectiles library can be used to generate projectiles which are a combination of mathematical simulation and particle control.
 - Projectiles.lua projectiles do not use a unit or entity as part of the projectile simulation, and as such are lighter weight than unit-based projectiles.
 - Due to not using a unit, the projectile simulation can potentially get out of synch with the particle representation if there a large number of high-velocity changes.  Because of this, a projectile which needs highly complex motion is better off implemented as a Physics:Unit().
@@ -14,14 +14,14 @@
 
 **Projectiles Library Functions**
 =============================
-####**Projectiles:CreateProjectile(projectile)**
+#### **Projectiles:CreateProjectile(projectile)**
   This function is used to create ane release the projectile defined by the projectile table passed to the function.  The function returns an updated reference to the projectile table on which the Proejctile Table Functions can be called.  See the Projectiles Table Format section for more detail on what properties can be used with the projectile table.
 
 
-####**Projectiles:CalcSlope(pos, unit, dir)**
+#### **Projectiles:CalcSlope(pos, unit, dir)**
   This function can be used to get the estimated slope of the ground in the given Vector direction 'dir' at the world point Vector 'pos'.  The 'unit' parameter is used to specify what unit should be used with GetGroundPosition() in order to handle the ground collision sizing.  This function can return odd values when used around sheer vertical edges.
 
-####**Projectiles:CalcNormal(pos, unit, scale)**
+#### **Projectiles:CalcNormal(pos, unit, scale)**
   This function can be used to get the estimated normal Vector of the ground at the world point Vector 'pos'.  The 'unit' parameter is used to specify what unit should be used with GetGroundPosition() in order to handle the ground collision sizing.  This function can return odd values when used around sheer vertical edges.
 
 
@@ -29,22 +29,22 @@
 =============================
 A projectile table which has been fed to CreateProjectile will have the following functions:
 
-####**projectile:GetVelocity()**
+#### **projectile:GetVelocity()**
   This function can be called to get the current velocity vector of this projectile.
 
-####**projectile:Destroy()**
+#### **projectile:Destroy()**
   This function can be called to immediately destroy this projectile, triggering its OnFinish callback function if present.
 
-####**projectile:SetVelocity(newVel[, newPos])**
+#### **projectile:SetVelocity(newVel[, newPos])**
   This function can be called to adjust the current velocity of the projectile, as well as the current simulated position of the unit (if specified).  The projectile simulation and particle will only update if the projectile is within its nMaxChanges velocity change limit.
 
-####**projectile:GetCreationTime()**
+#### **projectile:GetCreationTime()**
   This function reutnrs the creation time in GameTime of this projectile.
 
-####**projectile:GetDistanceTraveled()**
+#### **projectile:GetDistanceTraveled()**
   This function returns the total distance traveled by this projectile in hammer units per second.  Only counts distance moved due to velocity and not by setting a new position with SetVelocity.
 
-####**projectile:GetPosition()**
+#### **projectile:GetPosition()**
   This function returns the current world position of the projectile.
 
 
